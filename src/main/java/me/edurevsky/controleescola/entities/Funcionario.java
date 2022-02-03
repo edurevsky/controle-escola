@@ -1,9 +1,8 @@
 package me.edurevsky.controleescola.entities;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -11,17 +10,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "tb_alunos")
+@Table(name = "tb_funcionarios")
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class Aluno extends PessoaFisica {
+public class Funcionario extends PessoaFisica {
 
-    private String email;
-
-    private LocalDate dataMatricula;
+    private BigDecimal salario;
 
     @ManyToOne
-    @JoinColumn(name = "turma_id")
-    private Turma turma;
+    private Cargo cargo;
 
 }

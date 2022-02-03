@@ -1,25 +1,15 @@
 package me.edurevsky.controleescola.entities;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 // @Entity
 // @Table(name = "tb_professores")
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class Professor {
-    
-    private Long id;
-
-    private String nome;
-
-    private String cpf;
+public class Professor extends PessoaFisica {
 
     private BigDecimal salario;
 
