@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.services.contracts;
+package me.edurevsky.controleescola.services.contracts.aluno;
 
 import me.edurevsky.controleescola.entities.Aluno;
 
