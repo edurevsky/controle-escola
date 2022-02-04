@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
-import me.edurevsky.controleescola.services.contracts.BuscaAluno;
-import me.edurevsky.controleescola.services.contracts.RegistroAluno;
+import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
+import me.edurevsky.controleescola.services.contracts.aluno.RegistroAluno;
 
 @Service
 public class AlunoService implements RegistroAluno, BuscaAluno {

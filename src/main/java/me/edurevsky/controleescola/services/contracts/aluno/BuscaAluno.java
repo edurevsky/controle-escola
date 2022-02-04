@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.services.contracts;
+package me.edurevsky.controleescola.services.contracts.aluno;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
