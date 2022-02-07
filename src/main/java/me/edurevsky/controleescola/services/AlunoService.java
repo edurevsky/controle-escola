@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
 import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
@@ -16,13 +17,18 @@ public class AlunoService implements RegistroAluno, BuscaAluno {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    @Autowired
+    private TurmaService turmaService;
+
     @Override
     public Page<Aluno> buscarTodos(Pageable pageable) {
         return alunoRepository.findAll(pageable);
     }
 
     @Override
-    public Aluno registrarAluno(Aluno aluno) {
+    public Aluno registrarAluno(AlunoDTO alunoDTO) {
+        Aluno aluno = AlunoDTO.convertToAluno(alunoDTO);
+        aluno.setTurma(turmaService.buscarPorId(alunoDTO.getTurma()));
         return alunoRepository.save(aluno);
     }
 

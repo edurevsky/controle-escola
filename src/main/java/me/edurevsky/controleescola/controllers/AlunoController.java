@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.services.AlunoService;
 
@@ -23,8 +25,8 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @PostMapping
-    public ResponseEntity<?> registrarAluno(Aluno aluno) {
-        Aluno alunoRegistrado = alunoService.registrarAluno(aluno);
+    public ResponseEntity<?> registrarAluno(@RequestBody AlunoDTO alunoDTO) {
+        Aluno alunoRegistrado = alunoService.registrarAluno(alunoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(alunoRegistrado);
     }
 

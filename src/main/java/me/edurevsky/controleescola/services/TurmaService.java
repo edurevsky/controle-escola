@@ -22,8 +22,7 @@ public class TurmaService implements BuscaTurma {
 
     @Override
     public Turma buscarPorId(Long id) {
-        return turmaRepository.findById(id)
-            .orElseThrow( /** TODO */ );
+        return turmaRepository.findById(id).get();
     }
     
 }
