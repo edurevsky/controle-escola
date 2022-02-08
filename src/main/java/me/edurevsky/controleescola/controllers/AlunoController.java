@@ -1,5 +1,7 @@
 package me.edurevsky.controleescola.controllers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,10 +11,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.edurevsky.controleescola.controllers.utils.IdTurmaObject;
 import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.services.AlunoService;
@@ -50,5 +57,23 @@ public class AlunoController {
         } 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{idAluno}/transferir")
+    public ResponseEntity<?> transferirTurma(@PathVariable Long idAluno, @RequestBody IdTurmaObject idTurma) {
+        boolean foiTransferido = alunoService.transferirTurma(idAluno, idTurma.getIdTurma());
+        if (!foiTransferido) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    // @PutMapping(value = "/{id}")
+    // public ResponseEntity<?> atualizarAluno(@PathVariable Long id, @RequestBody AlunoDTO alunoDTO) {
+    //     boolean wasUpdated = alunoService.atualizaAluno(id, alunoDTO);
+    //     if (!wasUpdated) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    //     return ResponseEntity.ok().build();
+    // }
 
 }

@@ -7,7 +7,7 @@ public interface RegistroAluno {
     
     public Aluno registrarAluno(AlunoDTO aluno);
 
-    public Boolean atualizaAluno(Long id, Aluno aluno);
+    // public Boolean atualizaAluno(Long id, AlunoDTO alunoDTO);
 
     public Boolean removerAluno(Long id);
 
