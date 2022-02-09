@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,6 +19,7 @@ public class Funcionario extends PessoaFisica {
 
     private BigDecimal salario;
 
+    @JsonIgnore
     @ManyToOne
     private Cargo cargo;
 

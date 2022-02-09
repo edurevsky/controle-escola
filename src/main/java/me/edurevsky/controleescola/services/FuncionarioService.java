@@ -7,10 +7,10 @@ import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
-import me.edurevsky.controleescola.services.contracts.funcionario.RegistroDeFuncionario;
+import me.edurevsky.controleescola.services.contracts.funcionario.RegistroFuncionario;
 
 @Service
-public class FuncionarioService implements RegistroDeFuncionario {
+public class FuncionarioService implements RegistroFuncionario {
     
     @Autowired
     private FuncionarioRepository funcionarioRepository;
