@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
-import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
+import me.edurevsky.controleescola.services.contracts.aluno.AlterarCpf;
 import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.RegistroAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.TransferenciaDeTurma;
 
 @Service
-public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma {
+public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma, AlterarCpf {
     
     @Autowired
     private AlunoRepository alunoRepository;
@@ -60,6 +60,17 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
         alunoEmTransferencia.setTurma( turmaService.buscarPorId(idTurma) );
         alunoRepository.save(alunoEmTransferencia);
+        return true;
+    }
+
+    @Override
+    public Boolean alterarCpf(Long idAluno, String cpf) {
+        if (!alunoRepository.existsById(idAluno)) {
+            return false;
+        }
+        Aluno aluno = alunoRepository.findById(idAluno).get();
+        aluno.setCpf(cpf);
+        alunoRepository.save(aluno);
         return true;
     }
 
