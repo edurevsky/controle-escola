@@ -58,7 +58,7 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
             return false;
         }
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
-        alunoEmTransferencia.setTurma( turmaService.buscarPorId(idTurma) );
+        alunoEmTransferencia.setTurma(turmaService.buscarPorId(idTurma));
         alunoRepository.save(alunoEmTransferencia);
         return true;
     }
