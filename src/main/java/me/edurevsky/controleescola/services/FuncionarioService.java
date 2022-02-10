@@ -25,6 +25,13 @@ public class FuncionarioService implements RegistroFuncionario {
         return funcionarioRepository.save(funcionario);
     }
 
-    
+    @Override
+    public Boolean removerFuncionario(Long id) {
+        if (!funcionarioRepository.existsById(id)) {
+            return false;
+        }
+        funcionarioRepository.deleteById(id);
+        return true;
+    }
 
 }

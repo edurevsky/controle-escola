@@ -2,6 +2,8 @@ package me.edurevsky.controleescola.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,15 @@ public class FuncionarioController
     public ResponseEntity<?> registrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
         Funcionario funcionario = funcionarioService.registrarFuncionario(funcionarioDTO);
         return ResponseEntity.ok().body(funcionario);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> removerFuncionario(@PathVariable Long id) {
+        boolean wasDeleted = funcionarioService.removerFuncionario(id);
+        if (!wasDeleted) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }

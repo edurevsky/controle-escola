@@ -42,11 +42,11 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
 
     @Override
     public Boolean removerAluno(Long id) {
-        if (alunoRepository.existsById(id)) {
-            alunoRepository.deleteById(id);
-            return true;
+        if (!alunoRepository.existsById(id)) {
+            return false;
         }
-        return false;
+        alunoRepository.deleteById(id);
+        return true;
     }
 
     @Override
