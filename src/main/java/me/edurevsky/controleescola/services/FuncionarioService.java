@@ -10,10 +10,11 @@ import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.contracts.assalariado.AlterarSalario;
+import me.edurevsky.controleescola.services.contracts.funcionario.BuscaFuncionario;
 import me.edurevsky.controleescola.services.contracts.funcionario.RegistroFuncionario;
 
 @Service
-public class FuncionarioService implements RegistroFuncionario, AlterarSalario {
+public class FuncionarioService implements RegistroFuncionario, AlterarSalario, BuscaFuncionario {
     
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -46,6 +47,12 @@ public class FuncionarioService implements RegistroFuncionario, AlterarSalario {
         funcionario.setSalario(salario);
         funcionarioRepository.save(funcionario);
         return true;
+    }
+
+    @Override
+    public Funcionario buscarPorId(Long id) {
+        return funcionarioRepository.findById(id)
+            .orElseThrow( /**TODO */ );
     }
 
 }
