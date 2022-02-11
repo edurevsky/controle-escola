@@ -15,6 +15,7 @@ import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.RegistroAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.TransferenciaDeTurma;
 import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
+import me.edurevsky.controleescola.services.utils.Handlers;
 
 @Service
 public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma, AlterarCpf, AlterarEstaAtivo {
@@ -34,9 +35,8 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
 
     @Override
     public void removerAluno(Long id) {
-        if (!alunoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Aluno com id " + id + " não encontrado.");
-        }
+        Handlers.handleEntityNotFound(alunoRepository, id, "Aluno com id " + id + " não encontrado.");
+
         alunoRepository.deleteById(id);
     }
 
@@ -53,12 +53,9 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
 
     @Override
     public void transferirTurma(Long idAluno, Long idTurma) {
-        if (!alunoRepository.existsById(idAluno)) {
-            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado.");
-        }
-        if (turmaService.buscarPorId(idTurma) == null) {
-            throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
-        }
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, "Aluno com id " + idAluno + " não encontrado.");
+        this.handleTurmaNotFound(idTurma);
+
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
         alunoEmTransferencia.setTurma(turmaService.buscarPorId(idTurma));
         alunoRepository.save(alunoEmTransferencia);
@@ -66,9 +63,8 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
 
     @Override
     public void alterarCpf(Long idAluno, String cpf) {
-        if (!alunoRepository.existsById(idAluno)) {
-            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado.");
-        }
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, "Aluno com id " + idAluno + " não encontrado.");
+
         Aluno aluno = alunoRepository.findById(idAluno).get();
         aluno.setCpf(cpf);
         alunoRepository.save(aluno);
@@ -76,9 +72,8 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
 
     @Override
     public void alterarEstaAtivo(Long idAluno) {
-        if (!alunoRepository.existsById(idAluno)) {
-            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado");
-        }
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, "Aluno com id " + idAluno + " não encontrado.");
+
         Aluno aluno = alunoRepository.findById(idAluno).get();
         if (aluno.getEstaAtivo()) {
             aluno.setEstaAtivo(false);
@@ -86,6 +81,12 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
             aluno.setEstaAtivo(true);
         }
         alunoRepository.save(aluno);
+    }
+
+    private void handleTurmaNotFound(Long idTurma) {
+        if (turmaService.buscarPorId(idTurma) == null) {
+            throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
+        }
     }
 
 }

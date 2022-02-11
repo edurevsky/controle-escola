@@ -15,6 +15,7 @@ import me.edurevsky.controleescola.services.contracts.assalariado.AlterarSalario
 import me.edurevsky.controleescola.services.contracts.funcionario.BuscaFuncionario;
 import me.edurevsky.controleescola.services.contracts.funcionario.RegistroFuncionario;
 import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
+import me.edurevsky.controleescola.services.utils.Handlers;
 
 @Service
 public class FuncionarioService implements RegistroFuncionario, AlterarSalario, BuscaFuncionario, AlterarCpf {
@@ -34,17 +35,15 @@ public class FuncionarioService implements RegistroFuncionario, AlterarSalario, 
 
     @Override
     public void removerFuncionario(Long id) {
-        if (!funcionarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado.");
-        }
+        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+        
         funcionarioRepository.deleteById(id);
     }
 
     @Override
     public void alterarSalario(Long id, BigDecimal salario) {
-        if (!funcionarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado.");
-        }
+        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+
         Funcionario funcionario = funcionarioRepository.getById(id);
         funcionario.setSalario(salario);
         funcionarioRepository.save(funcionario);
@@ -58,9 +57,8 @@ public class FuncionarioService implements RegistroFuncionario, AlterarSalario, 
 
     @Override
     public void alterarCpf(Long id, String cpf) {
-        if (!funcionarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado");
-        }
+        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+
         Funcionario funcionario = funcionarioRepository.getById(id);
         funcionario.setCpf(cpf);
         funcionarioRepository.save(funcionario);
