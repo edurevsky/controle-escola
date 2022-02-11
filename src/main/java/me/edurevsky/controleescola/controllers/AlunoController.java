@@ -29,8 +29,8 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<?> registrarAluno(@RequestBody AlunoDTO alunoDTO) {
-        Aluno alunoRegistrado = alunoService.registrarAluno(alunoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(alunoRegistrado);
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(alunoService.registrarAluno(alunoDTO));
     }
 
     @GetMapping
@@ -47,29 +47,20 @@ public class AlunoController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> removerAluno(@PathVariable Long id) {
-        boolean wasDeleted = alunoService.removerAluno(id);
-        if (!wasDeleted) {
-            return ResponseEntity.notFound().build();  
-        } 
+        alunoService.removerAluno(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{idAluno}/transferir")
     public ResponseEntity<?> transferirTurma(@PathVariable Long idAluno, @RequestBody IdTurmaObject idTurma) {
-        boolean foiTransferido = alunoService.transferirTurma(idAluno, idTurma.getIdTurma());
-        if (!foiTransferido) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().build();
+        alunoService.transferirTurma(idAluno, idTurma.getTurma());
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{idAluno}/alterar-cpf")
     public ResponseEntity<?> alterarCpf(@PathVariable Long idAluno, @RequestBody CpfObject cpf) {
-        boolean foiAlterado = alunoService.alterarCpf(idAluno, cpf.getCpf());
-        if (!foiAlterado) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        alunoService.alterarCpf(idAluno, cpf.getCpf());
+        return ResponseEntity.noContent().build();
     }
 
 }

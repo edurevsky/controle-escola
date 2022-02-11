@@ -14,9 +14,10 @@ import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.contracts.assalariado.AlterarSalario;
 import me.edurevsky.controleescola.services.contracts.funcionario.BuscaFuncionario;
 import me.edurevsky.controleescola.services.contracts.funcionario.RegistroFuncionario;
+import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
 
 @Service
-public class FuncionarioService implements RegistroFuncionario, AlterarSalario, BuscaFuncionario {
+public class FuncionarioService implements RegistroFuncionario, AlterarSalario, BuscaFuncionario, AlterarCpf {
     
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -32,29 +33,37 @@ public class FuncionarioService implements RegistroFuncionario, AlterarSalario, 
     }
 
     @Override
-    public Boolean removerFuncionario(Long id) {
+    public void removerFuncionario(Long id) {
         if (!funcionarioRepository.existsById(id)) {
-            return false;
+            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado.");
         }
         funcionarioRepository.deleteById(id);
-        return true;
     }
 
     @Override
-    public Boolean alterarSalario(Long id, BigDecimal salario) {
+    public void alterarSalario(Long id, BigDecimal salario) {
         if (!funcionarioRepository.existsById(id)) {
-            return false;
+            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado.");
         }
         Funcionario funcionario = funcionarioRepository.getById(id);
         funcionario.setSalario(salario);
         funcionarioRepository.save(funcionario);
-        return true;
     }
 
     @Override
     public Funcionario buscarPorId(Long id) {
         return funcionarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
+    }
+
+    @Override
+    public void alterarCpf(Long id, String cpf) {
+        if (!funcionarioRepository.existsById(id)) {
+            throw new EntityNotFoundException("Funcionário com id " + id + " não encontrado");
+        }
+        Funcionario funcionario = funcionarioRepository.getById(id);
+        funcionario.setCpf(cpf);
+        funcionarioRepository.save(funcionario);
     }
 
 }

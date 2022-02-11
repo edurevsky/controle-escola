@@ -9,6 +9,6 @@ public interface RegistroAluno {
 
     // public Boolean atualizaAluno(Long id, AlunoDTO alunoDTO);
 
-    public Boolean removerAluno(Long id);
+    public void removerAluno(Long id);
 
 }

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import me.edurevsky.controleescola.exceptions.models.StandardErrorMessage;
 
 @ControllerAdvice
-public class AppExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handleAnyException(Exception e, WebRequest request) {

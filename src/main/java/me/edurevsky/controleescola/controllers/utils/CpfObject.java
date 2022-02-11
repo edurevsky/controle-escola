@@ -2,25 +2,12 @@ package me.edurevsky.controleescola.controllers.utils;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import lombok.Data;
+
+@Data
 public class CpfObject {
     
     @CPF
     public String cpf;
-
-    public CpfObject() {
-
-    }
-
-    public CpfObject(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
 }

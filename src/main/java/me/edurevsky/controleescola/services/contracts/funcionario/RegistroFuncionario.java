@@ -7,6 +7,6 @@ public interface RegistroFuncionario {
     
     public Funcionario registrarFuncionario(FuncionarioDTO funcionarioDTO);
 
-    public Boolean removerFuncionario(Long id);
+    public void removerFuncionario(Long id);
 
 }

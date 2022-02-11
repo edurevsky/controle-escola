@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
-import me.edurevsky.controleescola.services.contracts.aluno.AlterarCpf;
 import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.RegistroAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.TransferenciaDeTurma;
+import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
 
 @Service
 public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma, AlterarCpf {
@@ -32,12 +32,11 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
     }
 
     @Override
-    public Boolean removerAluno(Long id) {
+    public void removerAluno(Long id) {
         if (!alunoRepository.existsById(id)) {
-            return false;
+            throw new EntityNotFoundException("Aluno com id " + id + " não encontrado.");
         }
         alunoRepository.deleteById(id);
-        return true;
     }
 
     @Override
@@ -52,28 +51,26 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
     }
 
     @Override
-    public Boolean transferirTurma(Long idAluno, Long idTurma) {
+    public void transferirTurma(Long idAluno, Long idTurma) {
         if (!alunoRepository.existsById(idAluno)) {
-            return false;
+            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado.");
         }
         if (turmaService.buscarPorId(idTurma) == null) {
-            return false;
+            throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
         }
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
         alunoEmTransferencia.setTurma(turmaService.buscarPorId(idTurma));
         alunoRepository.save(alunoEmTransferencia);
-        return true;
     }
 
     @Override
-    public Boolean alterarCpf(Long idAluno, String cpf) {
+    public void alterarCpf(Long idAluno, String cpf) {
         if (!alunoRepository.existsById(idAluno)) {
-            return false;
+            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado.");
         }
         Aluno aluno = alunoRepository.findById(idAluno).get();
         aluno.setCpf(cpf);
         alunoRepository.save(aluno);
-        return true;
     }
 
 }

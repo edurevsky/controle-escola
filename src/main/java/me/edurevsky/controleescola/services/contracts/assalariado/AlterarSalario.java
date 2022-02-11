@@ -4,6 +4,6 @@ import java.math.BigDecimal;
 
 public interface AlterarSalario {
     
-    public Boolean alterarSalario(Long id, BigDecimal salario);
+    public void alterarSalario(Long id, BigDecimal salario);
     
 }
