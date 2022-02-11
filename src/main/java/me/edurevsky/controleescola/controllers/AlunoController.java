@@ -63,4 +63,10 @@ public class AlunoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{idAluno}/alterar-atividade")
+    public ResponseEntity<?> alterarAtividade(@PathVariable Long idAluno) {
+        alunoService.alterarEstaAtivo(idAluno);
+        return ResponseEntity.noContent().build();
+    }
+
 }

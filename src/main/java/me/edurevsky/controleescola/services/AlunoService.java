@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
+import me.edurevsky.controleescola.services.contracts.aluno.AlterarEstaAtivo;
 import me.edurevsky.controleescola.services.contracts.aluno.BuscaAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.RegistroAluno;
 import me.edurevsky.controleescola.services.contracts.aluno.TransferenciaDeTurma;
 import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
 
 @Service
-public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma, AlterarCpf {
+public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeTurma, AlterarCpf, AlterarEstaAtivo {
     
     @Autowired
     private AlunoRepository alunoRepository;
@@ -70,6 +71,20 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
         }
         Aluno aluno = alunoRepository.findById(idAluno).get();
         aluno.setCpf(cpf);
+        alunoRepository.save(aluno);
+    }
+
+    @Override
+    public void alterarEstaAtivo(Long idAluno) {
+        if (!alunoRepository.existsById(idAluno)) {
+            throw new EntityNotFoundException("Aluno com id " + idAluno + " não encontrado");
+        }
+        Aluno aluno = alunoRepository.findById(idAluno).get();
+        if (aluno.getEstaAtivo()) {
+            aluno.setEstaAtivo(false);
+        } else {
+            aluno.setEstaAtivo(true);
+        }
         alunoRepository.save(aluno);
     }
 

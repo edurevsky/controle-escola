@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.SalarioObject;
 import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.services.FuncionarioService;
@@ -35,15 +36,21 @@ public class FuncionarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(funcionarioService.buscarPorId(id));
+    }
+
     @PutMapping(value = "/{id}/alterar-salario")
     public ResponseEntity<?> alterarSalario(@PathVariable Long id, @RequestBody SalarioObject salario) {
         funcionarioService.alterarSalario(id, salario.getSalario());
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(funcionarioService.buscarPorId(id));
+    @PutMapping(value = "/{id}/alterar-cpf")
+    public ResponseEntity<?> alterarCpf(@PathVariable Long id, @RequestBody CpfObject cpf) {
+        funcionarioService.alterarCpf(id, cpf.getCpf());
+        return ResponseEntity.noContent().build();
     }
 
 }
