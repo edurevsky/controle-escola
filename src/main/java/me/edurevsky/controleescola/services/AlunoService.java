@@ -1,5 +1,7 @@
 package me.edurevsky.controleescola.services;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +48,7 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
     @Override
     public Aluno buscaPorId(Long id) {
         return alunoRepository.findById(id)
-            .orElseThrow( /**TODO: Tratamento de erro */ );
+            .orElseThrow(() -> new EntityNotFoundException("Aluno com id " + id + " não encontrado."));
     }
 
     @Override

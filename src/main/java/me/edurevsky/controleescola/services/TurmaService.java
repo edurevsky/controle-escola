@@ -2,6 +2,8 @@ package me.edurevsky.controleescola.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,8 @@ public class TurmaService implements BuscaTurma {
 
     @Override
     public Turma buscarPorId(Long id) {
-        return turmaRepository.findById(id).get();
+        return turmaRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Turma com id " + id + " não encontrada."));
     }
     
 }

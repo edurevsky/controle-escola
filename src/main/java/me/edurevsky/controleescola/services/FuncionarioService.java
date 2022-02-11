@@ -2,6 +2,8 @@ package me.edurevsky.controleescola.services;
 
 import java.math.BigDecimal;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +54,7 @@ public class FuncionarioService implements RegistroFuncionario, AlterarSalario, 
     @Override
     public Funcionario buscarPorId(Long id) {
         return funcionarioRepository.findById(id)
-            .orElseThrow( /**TODO */ );
+            .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
     }
 
 }
