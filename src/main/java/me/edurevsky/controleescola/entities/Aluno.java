@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.edurevsky.controleescola.entities.enums.Turno;
 
 @Entity
 @Table(name = "tb_alunos")
@@ -23,6 +24,8 @@ public class Aluno extends PessoaFisica {
     private Boolean estaAtivo; 
 
     private LocalDate dataMatricula;
+
+    private Turno turno;
 
     @JsonIgnore
     @ManyToOne

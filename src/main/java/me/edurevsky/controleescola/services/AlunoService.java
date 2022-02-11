@@ -23,21 +23,10 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
     private TurmaService turmaService;
 
     @Override
-    public Page<Aluno> buscarTodos(Pageable pageable) {
-        return alunoRepository.findAll(pageable);
-    }
-
-    @Override
     public Aluno registrarAluno(AlunoDTO alunoDTO) {
         Aluno aluno = AlunoDTO.convertToAluno(alunoDTO);
         aluno.setTurma(turmaService.buscarPorId(alunoDTO.getTurma()));
         return alunoRepository.save(aluno);
-    }
-
-    @Override
-    public Aluno buscaPorId(Long id) {
-        return alunoRepository.findById(id)
-            .orElseThrow( /**TODO: Tratamento de erro */ );
     }
 
     @Override
@@ -47,6 +36,17 @@ public class AlunoService implements RegistroAluno, BuscaAluno, TransferenciaDeT
         }
         alunoRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Page<Aluno> buscarTodos(Pageable pageable) {
+        return alunoRepository.findAll(pageable);
+    }
+
+    @Override
+    public Aluno buscaPorId(Long id) {
+        return alunoRepository.findById(id)
+            .orElseThrow( /**TODO: Tratamento de erro */ );
     }
 
     @Override

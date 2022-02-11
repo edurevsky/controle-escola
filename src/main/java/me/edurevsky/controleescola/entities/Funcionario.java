@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.edurevsky.controleescola.entities.enums.Turno;
 
 @Entity
 @Table(name = "tb_funcionarios")
@@ -18,6 +19,8 @@ import lombok.EqualsAndHashCode;
 public class Funcionario extends PessoaFisica {
 
     private BigDecimal salario;
+
+    private Turno horarioDeTrabalho;
 
     @JsonIgnore
     @ManyToOne
