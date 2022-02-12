@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAnyException(Exception e, WebRequest request) {
         StandardErrorMessage err = new StandardErrorMessage();
         err.setMessage(e.getMessage());
-        err.setCurrrentDate(new Date());
+        err.setTimestamp(new Date());
         return new ResponseEntity<>(err, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

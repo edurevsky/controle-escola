@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class StandardErrorMessage {
     
-    private Date currrentDate;
+    private Date timestamp;
     private String message;
     
 }
