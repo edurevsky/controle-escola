@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
@@ -19,6 +20,7 @@ import me.edurevsky.controleescola.controllers.utils.IdTurmaObject;
 import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.services.AlunoService;
+import me.edurevsky.controleescola.services.TurmaService;
 
 @RestController
 @RequestMapping(value = "/alunos")
@@ -26,6 +28,9 @@ public class AlunoController {
     
     @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    private TurmaService turmaService;
 
     @PostMapping
     public ResponseEntity<?> registrarAluno(@RequestBody AlunoDTO alunoDTO) {
@@ -37,6 +42,11 @@ public class AlunoController {
     public ResponseEntity<?> buscarTodos(Pageable pageable) {
         Page<Aluno> alunos = alunoService.buscarTodos(pageable);
         return ResponseEntity.ok().body(alunos);
+    }
+
+    @GetMapping(params = "id_turma")
+    public ResponseEntity<?> buscarAlunosPorIdDaTurma(@RequestParam(value = "id_turma") Long idTurma) {
+        return ResponseEntity.ok().body(turmaService.buscarPorId(idTurma));
     }
 
     @GetMapping(value = "/{id}")
