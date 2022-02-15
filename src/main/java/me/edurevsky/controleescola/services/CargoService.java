@@ -25,7 +25,11 @@ public class CargoService implements BuscaCargo {
 
     @Override
     public List<Cargo> buscarPorNomeDoCargo(String cargo) {
-        return cargoRepository.findByCargo(cargo);
+        List<Cargo> cargoEmBuca = cargoRepository.findByCargo(cargo);
+        if (!cargoEmBuca.isEmpty()) {
+            return cargoEmBuca;
+        }
+        throw new EntityNotFoundException("Não foi possível achar cargo com nome " + "'" + cargo + "'" + ".");
     }
 
 }

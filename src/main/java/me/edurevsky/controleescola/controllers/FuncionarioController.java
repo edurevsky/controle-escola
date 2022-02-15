@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.SalarioObject;
 import me.edurevsky.controleescola.dtos.FuncionarioDTO;
+import me.edurevsky.controleescola.services.CargoService;
 import me.edurevsky.controleescola.services.FuncionarioService;
 
 @RestController
@@ -25,10 +26,23 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
+    @Autowired
+    private CargoService cargoService;
+
     @PostMapping
     public ResponseEntity<?> registrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(funcionarioService.registrarFuncionario(funcionarioDTO));
+    }
+
+    @GetMapping(params = "cargo")
+    public ResponseEntity<?> buscarFuncionariosPorNomeDoCargo(@RequestParam String cargo) {
+        return ResponseEntity.ok().body(cargoService.buscarPorNomeDoCargo(cargo));
+    }
+
+    @GetMapping(params = "id_cargo")
+    public ResponseEntity<?> buscarFuncionariosPorIdDoCargo(@RequestParam(value = "id_cargo") Long idCargo) {
+        return ResponseEntity.ok().body(cargoService.buscarPorId(idCargo));
     }
 
     @DeleteMapping(value = "/{id}")
