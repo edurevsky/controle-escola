@@ -1,5 +1,7 @@
 package me.edurevsky.controleescola.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
@@ -33,7 +34,7 @@ public class AlunoController {
     private TurmaService turmaService;
 
     @PostMapping
-    public ResponseEntity<?> registrarAluno(@RequestBody AlunoDTO alunoDTO) {
+    public ResponseEntity<?> registrarAluno(@RequestBody @Valid AlunoDTO alunoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(alunoService.registrarAluno(alunoDTO));
     }
@@ -43,12 +44,7 @@ public class AlunoController {
         Page<Aluno> alunos = alunoService.buscarTodos(pageable);
         return ResponseEntity.ok().body(alunos);
     }
-
-    @GetMapping(params = "id_turma")
-    public ResponseEntity<?> buscarAlunosPorIdDaTurma(@RequestParam(value = "id_turma") Long idTurma) {
-        return ResponseEntity.ok().body(turmaService.buscarPorId(idTurma));
-    }
-
+    
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
         Aluno aluno = alunoService.buscaPorId(id);
@@ -59,6 +55,11 @@ public class AlunoController {
     public ResponseEntity<?> removerAluno(@PathVariable Long id) {
         alunoService.removerAluno(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/turma/{idTurma}")
+    public ResponseEntity<?> buscarAlunosPorIdDaTurma(@PathVariable Long idTurma) {
+        return ResponseEntity.ok().body(turmaService.buscarPorId(idTurma));
     }
 
     @PutMapping(value = "/{idAluno}/transferir")

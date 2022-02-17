@@ -1,5 +1,7 @@
 package me.edurevsky.controleescola.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ public class FuncionarioController {
     private CargoService cargoService;
 
     @PostMapping
-    public ResponseEntity<?> registrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
+    public ResponseEntity<?> registrarFuncionario(@RequestBody @Valid FuncionarioDTO funcionarioDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(funcionarioService.registrarFuncionario(funcionarioDTO));
     }
