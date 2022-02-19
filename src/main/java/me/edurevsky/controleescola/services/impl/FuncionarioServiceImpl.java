@@ -7,16 +7,17 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Funcionario;
+import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
-import me.edurevsky.controleescola.services.AlterarCpf;
-import me.edurevsky.controleescola.services.AlterarSalario;
+import me.edurevsky.controleescola.services.AlterarCpfService;
+import me.edurevsky.controleescola.services.AlterarSalarioService;
+import me.edurevsky.controleescola.services.FuncionarioService;
 import me.edurevsky.controleescola.services.utils.Handlers;
 
 @Service
-public class FuncionarioServiceImpl implements AlterarSalario, AlterarCpf {
+public class FuncionarioServiceImpl implements FuncionarioService, AlterarSalarioService, AlterarCpfService {
     
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -24,20 +25,22 @@ public class FuncionarioServiceImpl implements AlterarSalario, AlterarCpf {
     @Autowired
     private CargoRepository cargoRepository;
 
-    public Funcionario registrarFuncionario(FuncionarioDTO funcionarioDTO) {
-        Funcionario funcionario = FuncionarioDTO.convertToFuncionario(funcionarioDTO);
-        funcionario.setCargo(cargoRepository.getById(funcionarioDTO.getCargo()));
+    @Override
+    public Funcionario save(FuncionarioForm funcionarioForm) {
+        Funcionario funcionario = FuncionarioForm.convertToFuncionario(funcionarioForm);
+        funcionario.setCargo(cargoRepository.getById(funcionarioForm.getCargo()));
         return funcionarioRepository.save(funcionario);
     }
 
-    public void removerFuncionario(Long id) {
+    @Override
+    public void remove(Long id) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
         
         funcionarioRepository.deleteById(id);
     }
 
     @Override
-    public void alterarSalario(Long id, BigDecimal salario) {
+    public void updateSalary(Long id, BigDecimal salario) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
 
         Funcionario funcionario = funcionarioRepository.getById(id);
@@ -45,13 +48,14 @@ public class FuncionarioServiceImpl implements AlterarSalario, AlterarCpf {
         funcionarioRepository.save(funcionario);
     }
 
-    public Funcionario buscarPorId(Long id) {
+    @Override
+    public Funcionario findById(Long id) {
         return funcionarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
     }
 
     @Override
-    public void alterarCpf(Long id, String cpf) {
+    public void updateCpf(Long id, String cpf) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
 
         Funcionario funcionario = funcionarioRepository.getById(id);

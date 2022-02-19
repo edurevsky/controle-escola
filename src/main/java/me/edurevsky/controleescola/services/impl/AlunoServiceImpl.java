@@ -28,7 +28,7 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
     @Override
     public Aluno save(AlunoForm alunoDTO) {
         Aluno aluno = AlunoForm.convertToAluno(alunoDTO);
-        aluno.setTurma(turmaService.buscarPorId(alunoDTO.getTurma()));
+        aluno.setTurma(turmaService.findById(alunoDTO.getTurma()));
         return alunoRepository.save(aluno);
     }
     
@@ -56,7 +56,7 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
         this.handleTurmaNotFound(idTurma);
 
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
-        alunoEmTransferencia.setTurma(turmaService.buscarPorId(idTurma));
+        alunoEmTransferencia.setTurma(turmaService.findById(idTurma));
         alunoRepository.save(alunoEmTransferencia);
     }
 
@@ -83,7 +83,7 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
     }
 
     private void handleTurmaNotFound(Long idTurma) {
-        if (turmaService.buscarPorId(idTurma) == null) {
+        if (turmaService.findById(idTurma) == null) {
             throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
         }
     }
