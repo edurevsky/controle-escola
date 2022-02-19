@@ -34,49 +34,49 @@ public class AlunoController {
     private TurmaServiceImpl turmaService;
 
     @PostMapping
-    public ResponseEntity<?> registrarAluno(@RequestBody @Valid AlunoForm alunoDTO) {
+    public ResponseEntity<?> save(@RequestBody @Valid AlunoForm alunoForm) {
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(alunoService.save(alunoDTO));
+            .body(alunoService.save(alunoForm));
     }
 
     @GetMapping
-    public ResponseEntity<?> buscarTodos(Pageable pageable) {
+    public ResponseEntity<?> findAll(Pageable pageable) {
         Page<Aluno> alunos = alunoService.findAll(pageable);
         return ResponseEntity.ok().body(alunos);
     }
     
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         Aluno aluno = alunoService.findById(id);
         return ResponseEntity.ok().body(aluno);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> removerAluno(@PathVariable Long id) {
+    public ResponseEntity<?> remove(@PathVariable Long id) {
         alunoService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/turma/{idTurma}")
-    public ResponseEntity<?> buscarAlunosPorIdDaTurma(@PathVariable Long idTurma) {
-        return ResponseEntity.ok().body(turmaService.buscarPorId(idTurma));
+    public ResponseEntity<?> findByTurmaId(@PathVariable Long idTurma) {
+        return ResponseEntity.ok().body(turmaService.findById(idTurma));
     }
 
-    @PutMapping(value = "/{idAluno}/transferir")
-    public ResponseEntity<?> transferirTurma(@PathVariable Long idAluno, @RequestBody IdTurmaObject idTurma) {
-        alunoService.changeTurma(idAluno, idTurma.getTurma());
+    @PutMapping(value = "/{id}/transferir")
+    public ResponseEntity<?> changeTurma(@PathVariable Long id, @RequestBody IdTurmaObject idTurma) {
+        alunoService.changeTurma(id, idTurma.getTurma());
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{idAluno}/alterar-cpf")
-    public ResponseEntity<?> alterarCpf(@PathVariable Long idAluno, @RequestBody CpfObject cpf) {
-        alunoService.updateCpf(idAluno, cpf.getCpf());
+    @PutMapping(value = "/{id}/alterar-cpf")
+    public ResponseEntity<?> updateCpf(@PathVariable Long id, @RequestBody @Valid CpfObject cpf) {
+        alunoService.updateCpf(id, cpf.getCpf());
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{idAluno}/alterar-atividade")
-    public ResponseEntity<?> alterarAtividade(@PathVariable Long idAluno) {
-        alunoService.switchEstaAtivo(idAluno);
+    @PutMapping(value = "/{id}/alterar-atividade")
+    public ResponseEntity<?> switchEstaAtivo(@PathVariable Long id) {
+        alunoService.switchEstaAtivo(id);
         return ResponseEntity.noContent().build();
     }
 

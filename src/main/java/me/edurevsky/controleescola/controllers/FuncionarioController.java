@@ -32,40 +32,40 @@ public class FuncionarioController {
     private CargoServiceImpl cargoService;
 
     @PostMapping
-    public ResponseEntity<?> registrarFuncionario(@RequestBody @Valid FuncionarioForm funcionarioDTO) {
+    public ResponseEntity<?> save(@RequestBody @Valid FuncionarioForm funcionarioForm) {
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(funcionarioService.registrarFuncionario(funcionarioDTO));
+            .body(funcionarioService.save(funcionarioForm));
     }
 
     @GetMapping(params = "cargo")
-    public ResponseEntity<?> buscarFuncionariosPorNomeDoCargo(@RequestParam String cargo) {
+    public ResponseEntity<?> findByCargoName(@RequestParam String cargo) {
         return ResponseEntity.ok().body(cargoService.findByName(cargo));
     }
 
     @GetMapping(params = "id_cargo")
-    public ResponseEntity<?> buscarFuncionariosPorIdDoCargo(@RequestParam(value = "id_cargo") Long idCargo) {
+    public ResponseEntity<?> findByCargoId(@RequestParam(value = "id_cargo") Long idCargo) {
         return ResponseEntity.ok().body(cargoService.findById(idCargo));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> removerFuncionario(@PathVariable Long id) {
-        funcionarioService.removerFuncionario(id);
+    public ResponseEntity<?> remove(@PathVariable Long id) {
+        funcionarioService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(funcionarioService.buscarPorId(id));
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(funcionarioService.findById(id));
     }
 
     @PutMapping(value = "/{id}/alterar-salario")
-    public ResponseEntity<?> alterarSalario(@PathVariable Long id, @RequestBody SalarioObject salario) {
+    public ResponseEntity<?> updateSalary(@PathVariable Long id, @RequestBody SalarioObject salario) {
         funcionarioService.updateSalary(id, salario.getSalario());
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}/alterar-cpf")
-    public ResponseEntity<?> alterarCpf(@PathVariable Long id, @RequestBody CpfObject cpf) {
+    public ResponseEntity<?> updateCpf(@PathVariable Long id, @RequestBody CpfObject cpf) {
         funcionarioService.updateCpf(id, cpf.getCpf());
         return ResponseEntity.noContent().build();
     }
