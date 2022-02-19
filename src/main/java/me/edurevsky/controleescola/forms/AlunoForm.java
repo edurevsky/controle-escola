@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.dtos;
+package me.edurevsky.controleescola.forms;
 
 import java.time.LocalDate;
 
@@ -11,11 +11,7 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 
-/**
- * Classe responsável por receber apenas os
- * dados necessários de um aluno.
- */
-public class AlunoDTO {
+public class AlunoForm {
 
     @NotBlank
     private String nome;
@@ -29,7 +25,7 @@ public class AlunoDTO {
     @NotNull
     private Long turma;
 
-    public static Aluno convertToAluno(AlunoDTO alunoDTO) {
+    public static Aluno convertToAluno(AlunoForm alunoDTO) {
         Aluno aluno = new Aluno();
         aluno.setNome(alunoDTO.getNome());
         aluno.setCpf(alunoDTO.getCpf());

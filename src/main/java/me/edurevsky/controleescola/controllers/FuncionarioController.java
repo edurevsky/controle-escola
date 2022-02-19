@@ -17,34 +17,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.SalarioObject;
-import me.edurevsky.controleescola.dtos.FuncionarioDTO;
-import me.edurevsky.controleescola.services.CargoService;
-import me.edurevsky.controleescola.services.FuncionarioService;
+import me.edurevsky.controleescola.forms.FuncionarioForm;
+import me.edurevsky.controleescola.services.impl.CargoServiceImpl;
+import me.edurevsky.controleescola.services.impl.FuncionarioServiceImpl;
 
 @RestController
 @RequestMapping(value = "/funcionarios")
 public class FuncionarioController {
     
     @Autowired
-    private FuncionarioService funcionarioService;
+    private FuncionarioServiceImpl funcionarioService;
 
     @Autowired
-    private CargoService cargoService;
+    private CargoServiceImpl cargoService;
 
     @PostMapping
-    public ResponseEntity<?> registrarFuncionario(@RequestBody @Valid FuncionarioDTO funcionarioDTO) {
+    public ResponseEntity<?> registrarFuncionario(@RequestBody @Valid FuncionarioForm funcionarioDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(funcionarioService.registrarFuncionario(funcionarioDTO));
     }
 
     @GetMapping(params = "cargo")
     public ResponseEntity<?> buscarFuncionariosPorNomeDoCargo(@RequestParam String cargo) {
-        return ResponseEntity.ok().body(cargoService.buscarPorNomeDoCargo(cargo));
+        return ResponseEntity.ok().body(cargoService.findByName(cargo));
     }
 
     @GetMapping(params = "id_cargo")
     public ResponseEntity<?> buscarFuncionariosPorIdDoCargo(@RequestParam(value = "id_cargo") Long idCargo) {
-        return ResponseEntity.ok().body(cargoService.buscarPorId(idCargo));
+        return ResponseEntity.ok().body(cargoService.findById(idCargo));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -60,13 +60,13 @@ public class FuncionarioController {
 
     @PutMapping(value = "/{id}/alterar-salario")
     public ResponseEntity<?> alterarSalario(@PathVariable Long id, @RequestBody SalarioObject salario) {
-        funcionarioService.alterarSalario(id, salario.getSalario());
+        funcionarioService.updateSalary(id, salario.getSalario());
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}/alterar-cpf")
     public ResponseEntity<?> alterarCpf(@PathVariable Long id, @RequestBody CpfObject cpf) {
-        funcionarioService.alterarCpf(id, cpf.getCpf());
+        funcionarioService.updateCpf(id, cpf.getCpf());
         return ResponseEntity.noContent().build();
     }
 

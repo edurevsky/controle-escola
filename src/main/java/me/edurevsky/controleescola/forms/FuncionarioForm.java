@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.dtos;
+package me.edurevsky.controleescola.forms;
 
 import java.math.BigDecimal;
 
@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
 
-public class FuncionarioDTO {
+public class FuncionarioForm {
     
     @NotBlank
     private String nome;
@@ -27,7 +27,7 @@ public class FuncionarioDTO {
     @NotNull
     private Long cargo;
 
-    public static Funcionario convertToFuncionario(FuncionarioDTO funcionarioDTO) {
+    public static Funcionario convertToFuncionario(FuncionarioForm funcionarioDTO) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(funcionarioDTO.getNome());
         funcionario.setCpf(funcionarioDTO.getCpf());

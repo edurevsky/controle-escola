@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.services;
+package me.edurevsky.controleescola.services.impl;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 
 @Service
-public class TurmaService {
+public class TurmaServiceImpl {
 
     @Autowired
     private TurmaRepository turmaRepository;

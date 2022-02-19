@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.services;
+package me.edurevsky.controleescola.services.impl;
 
 import java.math.BigDecimal;
 
@@ -11,12 +11,12 @@ import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
-import me.edurevsky.controleescola.services.contracts.assalariado.AlterarSalario;
-import me.edurevsky.controleescola.services.contracts.pessoafisica.AlterarCpf;
+import me.edurevsky.controleescola.services.AlterarCpf;
+import me.edurevsky.controleescola.services.AlterarSalario;
 import me.edurevsky.controleescola.services.utils.Handlers;
 
 @Service
-public class FuncionarioService implements AlterarSalario, AlterarCpf {
+public class FuncionarioServiceImpl implements AlterarSalario, AlterarCpf {
     
     @Autowired
     private FuncionarioRepository funcionarioRepository;

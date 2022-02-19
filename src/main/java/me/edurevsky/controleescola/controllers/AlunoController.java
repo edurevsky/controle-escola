@@ -18,42 +18,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.IdTurmaObject;
-import me.edurevsky.controleescola.dtos.AlunoDTO;
 import me.edurevsky.controleescola.entities.Aluno;
-import me.edurevsky.controleescola.services.AlunoService;
-import me.edurevsky.controleescola.services.TurmaService;
+import me.edurevsky.controleescola.forms.AlunoForm;
+import me.edurevsky.controleescola.services.impl.AlunoServiceImpl;
+import me.edurevsky.controleescola.services.impl.TurmaServiceImpl;
 
 @RestController
 @RequestMapping(value = "/alunos")
 public class AlunoController {
     
     @Autowired
-    private AlunoService alunoService;
+    private AlunoServiceImpl alunoService;
 
     @Autowired
-    private TurmaService turmaService;
+    private TurmaServiceImpl turmaService;
 
     @PostMapping
-    public ResponseEntity<?> registrarAluno(@RequestBody @Valid AlunoDTO alunoDTO) {
+    public ResponseEntity<?> registrarAluno(@RequestBody @Valid AlunoForm alunoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(alunoService.registrarAluno(alunoDTO));
+            .body(alunoService.save(alunoDTO));
     }
 
     @GetMapping
     public ResponseEntity<?> buscarTodos(Pageable pageable) {
-        Page<Aluno> alunos = alunoService.buscarTodos(pageable);
+        Page<Aluno> alunos = alunoService.findAll(pageable);
         return ResponseEntity.ok().body(alunos);
     }
     
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        Aluno aluno = alunoService.buscaPorId(id);
+        Aluno aluno = alunoService.findById(id);
         return ResponseEntity.ok().body(aluno);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> removerAluno(@PathVariable Long id) {
-        alunoService.removerAluno(id);
+        alunoService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -64,19 +64,19 @@ public class AlunoController {
 
     @PutMapping(value = "/{idAluno}/transferir")
     public ResponseEntity<?> transferirTurma(@PathVariable Long idAluno, @RequestBody IdTurmaObject idTurma) {
-        alunoService.transferirTurma(idAluno, idTurma.getTurma());
+        alunoService.changeTurma(idAluno, idTurma.getTurma());
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{idAluno}/alterar-cpf")
     public ResponseEntity<?> alterarCpf(@PathVariable Long idAluno, @RequestBody CpfObject cpf) {
-        alunoService.alterarCpf(idAluno, cpf.getCpf());
+        alunoService.updateCpf(idAluno, cpf.getCpf());
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{idAluno}/alterar-atividade")
     public ResponseEntity<?> alterarAtividade(@PathVariable Long idAluno) {
-        alunoService.alterarEstaAtivo(idAluno);
+        alunoService.switchEstaAtivo(idAluno);
         return ResponseEntity.noContent().build();
     }
 
