@@ -27,12 +27,12 @@ public class FuncionarioForm {
     @NotNull
     private Long cargo;
 
-    public static Funcionario convertToFuncionario(FuncionarioForm funcionarioDTO) {
+    public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = new Funcionario();
-        funcionario.setNome(funcionarioDTO.getNome());
-        funcionario.setCpf(funcionarioDTO.getCpf());
-        funcionario.setSalario(funcionarioDTO.getSalario());
-        funcionario.setHorarioDeTrabalho(funcionarioDTO.getHorarioDeTrabalho());
+        funcionario.setNome(funcionarioForm.getNome());
+        funcionario.setCpf(funcionarioForm.getCpf());
+        funcionario.setSalario(funcionarioForm.getSalario());
+        funcionario.setHorarioDeTrabalho(funcionarioForm.getHorarioDeTrabalho());
         funcionario.setCargo(null);
         return funcionario;
     }

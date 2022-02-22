@@ -25,15 +25,15 @@ public class AlunoForm {
     @NotNull
     private Long turma;
 
-    public static Aluno convertToAluno(AlunoForm alunoDTO) {
+    public static Aluno convertToAluno(AlunoForm alunoForm) {
         Aluno aluno = new Aluno();
-        aluno.setNome(alunoDTO.getNome());
-        aluno.setCpf(alunoDTO.getCpf());
-        aluno.setTurno(alunoDTO.getTurno());
+        aluno.setNome(alunoForm.getNome());
+        aluno.setCpf(alunoForm.getCpf());
+        aluno.setTurno(alunoForm.getTurno());
         aluno.setTurma(null);
         aluno.setDataMatricula(LocalDate.now());
         aluno.setEstaAtivo(true);
-        aluno.setEmail(GeradorDeEmail.gerar(alunoDTO.getNome()));
+        aluno.setEmail(GeradorDeEmail.gerar(alunoForm.getNome()));
         return aluno;
     }
 
