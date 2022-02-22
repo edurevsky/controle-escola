@@ -2,8 +2,7 @@ package me.edurevsky.controleescola.forms;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -14,15 +13,17 @@ import me.edurevsky.controleescola.utils.GeradorDeEmail;
 public class AlunoForm {
 
     @NotBlank
+    @NotNull
+    @NotEmpty
     private String nome;
 
     @CPF
     private String cpf;
 
-    @NotNull
     private Turno turno;
 
-    @NotNull
+    @Min(value = 0)
+    @Max(value = 10) // deve ser alterado
     private Long turma;
 
     public static Aluno convertToAluno(AlunoForm alunoForm) {

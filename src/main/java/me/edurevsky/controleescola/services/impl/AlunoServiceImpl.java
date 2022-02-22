@@ -26,9 +26,9 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
     private TurmaServiceImpl turmaService;
     
     @Override
-    public Aluno save(AlunoForm alunoDTO) {
-        Aluno aluno = AlunoForm.convertToAluno(alunoDTO);
-        aluno.setTurma(turmaService.findById(alunoDTO.getTurma()));
+    public Aluno save(AlunoForm alunoForm) {
+        Aluno aluno = AlunoForm.convertToAluno(alunoForm);
+        aluno.setTurma(turmaService.findById(alunoForm.getTurma()));
         return alunoRepository.save(aluno);
     }
     

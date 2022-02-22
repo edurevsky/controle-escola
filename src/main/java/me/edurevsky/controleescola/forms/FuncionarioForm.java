@@ -24,7 +24,7 @@ public class FuncionarioForm {
     @NotNull
     private Turno horarioDeTrabalho;
 
-    @NotNull
+    @NotBlank
     private Long cargo;
 
     public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {

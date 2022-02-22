@@ -34,7 +34,7 @@ public class AlunoController {
     private TurmaServiceImpl turmaService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid AlunoForm alunoForm) {
+    public ResponseEntity<?> save(@RequestBody AlunoForm alunoForm) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(alunoService.save(alunoForm));
     }

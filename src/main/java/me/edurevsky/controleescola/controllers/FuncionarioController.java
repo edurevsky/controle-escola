@@ -32,7 +32,7 @@ public class FuncionarioController {
     private CargoServiceImpl cargoService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid FuncionarioForm funcionarioForm) {
+    public ResponseEntity<?> save(@RequestBody FuncionarioForm funcionarioForm) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(funcionarioService.save(funcionarioForm));
     }
