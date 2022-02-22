@@ -74,11 +74,7 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
         Handlers.handleEntityNotFound(alunoRepository, id, "Aluno com id " + id + " não encontrado.");
 
         Aluno aluno = alunoRepository.findById(id).get();
-        if (aluno.getEstaAtivo()) {
-            aluno.setEstaAtivo(false);
-        } else {
-            aluno.setEstaAtivo(true);
-        }
+        aluno.setEstaAtivo(!aluno.getEstaAtivo());
         alunoRepository.save(aluno);
     }
 

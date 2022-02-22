@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.controllers;
 
 import javax.validation.Valid;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +49,7 @@ public class AlunoController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         Aluno aluno = alunoService.findById(id);
-        return ResponseEntity.ok().body(aluno);
+        return ResponseEntity.ok().body(new AlunoDTO(aluno));
     }
 
     @DeleteMapping(value = "/{id}")

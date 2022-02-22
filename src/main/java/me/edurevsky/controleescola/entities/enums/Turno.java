@@ -6,7 +6,7 @@ public enum Turno {
     VESPERTINO("Vespertino"),
     NOTURNO("Noturno");
 
-    private String turno;
+    private final String turno;
 
     private Turno(String turno) {
         this.turno = turno;
