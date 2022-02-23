@@ -42,7 +42,7 @@ public class AlunoController {
 
     @GetMapping
     public ResponseEntity<?> findAll(Pageable pageable) {
-        Page<Aluno> alunos = alunoService.findAll(pageable);
+        Page<AlunoDTO> alunos = alunoService.findAll(pageable);
         return ResponseEntity.ok().body(alunos);
     }
     

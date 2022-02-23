@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.services;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +13,7 @@ public interface AlunoService {
 
     public void remove(Long id);
 
-    public Page<Aluno> findAll(Pageable pageable);
+    public Page<AlunoDTO> findAll(Pageable pageable);
 
     public Aluno findById(Long id);
 

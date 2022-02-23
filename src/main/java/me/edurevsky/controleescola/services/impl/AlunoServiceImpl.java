@@ -1,11 +1,14 @@
 package me.edurevsky.controleescola.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +43,10 @@ public class AlunoServiceImpl implements AlunoService, AlterarCpfService {
     }
 
     @Override
-    public Page<Aluno> findAll(Pageable pageable) {
-        return alunoRepository.findAll(pageable);
+    public Page<AlunoDTO> findAll(Pageable pageable) {
+        Page<Aluno> alunos = alunoRepository.findAll(pageable);
+        int totalElements = alunos.getNumberOfElements();
+        return new PageImpl<AlunoDTO>(alunos.getContent().stream().map(AlunoDTO::new).collect(Collectors.toList()), pageable, totalElements);
     }
 
     @Override
