@@ -2,13 +2,9 @@ package me.edurevsky.controleescola.entities;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
@@ -23,6 +19,11 @@ public class Turma {
     private String turma;
 
     @OneToMany(mappedBy = "turma")
+    @JsonIgnore
     private List<Aluno> alunos;
+
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
 
 }

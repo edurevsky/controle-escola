@@ -1,7 +1,5 @@
 package me.edurevsky.controleescola.controllers;
 
-import javax.validation.Valid;
-
 import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Funcionario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.SalarioObject;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
-import me.edurevsky.controleescola.services.impl.CargoServiceImpl;
-import me.edurevsky.controleescola.services.impl.FuncionarioServiceImpl;
+import me.edurevsky.controleescola.services.CargoService;
+import me.edurevsky.controleescola.services.FuncionarioService;
 
 @RestController
 @RequestMapping(value = "/funcionarios")
 public class FuncionarioController {
     
     @Autowired
-    private FuncionarioServiceImpl funcionarioService;
+    private FuncionarioService funcionarioService;
 
     @Autowired
-    private CargoServiceImpl cargoService;
+    private CargoService cargoService;
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody FuncionarioForm funcionarioForm) {

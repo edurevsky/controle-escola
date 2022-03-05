@@ -27,7 +27,6 @@ public class Aluno extends PessoaFisica {
 
     private Turno turno;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "turma_id")
     private Turma turma;

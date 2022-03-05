@@ -21,18 +21,18 @@ import me.edurevsky.controleescola.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.controllers.utils.IdTurmaObject;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.forms.AlunoForm;
-import me.edurevsky.controleescola.services.impl.AlunoServiceImpl;
-import me.edurevsky.controleescola.services.impl.TurmaServiceImpl;
+import me.edurevsky.controleescola.services.AlunoService;
+import me.edurevsky.controleescola.services.TurmaService;
 
 @RestController
 @RequestMapping(value = "/alunos")
 public class AlunoController {
     
     @Autowired
-    private AlunoServiceImpl alunoService;
+    private AlunoService alunoService;
 
     @Autowired
-    private TurmaServiceImpl turmaService;
+    private TurmaService turmaService;
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AlunoForm alunoForm) {
