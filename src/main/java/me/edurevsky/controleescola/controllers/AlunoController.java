@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.edurevsky.controleescola.controllers.utils.CpfObject;
-import me.edurevsky.controleescola.controllers.utils.IdTurmaObject;
+import me.edurevsky.controleescola.controllers.utils.IdObject;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
@@ -67,8 +67,8 @@ public class AlunoController {
     }
 
     @PutMapping(value = "/{id}/transferir")
-    public ResponseEntity<?> changeTurma(@PathVariable Long id, @RequestBody IdTurmaObject idTurma) {
-        alunoService.changeTurma(id, idTurma.getTurma());
+    public ResponseEntity<?> changeTurma(@PathVariable Long id, @RequestBody IdObject idTurma) {
+        alunoService.changeTurma(id, idTurma.getId());
         return ResponseEntity.noContent().build();
     }
 

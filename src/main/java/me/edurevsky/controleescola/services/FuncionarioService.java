@@ -15,12 +15,16 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 
 @Service
 public class FuncionarioService {
-    
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
+
+    private final FuncionarioRepository funcionarioRepository;
+    private final CargoRepository cargoRepository;
+    private static final String NOT_FOUND_MESSAGE = "Funcionario com id %d não encontrado.";
 
     @Autowired
-    private CargoRepository cargoRepository;
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository) {
+        this.funcionarioRepository = funcionarioRepository;
+        this.cargoRepository = cargoRepository;
+    }
 
     public Funcionario save(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = FuncionarioForm.convertToFuncionario(funcionarioForm);
@@ -29,13 +33,13 @@ public class FuncionarioService {
     }
 
     public void remove(Long id) {
-        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         
         funcionarioRepository.deleteById(id);
     }
 
     public void updateSalary(Long id, BigDecimal salario) {
-        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         Funcionario funcionario = funcionarioRepository.getById(id);
         funcionario.setSalario(salario);

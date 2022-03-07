@@ -8,20 +8,25 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TurmaDTO {
 
     private String turma;
+    private String conteudo;
     private Professor professor;
     private List<Aluno> alunos;
 
-    public TurmaDTO (Turma turma) {
+    public TurmaDTO() {
+
+    }
+
+    public TurmaDTO(@NotNull Turma turma) {
         this.turma = turma.getTurma();
+        this.conteudo = turma.getConteudo();
         this.professor = turma.getProfessor();
         this.alunos = turma.getAlunos();
     }

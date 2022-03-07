@@ -15,12 +15,11 @@ import java.util.List;
 public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
-    private final TurmaService turmaService;
+    private static final String NOT_FOUND_MESSAGE = "Professor com id %d não encontrado";
 
     @Autowired
-    public ProfessorService(ProfessorRepository professorRepository, TurmaService turmaService) {
+    public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
-        this.turmaService = turmaService;
     }
 
     public Professor save(ProfessorForm professorForm) {
@@ -28,27 +27,17 @@ public class ProfessorService {
     }
 
     public void remove(Long id) {
-        Handlers.handleEntityNotFound(professorRepository, id, "Professor com id " + id + " não encontrado");
+        Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         professorRepository.deleteById(id);
     }
 
     public Professor findById(Long id) {
         return professorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Professor com id " + id + " não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
     }
 
     public List<Professor> findAll() {
         return professorRepository.findAll();
-    }
-
-    public Professor addTurma(Long idProfessor, Long idTurma) {
-        Handlers.handleEntityNotFound(professorRepository, idProfessor, "Professor com id " + idProfessor + " não encontrado");
-
-        Professor professor = professorRepository.getById(idProfessor);
-        Turma turma = turmaService.findById(idTurma);
-        turma.setProfessor(professor);
-        turmaService.save(turma);
-        return professorRepository.save(professor);
     }
 
 }

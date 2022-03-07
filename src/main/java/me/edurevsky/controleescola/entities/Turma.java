@@ -23,6 +23,8 @@ public class Turma {
 
     private String turma;
 
+    private String conteudo;
+
     @JsonIgnore
     @OneToMany(mappedBy = "turma")
     private List<Aluno> alunos = new ArrayList<>();

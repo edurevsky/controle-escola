@@ -19,6 +19,10 @@ public class AlunoDTO {
     private Turno turno;
     private Turma turma;
 
+    public AlunoDTO() {
+
+    }
+
     public AlunoDTO(@NotNull Aluno aluno) {
         this.nome = aluno.getNome();
         this.cpf = aluno.getCpf();

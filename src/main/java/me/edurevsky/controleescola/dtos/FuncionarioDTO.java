@@ -18,6 +18,10 @@ public class FuncionarioDTO {
     private Turno horarioDeTrabalho;
     private String cargo;
 
+    public FuncionarioDTO() {
+
+    }
+
     public FuncionarioDTO(@NotNull Funcionario funcionario) {
        this.nome = funcionario.getNome();
        this.cpf = funcionario.getCpf();

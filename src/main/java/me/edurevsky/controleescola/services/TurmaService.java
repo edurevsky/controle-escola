@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class TurmaService {
 
     private final TurmaRepository turmaRepository;
     private final ProfessorRepository professorRepository;
+    private static final String NOT_FOUND_MESSAGE = "Turma com id %d não encontrada";
 
     @Autowired
     public TurmaService(TurmaRepository turmaRepository, ProfessorRepository professorRepository) {
@@ -24,8 +26,8 @@ public class TurmaService {
         this.professorRepository = professorRepository;
     }
 
-    public Turma save(Turma turma) {
-        return turmaRepository.save(turma);
+    public Turma save(TurmaForm turmaForm) {
+        return turmaRepository.save(TurmaForm.convertToTurma(turmaForm));
     }
 
     public List<Turma> findAll() {
@@ -34,15 +36,15 @@ public class TurmaService {
 
     public Turma findById(Long id) {
         return turmaRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Turma com id " + id + " não encontrada."));
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
     }
 
-    public void addProfessor(Long idTurma, Long idProfessor) {
-        Handlers.handleEntityNotFound(turmaRepository, idTurma, "Turma com id " + idTurma + " não encontrada");
+    public Turma addProfessor(Long idTurma, Long idProfessor) {
+        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format(NOT_FOUND_MESSAGE, idTurma));
 
         Turma turma = turmaRepository.getById(idTurma);
         turma.setProfessor(professorRepository.getById(idProfessor));
-        turmaRepository.save(turma);
+        return turmaRepository.save(turma);
     }
     
 }
