@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,11 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "tb_cargos")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cargo {
 
     @Id
@@ -23,6 +27,6 @@ public class Cargo {
     private String cargo;
 
     @OneToMany(mappedBy = "cargo")
-    private List<Funcionario> funcionarios;
+    private List<Funcionario> funcionarios = new ArrayList<>();
 
 }

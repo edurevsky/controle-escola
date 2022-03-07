@@ -1,8 +1,11 @@
 package me.edurevsky.controleescola.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,11 +17,12 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class Professor extends PessoaFisica {
 
     private BigDecimal salario;
 
     @OneToMany(mappedBy = "professor")
-    private List<Turma> turmas;
+    private List<Turma> turmas = new ArrayList<>();
 
 }

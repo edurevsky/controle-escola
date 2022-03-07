@@ -27,12 +27,15 @@ import me.edurevsky.controleescola.services.TurmaService;
 @RestController
 @RequestMapping(value = "/alunos")
 public class AlunoController {
-    
-    @Autowired
-    private AlunoService alunoService;
+
+    private final AlunoService alunoService;
+    private final TurmaService turmaService;
 
     @Autowired
-    private TurmaService turmaService;
+    public AlunoController(AlunoService alunoService, TurmaService turmaService) {
+        this.alunoService = alunoService;
+        this.turmaService = turmaService;
+    }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AlunoForm alunoForm) {
@@ -60,7 +63,7 @@ public class AlunoController {
 
     @GetMapping(value = "/turma/{idTurma}")
     public ResponseEntity<?> findByTurmaId(@PathVariable Long idTurma) {
-        return ResponseEntity.ok().body(turmaService.findById(idTurma));
+        return ResponseEntity.ok().body(turmaService.findById(idTurma).getAlunos());
     }
 
     @PutMapping(value = "/{id}/transferir")

@@ -1,28 +1,34 @@
 package me.edurevsky.controleescola.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 @Entity
 @Table(name = "tb_turmas")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Turma {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String turma;
 
-    @OneToMany(mappedBy = "turma")
     @JsonIgnore
-    private List<Aluno> alunos;
+    @OneToMany(mappedBy = "turma")
+    private List<Aluno> alunos = new ArrayList<>();
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private Professor professor;
 

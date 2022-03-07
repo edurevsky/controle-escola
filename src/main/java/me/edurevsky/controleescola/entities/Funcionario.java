@@ -8,14 +8,16 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import me.edurevsky.controleescola.entities.enums.Turno;
 
 @Entity
 @Table(name = "tb_funcionarios")
 @EqualsAndHashCode(callSuper = false)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Funcionario extends PessoaFisica {
 
     private BigDecimal salario;

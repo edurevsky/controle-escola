@@ -17,7 +17,7 @@ public class AlunoDTO {
     private String email;
     private Boolean estaAtivo;
     private Turno turno;
-    private String turma;
+    private Turma turma;
 
     public AlunoDTO(@NotNull Aluno aluno) {
         this.nome = aluno.getNome();
@@ -25,7 +25,7 @@ public class AlunoDTO {
         this.email = aluno.getEmail();
         this.estaAtivo = aluno.getEstaAtivo();
         this.turno = aluno.getTurno();
-        this.turma = aluno.getTurma().getTurma();
+        this.turma = aluno.getTurma();
     }
 
 }
