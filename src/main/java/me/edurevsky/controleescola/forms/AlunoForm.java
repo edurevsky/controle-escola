@@ -36,7 +36,7 @@ public class AlunoForm {
         aluno.setTurma(null);
         aluno.setDataMatricula(LocalDate.now());
         aluno.setEstaAtivo(true);
-        aluno.setEmail(GeradorDeEmail.gerar(alunoForm.getNome()));
+        aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
         return aluno;
     }
 

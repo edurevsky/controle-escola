@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value = "/turmas")
 public class TurmaController {
@@ -22,7 +24,12 @@ public class TurmaController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(turmaService.findAll());
+        return ResponseEntity.ok(
+                turmaService.findAll()
+                        .stream()
+                        .map(TurmaDTO::new)
+                        .collect(Collectors.toList())
+        );
     }
 
     @PostMapping
@@ -32,7 +39,8 @@ public class TurmaController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(new TurmaDTO(turmaService.findById(id)));
+        Turma turma = turmaService.findById(id);
+        return ResponseEntity.ok(new TurmaDTO(turma));
     }
 
     @PutMapping(value = "/{id}/adicionar-professor")

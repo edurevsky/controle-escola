@@ -24,12 +24,15 @@ import me.edurevsky.controleescola.services.FuncionarioService;
 @RestController
 @RequestMapping(value = "/funcionarios")
 public class FuncionarioController {
-    
-    @Autowired
-    private FuncionarioService funcionarioService;
+
+    private final FuncionarioService funcionarioService;
+    private final CargoService cargoService;
 
     @Autowired
-    private CargoService cargoService;
+    public FuncionarioController(FuncionarioService funcionarioService, CargoService cargoService) {
+        this.funcionarioService = funcionarioService;
+        this.cargoService = cargoService;
+    }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody FuncionarioForm funcionarioForm) {
