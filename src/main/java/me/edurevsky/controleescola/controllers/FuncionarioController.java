@@ -26,28 +26,16 @@ import me.edurevsky.controleescola.services.FuncionarioService;
 public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;
-    private final CargoService cargoService;
 
     @Autowired
-    public FuncionarioController(FuncionarioService funcionarioService, CargoService cargoService) {
+    public FuncionarioController(FuncionarioService funcionarioService) {
         this.funcionarioService = funcionarioService;
-        this.cargoService = cargoService;
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody FuncionarioForm funcionarioForm) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(funcionarioService.save(funcionarioForm));
-    }
-
-    @GetMapping(params = "cargo")
-    public ResponseEntity<?> findByCargoName(@RequestParam String cargo) {
-        return ResponseEntity.ok().body(cargoService.findByName(cargo));
-    }
-
-    @GetMapping(params = "id_cargo")
-    public ResponseEntity<?> findByCargoId(@RequestParam(value = "id_cargo") Long idCargo) {
-        return ResponseEntity.ok().body(cargoService.findById(idCargo));
     }
 
     @DeleteMapping(value = "/{id}")

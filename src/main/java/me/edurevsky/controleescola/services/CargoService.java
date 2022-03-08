@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.forms.CargoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,17 @@ import me.edurevsky.controleescola.repositories.CargoRepository;
 
 @Service
 public class CargoService {
-    
+
+    private final CargoRepository cargoRepository;
+
     @Autowired
-    private CargoRepository cargoRepository;
+    public CargoService(CargoRepository cargoRepository) {
+        this.cargoRepository = cargoRepository;
+    }
+
+    public Cargo save(CargoForm cargoForm) {
+        return cargoRepository.save(CargoForm.convertToCargo(cargoForm));
+    }
 
     public Cargo findById(Long id) {
         return cargoRepository.findById(id)

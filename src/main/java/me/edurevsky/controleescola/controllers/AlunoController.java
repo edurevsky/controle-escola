@@ -61,11 +61,6 @@ public class AlunoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/turma/{idTurma}")
-    public ResponseEntity<?> findByTurmaId(@PathVariable Long idTurma) {
-        return ResponseEntity.ok().body(turmaService.findById(idTurma).getAlunos());
-    }
-
     @PutMapping(value = "/{id}/transferir")
     public ResponseEntity<?> changeTurma(@PathVariable Long id, @RequestBody IdObject idTurma) {
         alunoService.changeTurma(id, idTurma.getId());

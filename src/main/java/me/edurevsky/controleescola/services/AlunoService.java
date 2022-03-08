@@ -20,11 +20,15 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 @Service
 public class AlunoService {
 
-    @Autowired
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
+    private final TurmaService turmaService;
+    private static final String NOT_FOUND_MESSAGE = "Aluno com id %d não encontrado";
 
     @Autowired
-    private TurmaService turmaService;
+    public AlunoService(AlunoRepository alunoRepository, TurmaService turmaService) {
+        this.alunoRepository = alunoRepository;
+        this.turmaService = turmaService;
+    }
 
     public Aluno save(AlunoForm alunoForm) {
         Aluno aluno = AlunoForm.convertToAluno(alunoForm);
@@ -33,7 +37,7 @@ public class AlunoService {
     }
 
     public void remove(Long id) {
-        Handlers.handleEntityNotFound(alunoRepository, id, "Aluno com id " + id + " não encontrado");
+        Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         alunoRepository.deleteById(id);
     }
@@ -46,11 +50,11 @@ public class AlunoService {
 
     public Aluno findById(Long id) {
         return alunoRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Aluno com id " + id + " não encontrado."));
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
     }
 
     public void changeTurma(Long idAluno, Long idTurma) {
-        Handlers.handleEntityNotFound(alunoRepository, idAluno, "Aluno com id " + idAluno + " não encontrado.");
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
         this.handleTurmaNotFound(idTurma);
 
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
@@ -59,7 +63,7 @@ public class AlunoService {
     }
 
     public void updateCpf(Long idAluno, String cpf) {
-        Handlers.handleEntityNotFound(alunoRepository, idAluno, "Aluno com id " + idAluno + " não encontrado.");
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
 
         Aluno aluno = alunoRepository.findById(idAluno).get();
         aluno.setCpf(cpf);
@@ -67,7 +71,7 @@ public class AlunoService {
     }
 
     public void switchEstaAtivo(Long id) {
-        Handlers.handleEntityNotFound(alunoRepository, id, "Aluno com id " + id + " não encontrado.");
+        Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         Aluno aluno = alunoRepository.findById(id).get();
         aluno.setEstaAtivo(!aluno.getEstaAtivo());
