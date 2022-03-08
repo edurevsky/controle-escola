@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/cargos")
+@RequestMapping(value = "api/v1/cargos")
 public class CargoController {
 
     private final CargoService cargoService;
@@ -30,6 +30,12 @@ public class CargoController {
     @GetMapping(value = "/{nome}")
     public ResponseEntity<?> findByNome(@PathVariable("nome") String nome) {
         return ResponseEntity.ok(cargoService.findByName(nome));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> remove(@PathVariable("id") Long id) {
+        cargoService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

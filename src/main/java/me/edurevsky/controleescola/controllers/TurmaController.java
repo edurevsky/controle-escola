@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/turmas")
+@RequestMapping(value = "api/v1/turmas")
 public class TurmaController {
 
     private final TurmaService turmaService;

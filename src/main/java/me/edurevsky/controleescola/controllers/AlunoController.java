@@ -25,7 +25,7 @@ import me.edurevsky.controleescola.services.AlunoService;
 import me.edurevsky.controleescola.services.TurmaService;
 
 @RestController
-@RequestMapping(value = "/alunos")
+@RequestMapping(value = "api/v1/alunos")
 public class AlunoController {
 
     private final AlunoService alunoService;

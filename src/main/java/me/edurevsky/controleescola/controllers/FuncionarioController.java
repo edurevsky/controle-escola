@@ -22,7 +22,7 @@ import me.edurevsky.controleescola.services.CargoService;
 import me.edurevsky.controleescola.services.FuncionarioService;
 
 @RestController
-@RequestMapping(value = "/funcionarios")
+@RequestMapping(value = "api/v1/funcionarios")
 public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/professores")
+@RequestMapping(value = "api/v1/professores")
 public class ProfessorController {
 
     private final ProfessorService professorService;

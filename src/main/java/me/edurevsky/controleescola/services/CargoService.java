@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.forms.CargoForm;
+import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ import me.edurevsky.controleescola.repositories.CargoRepository;
 public class CargoService {
 
     private final CargoRepository cargoRepository;
+    private static final String NOT_FOUND_MESSAGE = "Cargo com id %d não encontrado";
+    private static final String NAME_NOT_FOUND_MESSAGE = "Cargo com nome %s não encontrado";
 
     @Autowired
     public CargoService(CargoRepository cargoRepository) {
@@ -27,7 +30,7 @@ public class CargoService {
 
     public Cargo findById(Long id) {
         return cargoRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Cargo com id " + id + " não encontrado."));
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
     }
 
     public List<Cargo> findByName(String cargo) {
@@ -35,7 +38,11 @@ public class CargoService {
         if (!cargoEmBuca.isEmpty()) {
             return cargoEmBuca;
         }
-        throw new EntityNotFoundException("Não foi possível achar cargo com nome " + "'" + cargo + "'" + ".");
+        throw new EntityNotFoundException(String.format(NAME_NOT_FOUND_MESSAGE, cargo));
+    }
+
+    public void remove(Long id) {
+        Handlers.handleEntityNotFound(cargoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
     }
 
 }
