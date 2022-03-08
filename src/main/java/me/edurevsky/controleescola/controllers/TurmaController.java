@@ -27,12 +27,7 @@ public class TurmaController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(
-                turmaService.findAll()
-                        .stream()
-                        .map(TurmaDTO::new)
-                        .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(turmaService.findAll());
     }
 
     @PostMapping
@@ -42,18 +37,17 @@ public class TurmaController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        Turma turma = turmaService.findById(id);
-        return ResponseEntity.ok(new TurmaDTO(turma));
+        // Turma turma = turmaService.findById(id);
+        return ResponseEntity.ok(turmaService.findById(id));
     }
 
     @GetMapping(value = "/{id}/alunos")
-    public ResponseEntity<?> findByIdAlunos(@PathVariable("id") Long id) {
-        List<AlunoDTO> alunos = turmaService.findById(id).getAlunos().stream().map(AlunoDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok(alunos);
+    public ResponseEntity<?> findByIdGetAlunos(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(turmaService.findByIdGetAlunos(id));
     }
 
-    @PutMapping(value = "/{id}/adicionar-professor")
-    public ResponseEntity<?> addProfessor(@PathVariable("id") Long idTurma, @RequestBody IdObject idProfessor) {
+    @PutMapping(value = "/{idTurma}/adicionar-professor")
+    public ResponseEntity<?> addProfessor(@PathVariable("idTurma") Long idTurma, @RequestBody IdObject idProfessor) {
         return ResponseEntity.ok(turmaService.addProfessor(idTurma, idProfessor.getId()));
     }
 

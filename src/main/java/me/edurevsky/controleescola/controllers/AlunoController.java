@@ -29,12 +29,10 @@ import me.edurevsky.controleescola.services.TurmaService;
 public class AlunoController {
 
     private final AlunoService alunoService;
-    private final TurmaService turmaService;
 
     @Autowired
-    public AlunoController(AlunoService alunoService, TurmaService turmaService) {
+    public AlunoController(AlunoService alunoService) {
         this.alunoService = alunoService;
-        this.turmaService = turmaService;
     }
 
     @PostMapping
@@ -51,8 +49,7 @@ public class AlunoController {
     
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        Aluno aluno = alunoService.findById(id);
-        return ResponseEntity.ok().body(new AlunoDTO(aluno));
+        return ResponseEntity.ok().body(alunoService.findById(id));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -61,9 +58,9 @@ public class AlunoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{id}/transferir")
-    public ResponseEntity<?> changeTurma(@PathVariable Long id, @RequestBody IdObject idTurma) {
-        alunoService.changeTurma(id, idTurma.getId());
+    @PutMapping(value = "/{idAluno}/transferir/{idTurma}")
+    public ResponseEntity<?> changeTurma(@PathVariable("idAluno") Long id, @PathVariable("idTurma") Long idTurma) {
+        alunoService.changeTurma(id, idTurma);
         return ResponseEntity.noContent().build();
     }
 

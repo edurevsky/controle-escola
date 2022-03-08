@@ -1,9 +1,12 @@
 package me.edurevsky.controleescola.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.dtos.AlunoDTO;
+import me.edurevsky.controleescola.dtos.TurmaDTO;
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
@@ -30,13 +33,14 @@ public class TurmaService {
         return turmaRepository.save(TurmaForm.convertToTurma(turmaForm));
     }
 
-    public List<Turma> findAll() {
-        return turmaRepository.findAll();
+    public List<TurmaDTO> findAll() {
+        return turmaRepository.findAll().stream().map(TurmaDTO::new).collect(Collectors.toList());
     }
 
-    public Turma findById(Long id) {
-        return turmaRepository.findById(id)
+    public TurmaDTO findById(Long id) {
+        Turma turma = turmaRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
+        return new TurmaDTO(turma);
     }
 
     public Turma addProfessor(Long idTurma, Long idProfessor) {
@@ -45,6 +49,13 @@ public class TurmaService {
         Turma turma = turmaRepository.getById(idTurma);
         turma.setProfessor(professorRepository.getById(idProfessor));
         return turmaRepository.save(turma);
+    }
+
+    public List<AlunoDTO> findByIdGetAlunos(Long id) {
+        Handlers.handleEntityNotFound(turmaRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
+        Turma turma = turmaRepository.getById(id);
+        return turma.getAlunos().stream().map(AlunoDTO::new).collect(Collectors.toList());
     }
     
 }

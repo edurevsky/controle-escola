@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.dtos.AlunoDTO;
+import me.edurevsky.controleescola.repositories.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,18 +22,18 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
-    private final TurmaService turmaService;
+    private final TurmaRepository turmaRepository;
     private static final String NOT_FOUND_MESSAGE = "Aluno com id %d não encontrado";
 
     @Autowired
-    public AlunoService(AlunoRepository alunoRepository, TurmaService turmaService) {
+    public AlunoService(AlunoRepository alunoRepository, TurmaRepository turmaRepository) {
         this.alunoRepository = alunoRepository;
-        this.turmaService = turmaService;
+        this.turmaRepository = turmaRepository;
     }
 
     public Aluno save(AlunoForm alunoForm) {
         Aluno aluno = AlunoForm.convertToAluno(alunoForm);
-        aluno.setTurma(turmaService.findById(alunoForm.getTurma()));
+        aluno.setTurma(turmaRepository.getById(alunoForm.getTurma()));
         return alunoRepository.save(aluno);
     }
 
@@ -48,9 +49,10 @@ public class AlunoService {
         return new PageImpl<AlunoDTO>(alunos.getContent().stream().map(AlunoDTO::new).collect(Collectors.toList()), pageable, totalElements);
     }
 
-    public Aluno findById(Long id) {
-        return alunoRepository.findById(id)
+    public AlunoDTO findById(Long id) {
+        Aluno aluno = alunoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
+        return new AlunoDTO(aluno);
     }
 
     public void changeTurma(Long idAluno, Long idTurma) {
@@ -58,7 +60,7 @@ public class AlunoService {
         this.handleTurmaNotFound(idTurma);
 
         Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
-        alunoEmTransferencia.setTurma(turmaService.findById(idTurma));
+        alunoEmTransferencia.setTurma(turmaRepository.getById(idTurma));
         alunoRepository.save(alunoEmTransferencia);
     }
 
@@ -79,7 +81,7 @@ public class AlunoService {
     }
 
     private void handleTurmaNotFound(Long idTurma) {
-        if (turmaService.findById(idTurma) == null) {
+        if (!turmaRepository.existsById(idTurma)) {
             throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
         }
     }

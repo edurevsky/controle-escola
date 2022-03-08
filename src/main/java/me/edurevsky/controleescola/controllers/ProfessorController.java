@@ -25,12 +25,7 @@ public class ProfessorController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(
-                professorService.findAll()
-                        .stream()
-                        .map(ProfessorDTO::new)
-                        .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(professorService.findAll());
     }
 
     @PostMapping
@@ -40,8 +35,7 @@ public class ProfessorController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        Professor professor = professorService.findById(id);
-        return ResponseEntity.ok(new ProfessorDTO(professor));
+        return ResponseEntity.ok(professorService.findById(id));
     }
 
     @DeleteMapping(value = "/{id}")
