@@ -28,16 +28,12 @@ public class FuncionarioForm {
     @NotNull
     private Turno horarioDeTrabalho;
 
-    @NotBlank
-    private Long cargo;
-
     public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(funcionarioForm.getNome());
         funcionario.setCpf(funcionarioForm.getCpf());
         funcionario.setSalario(funcionarioForm.getSalario());
         funcionario.setHorarioDeTrabalho(funcionarioForm.getHorarioDeTrabalho());
-        funcionario.setCargo(null);
         return funcionario;
     }
 

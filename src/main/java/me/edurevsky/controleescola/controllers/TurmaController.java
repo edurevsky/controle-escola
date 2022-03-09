@@ -1,18 +1,10 @@
 package me.edurevsky.controleescola.controllers;
 
-import me.edurevsky.controleescola.controllers.utils.IdObject;
-import me.edurevsky.controleescola.dtos.AlunoDTO;
-import me.edurevsky.controleescola.dtos.TurmaDTO;
-import me.edurevsky.controleescola.entities.Aluno;
-import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/v1/turmas")
@@ -37,7 +29,6 @@ public class TurmaController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        // Turma turma = turmaService.findById(id);
         return ResponseEntity.ok(turmaService.findById(id));
     }
 
@@ -46,9 +37,9 @@ public class TurmaController {
         return ResponseEntity.ok(turmaService.findByIdGetAlunos(id));
     }
 
-    @PutMapping(value = "/{idTurma}/adicionar-professor")
-    public ResponseEntity<?> addProfessor(@PathVariable("idTurma") Long idTurma, @RequestBody IdObject idProfessor) {
-        return ResponseEntity.ok(turmaService.addProfessor(idTurma, idProfessor.getId()));
+    @PutMapping(value = "/{idTurma}/atualizar-professor/{idProfessor}")
+    public ResponseEntity<?> addProfessor(@PathVariable("idTurma") Long idTurma, @PathVariable("idProfessor") Long idProfessor) {
+        return ResponseEntity.ok(turmaService.addProfessor(idTurma, idProfessor));
     }
 
 }

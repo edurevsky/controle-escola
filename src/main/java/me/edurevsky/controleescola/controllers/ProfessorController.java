@@ -1,16 +1,11 @@
 package me.edurevsky.controleescola.controllers;
 
-import me.edurevsky.controleescola.controllers.utils.IdObject;
-import me.edurevsky.controleescola.dtos.ProfessorDTO;
-import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/v1/professores")

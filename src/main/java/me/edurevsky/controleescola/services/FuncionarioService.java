@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.entities.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class FuncionarioService {
 
     public Funcionario save(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = FuncionarioForm.convertToFuncionario(funcionarioForm);
-        funcionario.setCargo(cargoRepository.getById(funcionarioForm.getCargo()));
+        // funcionario.setCargo(cargoRepository.getById(funcionarioForm.getCargo()));
         return funcionarioRepository.save(funcionario);
     }
 
@@ -59,4 +60,10 @@ public class FuncionarioService {
         funcionarioRepository.save(funcionario);
     }
 
+    public Funcionario addCargo(Long idFuncionario, Long idCargo) {
+        Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
+        Cargo cargo = cargoRepository.getById(idCargo);
+        funcionario.setCargo(cargo);
+        return funcionarioRepository.save(funcionario);
+    }
 }

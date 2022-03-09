@@ -27,8 +27,8 @@ public class CargoController {
         return ResponseEntity.ok(cargoService.findById(id));
     }
 
-    @GetMapping(value = "/{nome}")
-    public ResponseEntity<?> findByNome(@PathVariable("nome") String nome) {
+    @GetMapping
+    public ResponseEntity<?> findByNome(@RequestParam("nome") String nome) {
         return ResponseEntity.ok(cargoService.findByName(nome));
     }
 

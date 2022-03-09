@@ -17,6 +17,7 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AlunoService {
@@ -33,10 +34,10 @@ public class AlunoService {
 
     public Aluno save(AlunoForm alunoForm) {
         Aluno aluno = AlunoForm.convertToAluno(alunoForm);
-        aluno.setTurma(turmaRepository.getById(alunoForm.getTurma()));
         return alunoRepository.save(aluno);
     }
 
+    @Transactional
     public void remove(Long id) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
@@ -46,7 +47,7 @@ public class AlunoService {
     public Page<AlunoDTO> findAll(Pageable pageable) {
         Page<Aluno> alunos = alunoRepository.findAll(pageable);
         int totalElements = alunos.getNumberOfElements();
-        return new PageImpl<AlunoDTO>(alunos.getContent().stream().map(AlunoDTO::new).collect(Collectors.toList()), pageable, totalElements);
+        return new PageImpl<>(alunos.getContent().stream().map(AlunoDTO::new).collect(Collectors.toList()), pageable, totalElements);
     }
 
     public AlunoDTO findById(Long id) {
@@ -55,15 +56,17 @@ public class AlunoService {
         return new AlunoDTO(aluno);
     }
 
-    public void changeTurma(Long idAluno, Long idTurma) {
+    @Transactional
+    public Aluno addTurma(Long idAluno, Long idTurma) {
         Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
-        this.handleTurmaNotFound(idTurma);
+        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format("Turma com id %d não encontrada", idTurma));
 
-        Aluno alunoEmTransferencia = alunoRepository.findById(idAluno).get();
-        alunoEmTransferencia.setTurma(turmaRepository.getById(idTurma));
-        alunoRepository.save(alunoEmTransferencia);
+        Aluno aluno = alunoRepository.findById(idAluno).get();
+        aluno.setTurma(turmaRepository.getById(idTurma));
+        return alunoRepository.save(aluno);
     }
 
+    @Transactional
     public void updateCpf(Long idAluno, String cpf) {
         Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
 
@@ -72,18 +75,13 @@ public class AlunoService {
         alunoRepository.save(aluno);
     }
 
-    public void switchEstaAtivo(Long id) {
+    @Transactional
+    public Aluno switchEstaAtivo(Long id) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         Aluno aluno = alunoRepository.findById(id).get();
         aluno.setEstaAtivo(!aluno.getEstaAtivo());
-        alunoRepository.save(aluno);
-    }
-
-    private void handleTurmaNotFound(Long idTurma) {
-        if (!turmaRepository.existsById(idTurma)) {
-            throw new EntityNotFoundException("Turma com id " + idTurma + " não encontrada.");
-        }
+        return alunoRepository.save(aluno);
     }
 
     public List<Aluno> findByEstaAtivo(Boolean estaAtivo) {

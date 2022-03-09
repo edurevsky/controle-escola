@@ -26,14 +26,11 @@ public class AlunoForm {
 
     private Turno turno;
 
-    private Long turma;
-
     public static Aluno convertToAluno(AlunoForm alunoForm) {
         Aluno aluno = new Aluno();
         aluno.setNome(alunoForm.getNome());
         aluno.setCpf(alunoForm.getCpf());
         aluno.setTurno(alunoForm.getTurno());
-        aluno.setTurma(null);
         aluno.setDataMatricula(LocalDate.now());
         aluno.setEstaAtivo(true);
         aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));

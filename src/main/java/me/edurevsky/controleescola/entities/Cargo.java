@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Entity
@@ -26,7 +27,18 @@ public class Cargo {
 
     private String cargo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cargo")
     private List<Funcionario> funcionarios = new ArrayList<>();
+
+    /**
+     * Método Builder
+     * @param cargo o nome do cargo
+     * @return Objeto Cargo
+     */
+    public Cargo withCargo(String cargo) {
+        this.cargo = cargo;
+        return this;
+    }
 
 }
