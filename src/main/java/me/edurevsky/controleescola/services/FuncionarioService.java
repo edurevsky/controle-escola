@@ -73,4 +73,5 @@ public class FuncionarioService {
     public List<FuncionarioDTO> findAll() {
         return funcionarioRepository.findAll().stream().map(FuncionarioDTO::new).collect(Collectors.toList());
     }
+
 }

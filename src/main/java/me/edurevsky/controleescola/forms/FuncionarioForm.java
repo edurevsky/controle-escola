@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.edurevsky.controleescola.entities.Cargo;
 import org.hibernate.validator.constraints.br.CPF;
 
 import me.edurevsky.controleescola.entities.Funcionario;
@@ -28,12 +29,15 @@ public class FuncionarioForm {
     @NotNull
     private Turno horarioDeTrabalho;
 
+    private Cargo cargo;
+
     public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(funcionarioForm.getNome());
         funcionario.setCpf(funcionarioForm.getCpf());
         funcionario.setSalario(funcionarioForm.getSalario());
         funcionario.setHorarioDeTrabalho(funcionarioForm.getHorarioDeTrabalho());
+        funcionario.setCargo(funcionarioForm.getCargo());
         return funcionario;
     }
 

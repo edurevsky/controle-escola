@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+
+<form action="#" th:action="@{/funcionarios/novo-funcionario}" th:object="${funcionarioForm}" method="post">
+
+    <input type="submit">
+    <input type="reset">
+
+    <input type="text" th:field="*{nome}" placeholder="Nome">
+    <input type="text" th:field="*{cpf}" placeholder="CPF">
+    <input type="number" step="any" th:field="*{salario}" placeholder="Salário">
+
+    <select th:field="*{horarioDeTrabalho}">
+        <option th:value="${matutino}" th:text="${matutino.turno}"></option>
+        <option th:value="${vespertino}" th:text="${vespertino.turno}"></option>
+        <option th:value="${noturno}" th:text="${noturno.turno}"></option>
+    </select>
+
+    <select th:field="*{cargo}">
+        <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
+    </select>
+
+</form>
+
+</body>
+</html>
