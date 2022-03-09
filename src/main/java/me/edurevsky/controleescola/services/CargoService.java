@@ -28,6 +28,10 @@ public class CargoService {
         return cargoRepository.save(CargoForm.convertToCargo(cargoForm));
     }
 
+    public List<Cargo> findAll() {
+        return cargoRepository.findAll();
+    }
+
     public Cargo findById(Long id) {
         return cargoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));

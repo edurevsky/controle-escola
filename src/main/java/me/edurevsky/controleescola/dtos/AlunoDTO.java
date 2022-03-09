@@ -6,8 +6,6 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.entities.enums.Turno;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 public class AlunoDTO {
@@ -23,7 +21,7 @@ public class AlunoDTO {
 
     }
 
-    public AlunoDTO(@NotNull Aluno aluno) {
+    public AlunoDTO(Aluno aluno) {
         this.nome = aluno.getNome();
         this.cpf = aluno.getCpf();
         this.email = aluno.getEmail();

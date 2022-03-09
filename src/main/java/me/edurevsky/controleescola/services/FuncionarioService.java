@@ -1,9 +1,12 @@
 package me.edurevsky.controleescola.services;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +68,9 @@ public class FuncionarioService {
         Cargo cargo = cargoRepository.getById(idCargo);
         funcionario.setCargo(cargo);
         return funcionarioRepository.save(funcionario);
+    }
+
+    public List<FuncionarioDTO> findAll() {
+        return funcionarioRepository.findAll().stream().map(FuncionarioDTO::new).collect(Collectors.toList());
     }
 }

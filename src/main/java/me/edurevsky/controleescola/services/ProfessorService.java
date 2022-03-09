@@ -2,7 +2,6 @@ package me.edurevsky.controleescola.services;
 
 import me.edurevsky.controleescola.dtos.ProfessorDTO;
 import me.edurevsky.controleescola.entities.Professor;
-import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
