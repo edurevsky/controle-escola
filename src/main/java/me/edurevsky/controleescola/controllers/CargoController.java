@@ -38,4 +38,9 @@ public class CargoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody CargoForm cargoForm) {
+        return ResponseEntity.ok(cargoService.update(id, cargoForm));
+    }
+
 }

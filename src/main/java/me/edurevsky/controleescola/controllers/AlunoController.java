@@ -51,6 +51,11 @@ public class AlunoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AlunoForm alunoForm) {
+        return ResponseEntity.ok(alunoService.update(id, alunoForm));
+    }
+
     @PutMapping(value = "/{idAluno}/atualizar-turma/{idTurma}")
     public ResponseEntity<?> changeTurma(@PathVariable("idAluno") Long idAluno, @PathVariable("idTurma") Long idTurma) {
         return ResponseEntity.ok(alunoService.addTurma(idAluno, idTurma));

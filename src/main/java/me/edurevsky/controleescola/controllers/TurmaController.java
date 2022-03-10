@@ -32,6 +32,11 @@ public class TurmaController {
         return ResponseEntity.ok(turmaService.findById(id));
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody TurmaForm turmaForm) {
+        return ResponseEntity.ok(turmaService.update(id, turmaForm));
+    }
+
     @GetMapping(value = "/{id}/alunos")
     public ResponseEntity<?> findByIdGetAlunos(@PathVariable("id") Long id) {
         return ResponseEntity.ok(turmaService.findByIdGetAlunos(id));

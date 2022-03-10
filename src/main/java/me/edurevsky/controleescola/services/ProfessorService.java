@@ -4,6 +4,7 @@ import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,13 @@ public class ProfessorService {
 
     public Professor save(ProfessorForm professorForm) {
         return professorRepository.save(ProfessorForm.convertToProfessor(professorForm));
+    }
+
+    public Professor update(Long id, ProfessorForm professorForm) {
+        Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        Professor professor = professorRepository.getById(id);
+        BeanUtils.copyProperties(professorForm, professor);
+        return professorRepository.save(professor);
     }
 
     public void remove(Long id) {

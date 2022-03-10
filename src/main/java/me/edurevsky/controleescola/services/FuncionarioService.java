@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.entities.Cargo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,13 @@ public class FuncionarioService {
 
     public Funcionario save(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = FuncionarioForm.convertToFuncionario(funcionarioForm);
+        return funcionarioRepository.save(funcionario);
+    }
+
+    public Funcionario update(Long id, FuncionarioForm funcionarioForm) {
+        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        Funcionario funcionario = funcionarioRepository.getById(id);
+        BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionarioRepository.save(funcionario);
     }
 

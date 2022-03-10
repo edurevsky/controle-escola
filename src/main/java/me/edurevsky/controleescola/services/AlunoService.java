@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.repositories.TurmaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,13 @@ public class AlunoService {
         alunoRepository.deleteById(id);
     }
 
+    public Aluno update(Long id, AlunoForm alunoForm) {
+        Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        Aluno aluno = alunoRepository.getById(id);
+        BeanUtils.copyProperties(alunoForm, aluno);
+        return alunoRepository.save(aluno);
+    }
+
     public List<Aluno> findAll() {
         return alunoRepository.findAll();
     }
@@ -61,7 +69,7 @@ public class AlunoService {
     public Aluno updateCpf(Long idAluno, String cpf) {
         Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
 
-        Aluno aluno = alunoRepository.findById(idAluno).get();
+        Aluno aluno = alunoRepository.getById(idAluno);
         aluno.setCpf(cpf);
         return alunoRepository.save(aluno);
     }

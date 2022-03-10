@@ -46,6 +46,11 @@ public class FuncionarioController {
         return ResponseEntity.ok().body(funcionarioService.findById(id));
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody FuncionarioForm funcionarioForm) {
+        return ResponseEntity.ok(funcionarioService.update(id, funcionarioForm));
+    }
+
     @PutMapping(value = "/{idFuncionario}/atualizar-cargo/{idCargo}")
     public ResponseEntity<?> addCargo(@PathVariable("idFuncionario") Long idFuncionario, @PathVariable("idCargo") Long idCargo) {
         return ResponseEntity.ok(funcionarioService.addCargo(idFuncionario, idCargo));

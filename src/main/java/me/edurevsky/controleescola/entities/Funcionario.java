@@ -24,7 +24,6 @@ public class Funcionario extends PessoaFisica {
 
     private Turno horarioDeTrabalho;
 
-    @JsonIgnore
     @ManyToOne
     private Cargo cargo;
 

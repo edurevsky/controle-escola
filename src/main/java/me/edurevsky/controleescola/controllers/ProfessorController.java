@@ -39,4 +39,9 @@ public class ProfessorController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ProfessorForm professorForm) {
+        return ResponseEntity.ok(professorService.update(id, professorForm));
+    }
+
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div th:fragment="header1">
+    <header>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}"> Início </a>
+                <li><a th:href="@{/turmas}"> Turmas </a>
+                <li><a th:href="@{/alunos}"> Alunos </a>
+                <li><a th:href="@{/professores}"> Professores </a>
+                <li><a th:href="@{/funcionarios}"> Funcionários </a>
+                <li><a th:href="@{/cargos}"> Cargos </a>
+            </ul>
+        </nav>
+    </header>
+</div>
+
+</body>
+</html>

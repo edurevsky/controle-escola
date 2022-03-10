@@ -9,6 +9,7 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,13 @@ public class TurmaService {
 
     public Turma save(TurmaForm turmaForm) {
         return turmaRepository.save(TurmaForm.convertToTurma(turmaForm));
+    }
+
+    public Turma update(Long id, TurmaForm turmaForm) {
+        Handlers.handleEntityNotFound(turmaRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        Turma turma = turmaRepository.getById(id);
+        BeanUtils.copyProperties(turmaForm, turma);
+        return turmaRepository.save(turma);
     }
 
     public List<Turma> findAll() {
