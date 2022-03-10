@@ -36,8 +36,8 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll(Pageable pageable) {
-        return ResponseEntity.ok().body(alunoService.findAll(pageable));
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok().body(alunoService.findAll());
     }
     
     @GetMapping(value = "/{id}")
@@ -58,8 +58,7 @@ public class AlunoController {
 
     @PutMapping(value = "/{id}/atualizar-cpf")
     public ResponseEntity<?> updateCpf(@PathVariable Long id, @RequestBody @Valid CpfObject cpf) {
-        alunoService.updateCpf(id, cpf.getCpf());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(alunoService.updateCpf(id, cpf.getCpf()));
     }
 
     @PutMapping(value = "/{id}/atualizar-status")

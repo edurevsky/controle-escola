@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.controllers;
 
-import me.edurevsky.controleescola.dtos.FuncionarioDTO;
 import me.edurevsky.controleescola.entities.Funcionario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,8 +43,7 @@ public class FuncionarioController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        Funcionario funcionario = funcionarioService.findById(id);
-        return ResponseEntity.ok().body(new FuncionarioDTO(funcionario));
+        return ResponseEntity.ok().body(funcionarioService.findById(id));
     }
 
     @PutMapping(value = "/{idFuncionario}/atualizar-cargo/{idCargo}")

@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.forms;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.edurevsky.controleescola.entities.Professor;

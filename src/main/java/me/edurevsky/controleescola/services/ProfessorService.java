@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.services;
 
-import me.edurevsky.controleescola.dtos.ProfessorDTO;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
@@ -32,15 +31,13 @@ public class ProfessorService {
         professorRepository.deleteById(id);
     }
 
-    public ProfessorDTO findById(Long id) {
-        Professor professor = professorRepository.findById(id)
+    public Professor findById(Long id) {
+        return professorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
-        return new ProfessorDTO(professor);
     }
 
-    public List<ProfessorDTO> findAll() {
-        List<Professor> professores = professorRepository.findAll();
-        return professores.stream().map(ProfessorDTO::new).collect(Collectors.toList());
+    public List<Professor> findAll() {
+        return professorRepository.findAll();
     }
 
 }

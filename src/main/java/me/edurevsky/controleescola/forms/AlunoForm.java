@@ -6,11 +6,13 @@ import javax.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.edurevsky.controleescola.entities.Turma;
 import org.hibernate.validator.constraints.br.CPF;
 
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
+import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
@@ -24,13 +26,15 @@ public class AlunoForm {
     @CPF
     private String cpf;
 
+    @NotNull
     private Turno turno;
+
+    @NotNull
+    private Turma turma;
 
     public static Aluno convertToAluno(AlunoForm alunoForm) {
         Aluno aluno = new Aluno();
-        aluno.setNome(alunoForm.getNome());
-        aluno.setCpf(alunoForm.getCpf());
-        aluno.setTurno(alunoForm.getTurno());
+        BeanUtils.copyProperties(alunoForm, aluno);
         aluno.setDataMatricula(LocalDate.now());
         aluno.setEstaAtivo(true);
         aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));

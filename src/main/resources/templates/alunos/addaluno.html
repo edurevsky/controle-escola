@@ -7,20 +7,21 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/funcionarios/registrar}" th:object="${funcionarioForm}" method="post">
+<h1 th:text="${title}"></h1>
+
+<form action="#" th:action="@{/alunos/registrar}" th:object="${alunoForm}" method="post">
 
     <input type="text" th:field="*{nome}" placeholder="Nome">
-    <input type="text" th:field="*{cpf}" placeholder="CPF">
-    <input type="number" step="any" th:field="*{salario}" placeholder="Salário">
+    <input type="text" th:field="*{cpf}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="CPF">
 
-    <select th:field="*{horarioDeTrabalho}">
+    <select th:field="*{turno}">
         <option th:value="${matutino}" th:text="${matutino.turno}"></option>
         <option th:value="${vespertino}" th:text="${vespertino.turno}"></option>
         <option th:value="${noturno}" th:text="${noturno.turno}"></option>
     </select>
 
-    <select th:field="*{cargo}">
-        <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
+    <select th:field="*{turma}">
+        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
     </select>
 
     <input type="submit">

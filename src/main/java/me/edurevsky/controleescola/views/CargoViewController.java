@@ -27,13 +27,13 @@ public class CargoViewController {
         return "cargos/index";
     }
 
-    @GetMapping(value = "/cargos/novo-cargo")
+    @GetMapping(value = "/cargos/registrar")
     public String novoCargoView(CargoForm cargoForm, Model model) {
-        model.addAttribute("title", "Adicionar novo cargo");
+        model.addAttribute("title", "Registrar Cargo");
         return "cargos/addcargo";
     }
 
-    @PostMapping(value = "/cargos/novo-cargo")
+    @PostMapping(value = "/cargos/registrar")
     public String novoCargoPost(@ModelAttribute CargoForm cargoForm) {
         cargoService.save(cargoForm);
         return "redirect:/cargos";

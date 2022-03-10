@@ -47,6 +47,7 @@ public class CargoService {
 
     public void remove(Long id) {
         Handlers.handleEntityNotFound(cargoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        cargoRepository.deleteById(id);
     }
 
 }

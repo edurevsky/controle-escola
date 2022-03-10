@@ -30,8 +30,8 @@ public class FuncionarioViewController {
         return "funcionarios/index";
     }
 
-    @GetMapping(value = "/funcionarios/novo-funcionario")
-    public String novoFuncionarioView(FuncionarioForm funcionarioForm, Model model) {
+    @GetMapping(value = "/funcionarios/registrar")
+    public String addFuncionarioView(FuncionarioForm funcionarioForm, Model model) {
         model.addAttribute("title", "Registrar Funcionário");
         model.addAttribute("cargosList", cargoService.findAll());
         model.addAttribute("matutino", Turno.MATUTINO);
@@ -40,8 +40,8 @@ public class FuncionarioViewController {
         return "funcionarios/addfuncionario";
     }
 
-    @PostMapping(value = "/funcionarios/novo-funcionario")
-    public String novoFuncionarioPost(@ModelAttribute FuncionarioForm funcionarioForm) {
+    @PostMapping(value = "/funcionarios/registrar")
+    public String addFuncionarioPost(@ModelAttribute FuncionarioForm funcionarioForm) {
         funcionarioService.save(funcionarioForm);
         return "redirect:/funcionarios";
     }

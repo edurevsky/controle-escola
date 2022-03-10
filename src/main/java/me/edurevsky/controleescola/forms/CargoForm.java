@@ -1,7 +1,6 @@
 package me.edurevsky.controleescola.forms;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.edurevsky.controleescola.entities.Cargo;
 

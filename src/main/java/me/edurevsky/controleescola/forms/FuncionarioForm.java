@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
+import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
@@ -29,15 +30,12 @@ public class FuncionarioForm {
     @NotNull
     private Turno horarioDeTrabalho;
 
+    @NotNull
     private Cargo cargo;
 
     public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = new Funcionario();
-        funcionario.setNome(funcionarioForm.getNome());
-        funcionario.setCpf(funcionarioForm.getCpf());
-        funcionario.setSalario(funcionarioForm.getSalario());
-        funcionario.setHorarioDeTrabalho(funcionarioForm.getHorarioDeTrabalho());
-        funcionario.setCargo(funcionarioForm.getCargo());
+        BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionario;
     }
 
