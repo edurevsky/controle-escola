@@ -6,9 +6,7 @@ import me.edurevsky.controleescola.services.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CargoViewController {
@@ -30,12 +28,18 @@ public class CargoViewController {
     @GetMapping(value = "/cargos/registrar")
     public String novoCargoView(CargoForm cargoForm, Model model) {
         model.addAttribute("title", "Registrar Cargo");
-        return "cargos/addcargo";
+        return "cargos/new";
     }
 
     @PostMapping(value = "/cargos/registrar")
     public String novoCargoPost(@ModelAttribute CargoForm cargoForm) {
         cargoService.save(cargoForm);
+        return "redirect:/cargos";
+    }
+
+    @GetMapping(value = "/cargos/{id}/deletar")
+    public String deletarCargo(@PathVariable Long id) {
+        cargoService.remove(id);
         return "redirect:/cargos";
     }
 
