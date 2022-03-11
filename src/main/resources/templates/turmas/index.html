@@ -7,27 +7,34 @@
 </head>
 <body>
 
-<div th:replace="~{header :: header2}"></div>
+<div th:replace="~{header :: main-header}"></div>
 
-<table>
-    <thead>
-    <tr>
-        <th> Turma </th>
-        <th> Conteúdo </th>
-        <th> Professor </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${turmasList.empty}">
-        <td colspan="2"> Nenhuma turma registrada. </td>
-    </tr>
-    <tr th:each="turma : ${turmasList}">
-        <td><span th:text="${turma.turma}"> Turma </span></td>
-        <td><span th:text="${turma.conteudo}"> Conteúdo </span></td>
-        <td><span th:text="${turma.professor.nome}"> Professor </span></td>
-    </tr>
-    </tbody>
-</table>
+<div class="container mt-3">
+    <h1 th:text="${title}"></h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th> Turma </th>
+            <th> Conteúdo </th>
+            <th> Professor </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${turmasList.empty}">
+            <td colspan="3"> Nenhuma turma registrada. </td>
+        </tr>
+        <tr th:each="turma : ${turmasList}">
+            <td><span th:text="${turma.turma}"> Turma </span></td>
+            <td><span th:text="${turma.conteudo}"> Conteúdo </span></td>
+            <td><span th:text="${turma.professor.nome}"> Professor </span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 </html>

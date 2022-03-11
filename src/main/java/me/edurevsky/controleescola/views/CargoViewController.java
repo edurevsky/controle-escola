@@ -43,4 +43,10 @@ public class CargoViewController {
         return "redirect:/cargos";
     }
 
+    @GetMapping(value = "/cargos/{id}/detalhes")
+    public String detalhesCargo(@PathVariable Long id, Model model) {
+        model.addAttribute("cargo", cargoService.findById(id));
+        return "cargos/detalhes";
+    }
+
 }

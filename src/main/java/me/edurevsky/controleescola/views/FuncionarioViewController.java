@@ -25,7 +25,7 @@ public class FuncionarioViewController {
 
     @GetMapping(value = "/funcionarios")
     public String index(Model model) {
-        model.addAttribute("title", "Funcionários Registrados");
+        model.addAttribute("title", "Lista de Funcionários");
         model.addAttribute("funcionariosList", funcionarioService.findAll());
         return "funcionarios/index";
     }
@@ -34,9 +34,7 @@ public class FuncionarioViewController {
     public String addFuncionarioView(FuncionarioForm funcionarioForm, Model model) {
         model.addAttribute("title", "Registrar Funcionário");
         model.addAttribute("cargosList", cargoService.findAll());
-        model.addAttribute("matutino", Turno.MATUTINO);
-        model.addAttribute("vespertino", Turno.VESPERTINO);
-        model.addAttribute("noturno", Turno.NOTURNO);
+        model.addAttribute("turnos", Turno.values());
         return "funcionarios/addfuncionario";
     }
 

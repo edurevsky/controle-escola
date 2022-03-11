@@ -9,7 +9,7 @@
 
 <form action="#" th:action="@{/cargos/registrar}" th:object="${cargoForm}" method="post">
 
-    <input type="text" value="" th:field="*{cargo}" placeholder="Cargo"/>
+    <input type="text" th:field="*{cargo}" placeholder="Cargo"/>
 
     <input type="submit" th:value="Salvar">
     <input type="reset" th:value="Resetar">

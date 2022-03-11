@@ -13,17 +13,15 @@
     <input type="text" th:field="*{cpf}" placeholder="CPF">
     <input type="number" step="any" th:field="*{salario}" placeholder="Salário">
 
-    <select th:field="*{horarioDeTrabalho}">
-        <option th:value="${matutino}" th:text="${matutino.turno}"></option>
-        <option th:value="${vespertino}" th:text="${vespertino.turno}"></option>
-        <option th:value="${noturno}" th:text="${noturno.turno}"></option>
+    Turno <select th:field="*{horarioDeTrabalho}">
+        <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>
     </select>
 
-    <select th:field="*{cargo}">
+    Cargo <select th:field="*{cargo}">
         <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
     </select>
 
-    <input type="submit">
+    <input type="submit" th:text="Salvar">
     <input type="reset">
 
 </form>

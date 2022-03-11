@@ -25,7 +25,7 @@ public class AlunosViewController {
 
     @GetMapping(value = "/alunos")
     public String index(Model model) {
-        model.addAttribute("title", "Alunos Registrados");
+        model.addAttribute("title", "Lista de Alunos");
         model.addAttribute("alunosList", alunoService.findAll());
         return "alunos/index";
     }
@@ -34,9 +34,7 @@ public class AlunosViewController {
     public String novoAlunoView(AlunoForm alunoForm, Model model) {
         model.addAttribute("title", "Registrar Aluno");
         model.addAttribute("turmasList", turmaService.findAll());
-        model.addAttribute("matutino", Turno.MATUTINO);
-        model.addAttribute("vespertino", Turno.VESPERTINO);
-        model.addAttribute("noturno", Turno.NOTURNO);
+        model.addAttribute("turnos", Turno.values());
         return "alunos/addaluno";
     }
 

@@ -24,7 +24,7 @@ public class TurmasViewController {
 
     @GetMapping(value = "/turmas")
     public String index(Model model) {
-        model.addAttribute("title", "Turmas Registradas");
+        model.addAttribute("title", "Lista de Turmas");
         model.addAttribute("turmasList", turmaService.findAll());
         return "turmas/index";
     }
@@ -37,7 +37,7 @@ public class TurmasViewController {
     }
 
     @PostMapping(value = "turmas/registrar")
-    public String addTurmaPost(@ModelAttribute TurmaForm turmaForm, Model model) {
+    public String addTurmaPost(@ModelAttribute TurmaForm turmaForm) {
         turmaService.save(turmaForm);
         return "redirect:/turmas";
     }
