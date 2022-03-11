@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.controllers;
+package me.edurevsky.controleescola.rest.controllers;
 
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.services.TurmaService;

@@ -1,6 +1,5 @@
-package me.edurevsky.controleescola.controllers;
+package me.edurevsky.controleescola.rest.controllers;
 
-import me.edurevsky.controleescola.entities.Funcionario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.edurevsky.controleescola.controllers.utils.CpfObject;
-import me.edurevsky.controleescola.controllers.utils.SalarioObject;
+import me.edurevsky.controleescola.rest.controllers.utils.CpfObject;
+import me.edurevsky.controleescola.rest.controllers.utils.SalarioObject;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.services.FuncionarioService;
 

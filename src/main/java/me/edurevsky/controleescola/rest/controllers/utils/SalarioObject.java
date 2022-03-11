@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.controllers.utils;
+package me.edurevsky.controleescola.rest.controllers.utils;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.controllers;
+package me.edurevsky.controleescola.rest.controllers;
 
 import javax.validation.Valid;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.edurevsky.controleescola.controllers.utils.CpfObject;
+import me.edurevsky.controleescola.rest.controllers.utils.CpfObject;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
 

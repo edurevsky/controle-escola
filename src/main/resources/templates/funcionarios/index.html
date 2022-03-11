@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div th:replace="~{header :: main-header}"></div>
+<div th:replace="~{fragments :: main-header}"></div>
 
 <div class="container mt-3">
     <h1 th:text="${title}"></h1>
@@ -15,21 +15,21 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th> Nome </th>
-            <th> CPF </th>
-            <th> Turno </th>
-            <th> Cargo </th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Turno</th>
+            <th>Cargo</th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${funcionariosList.empty}">
-            <td colspan="4"> Nenhum funcionário registrado. </td>
+            <td colspan="4">Nenhum funcionário registrado</td>
         </tr>
         <tr th:each="funcionario : ${funcionariosList}">
-            <td><span th:text="${funcionario.nome}"> Nome </span></td>
-            <td><span th:text="${funcionario.cpf}"> CPF </span></td>
-            <td><span th:text="${funcionario.horarioDeTrabalho}"> Turno </span></td>
-            <td><span th:text="${funcionario.cargo.cargo}"> Cargo </span></td>
+            <td><span th:text="${funcionario.nome}">Nome</span></td>
+            <td><span th:text="${funcionario.cpf}">CPF</span></td>
+            <td><span th:text="${funcionario.horarioDeTrabalho}">Turno</span></td>
+            <td><span th:text="${funcionario.cargo.cargo}">Cargo</span></td>
         </tr>
         </tbody>
     </table>
