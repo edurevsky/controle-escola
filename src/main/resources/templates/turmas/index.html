@@ -10,7 +10,11 @@
 <div th:replace="~{fragments :: main-header}"></div>
 
 <div class="container mt-3">
-    <h1 th:text="${title}"></h1>
+
+    <div class="inline_block">
+        <h1 th:text="${title}"></h1>
+        <a class="btn btn-primary float-end" role="button" th:href="@{/turmas/registrar}" th:text="Registrar"></a>
+    </div>
 
     <table class="table table-striped">
         <thead>
@@ -22,7 +26,7 @@
         </thead>
         <tbody>
         <tr th:if="${turmasList.empty}">
-            <td colspan="3"> Nenhuma turma registrada. </td>
+            <td colspan="3"> Nenhuma turma registrada </td>
         </tr>
         <tr th:each="turma : ${turmasList}">
             <td><span th:text="${turma.turma}"> Turma </span></td>

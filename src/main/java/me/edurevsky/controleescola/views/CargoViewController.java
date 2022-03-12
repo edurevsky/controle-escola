@@ -1,7 +1,6 @@
 package me.edurevsky.controleescola.views;
 
 import me.edurevsky.controleescola.forms.CargoForm;
-import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.services.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,19 @@ public class CargoViewController {
     @GetMapping(value = "/cargos/{id}/detalhes")
     public String detalhesCargo(@PathVariable Long id, Model model) {
         model.addAttribute("cargo", cargoService.findById(id));
-        return "cargos/detalhes";
+        return "cargos/details";
+    }
+
+    @GetMapping(value = "/cargos/{id}/editar")
+    public String editarCargo(@ModelAttribute CargoForm cargoForm, @PathVariable Long id, Model model) {
+        model.addAttribute("cargo", cargoService.findById(id));
+        return "cargos/edit";
+    }
+
+    @PostMapping(value = "/cargos/{id}/editar")
+    public String editarCargoPost(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
+        cargoService.update(id, cargoForm);
+        return "redirect:/cargos";
     }
 
 }

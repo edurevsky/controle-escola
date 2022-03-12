@@ -2,11 +2,7 @@ package me.edurevsky.controleescola.entities;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 
 import lombok.*;
 import me.edurevsky.controleescola.entities.enums.Turno;
@@ -25,6 +21,7 @@ public class Funcionario extends PessoaFisica {
     private Turno horarioDeTrabalho;
 
     @ManyToOne
+    @JoinColumn(nullable = true)
     private Cargo cargo;
 
 }

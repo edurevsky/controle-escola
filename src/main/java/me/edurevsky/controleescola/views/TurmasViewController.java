@@ -33,7 +33,7 @@ public class TurmasViewController {
     public String addTurmaView(TurmaForm turmaForm, Model model) {
         model.addAttribute("title", "Registrar Turma");
         model.addAttribute("professoresList", professorService.findAll());
-        return "turmas/addturma";
+        return "turmas/new";
     }
 
     @PostMapping(value = "turmas/registrar")

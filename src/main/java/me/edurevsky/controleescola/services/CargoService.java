@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.forms.CargoForm;
+import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ import me.edurevsky.controleescola.repositories.CargoRepository;
 public class CargoService {
 
     private final CargoRepository cargoRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private static final String NOT_FOUND_MESSAGE = "Cargo com id %d não encontrado";
     private static final String NAME_NOT_FOUND_MESSAGE = "Cargo com nome %s não encontrado";
 
     @Autowired
-    public CargoService(CargoRepository cargoRepository) {
+    public CargoService(CargoRepository cargoRepository, FuncionarioRepository funcionarioRepository) {
         this.cargoRepository = cargoRepository;
+        this.funcionarioRepository = funcionarioRepository;
     }
 
     public Cargo save(CargoForm cargoForm) {
@@ -54,6 +58,11 @@ public class CargoService {
 
     public void remove(Long id) {
         Handlers.handleEntityNotFound(cargoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+        List<Funcionario> funcionarios = cargoRepository.getById(id).getFuncionarios();
+        funcionarios.forEach(funcionario -> {
+            funcionario.setCargo(null);
+        });
+        funcionarioRepository.saveAll(funcionarios);
         cargoRepository.deleteById(id);
     }
 

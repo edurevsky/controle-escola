@@ -10,11 +10,16 @@
 <div th:replace="~{fragments :: main-header}"></div>
 
 <div class="container mt-3">
-    <h1 th:text="${title}"></h1>
+
+    <div class="inline_block">
+        <h1 th:text="${title}"></h1>
+        <a class="btn btn-primary float-end" role="button" th:href="@{/funcionarios/registrar}" th:text="Registrar"></a>
+    </div>
 
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Nome</th>
             <th>CPF</th>
             <th>Turno</th>
@@ -23,13 +28,14 @@
         </thead>
         <tbody>
         <tr th:if="${funcionariosList.empty}">
-            <td colspan="4">Nenhum funcionário registrado</td>
+            <td colspan="5">Nenhum funcionário registrado</td>
         </tr>
         <tr th:each="funcionario : ${funcionariosList}">
+            <th><span th:text="${funcionario.id}">Id</span></th>
             <td><span th:text="${funcionario.nome}">Nome</span></td>
             <td><span th:text="${funcionario.cpf}">CPF</span></td>
             <td><span th:text="${funcionario.horarioDeTrabalho}">Turno</span></td>
-            <td><span th:text="${funcionario.cargo.cargo}">Cargo</span></td>
+            <td><span th:text="${funcionario.cargo != null} ? ${funcionario.cargo.cargo} : 'Nenhum'">Cargo</span></td>
         </tr>
         </tbody>
     </table>

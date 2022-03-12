@@ -18,6 +18,7 @@
     </select>
 
     Cargo <select th:field="*{cargo}">
+        <option th:value="${null}">Nenhum</option>
         <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
     </select>
 

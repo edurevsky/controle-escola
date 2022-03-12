@@ -36,7 +36,7 @@
             <td><span th:text="${cargo.cargo}">Cargo</span></td>
             <td><a th:href="@{|/cargos/${cargo.id}/detalhes|}">Detalhes</a></td>
             <td><a th:href="@{|/cargos/${cargo.id}/deletar|}">Deletar</a></td>
-            <td><a href="">Editar</a></td>
+            <td><a th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a></td>
         </tr>
         </tbody>
     </table>

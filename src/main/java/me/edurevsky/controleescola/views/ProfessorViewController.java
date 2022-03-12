@@ -29,7 +29,7 @@ public class ProfessorViewController {
     @GetMapping(value = "/professores/registrar")
     public String addProfessorView(ProfessorForm professorForm, Model model) {
         model.addAttribute("title", "Registrar Professor");
-        return "professores/addprofessor";
+        return "professores/new";
     }
 
     @PostMapping(value = "/professores/registrar")

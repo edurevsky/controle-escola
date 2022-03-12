@@ -35,7 +35,7 @@ public class AlunosViewController {
         model.addAttribute("title", "Registrar Aluno");
         model.addAttribute("turmasList", turmaService.findAll());
         model.addAttribute("turnos", Turno.values());
-        return "alunos/addaluno";
+        return "alunos/new";
     }
 
     @PostMapping(value = "/alunos/registrar")
