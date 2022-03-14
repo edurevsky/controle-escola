@@ -32,10 +32,10 @@
             <td colspan="5"> Nenhum cargo registrado</td>
         </tr>
         <tr th:each="cargo : ${cargosList}">
-            <td><span th:text="${cargo.id}">Id</span></td>
+            <th><span th:text="${cargo.id}">Id</span></th>
             <td><span th:text="${cargo.cargo}">Cargo</span></td>
             <td><a th:href="@{|/cargos/${cargo.id}/detalhes|}">Detalhes</a></td>
-            <td><a th:href="@{|/cargos/${cargo.id}/deletar|}">Deletar</a></td>
+            <td><a th:href="@{|/cargos/${cargo.id}/deletar|}" onclick="messageAlert()">Deletar</a></td>
             <td><a th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a></td>
         </tr>
         </tbody>
@@ -43,9 +43,17 @@
 
 </div>
 
+<div th:replace="~{fragments :: main-footer}"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+<script>
+    function messageAlert() {
+        alert("Os funcionários relacionados com esse cargo serão setados com 'nenhum'");
+    }
+</script>
 
 </body>
 </html>

@@ -51,6 +51,7 @@ public class CargoViewController {
     @GetMapping(value = "/cargos/{id}/editar")
     public String editarCargo(@ModelAttribute CargoForm cargoForm, @PathVariable Long id, Model model) {
         model.addAttribute("cargo", cargoService.findById(id));
+        model.addAttribute("title", "Editar cargo");
         return "cargos/edit";
     }
 

@@ -12,7 +12,9 @@
 
 <div th:replace="~{fragments :: main-header}"></div>
 
-<div class="container">
+<div class="container mt-3">
+
+    <h1 th:text="${title}"></h1>
 
     <form th:action="@{|/cargos/${cargo.id}/editar|}" th:object="${cargoForm}" method="post">
 
@@ -22,7 +24,7 @@
         </div>
         
         <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">
-        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Resetar">
+        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Limpar">
 
     </form>
 

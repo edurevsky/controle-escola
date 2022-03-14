@@ -23,7 +23,7 @@ public class Cargo {
     private String cargo;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Funcionario.class, mappedBy = "cargo", orphanRemoval = false)
+    @OneToMany(targetEntity = Funcionario.class, mappedBy = "cargo")
     private List<Funcionario> funcionarios = new ArrayList<>();
 
     /**

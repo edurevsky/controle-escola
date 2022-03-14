@@ -45,9 +45,25 @@ public class FuncionarioViewController {
         return "redirect:/funcionarios";
     }
 
+    @GetMapping(value = "/funcionarios/{id}/deletar")
+    public String deletarFuncionario(@PathVariable Long id) {
+        funcionarioService.remove(id);
+        return "redirect:/funcionarios";
+    }
+
     @GetMapping(value = "/funcionarios/{id}/editar")
-    public String editarFuncionario(@ModelAttribute FuncionarioForm funcionarioForm, @PathVariable Long id) {
+    public String editarFuncionario(FuncionarioForm funcionarioForm, @PathVariable Long id, Model model) {
+        model.addAttribute("funcionario", funcionarioService.findById(id));
+        model.addAttribute("turnos", Turno.values());
+        model.addAttribute("cargosList", !cargoService.findAll().isEmpty() ? cargoService.findAll() : null);
+        model.addAttribute("title", "Editar funcionário");
         return "funcionarios/edit";
+    }
+
+    @PostMapping(value = "/funcionarios/{id}/editar")
+    public String editarFuncionarioPost(@ModelAttribute FuncionarioForm funcionarioForm, @PathVariable Long id) {
+        funcionarioService.update(id, funcionarioForm);
+        return "redirect:/funcionarios";
     }
 
 }

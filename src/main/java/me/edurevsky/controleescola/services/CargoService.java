@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.repositories.CargoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CargoService {
@@ -33,6 +34,7 @@ public class CargoService {
         return cargoRepository.save(CargoForm.convertToCargo(cargoForm));
     }
 
+    @Transactional
     public Cargo update(Long id, CargoForm cargoForm) {
         Cargo cargo = cargoRepository.getById(id);
         BeanUtils.copyProperties(cargoForm, cargo);
@@ -43,6 +45,14 @@ public class CargoService {
         return cargoRepository.findAll();
     }
 
+    /**
+     * Returns a Cargo object if the id exists,
+     * else throws a Exception
+     *
+     * @param id the cargo id
+     * @return Cargo
+     * @throws EntityNotFoundException if id not exists
+     */
     public Cargo findById(Long id) {
         return cargoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
@@ -56,12 +66,18 @@ public class CargoService {
         throw new EntityNotFoundException(String.format(NAME_NOT_FOUND_MESSAGE, cargo));
     }
 
+    /**
+     * If the id exists, removes the cargo and
+     * sets all the funcionarios cargo to null
+     *
+     * @param id The cargo id
+     */
+    @Transactional
     public void remove(Long id) {
         Handlers.handleEntityNotFound(cargoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
         List<Funcionario> funcionarios = cargoRepository.getById(id).getFuncionarios();
-        funcionarios.forEach(funcionario -> {
-            funcionario.setCargo(null);
-        });
+        funcionarios.forEach((funcionario) -> funcionario.setCargo(null));
         funcionarioRepository.saveAll(funcionarios);
         cargoRepository.deleteById(id);
     }

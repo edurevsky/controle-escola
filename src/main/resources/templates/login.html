@@ -13,11 +13,13 @@
         <form th:action="@{/login}" method="post">
 
             <div class="form-outline mb-4">
-                <input class="form-control" type="text" placeholder="Usuário" name="username">
+                <label for="username-input">Usuário</label>
+                <input class="form-control" id="username-input" type="text" placeholder="Usuário" name="username">
             </div>
 
             <div class="form-outline mb-3">
-                <input class="form-control" type="password" placeholder="Senha" name="password">
+                <label for="password-input">Senha</label>
+                <input class="form-control" id="password-input" type="password" name="password">
             </div>
 
             <input class="btn btn-primary" type="submit" value="Login">

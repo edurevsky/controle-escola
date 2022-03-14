@@ -22,8 +22,8 @@
         <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
     </select>
 
-    <input type="submit">
-    <input type="reset">
+    <input type="submit" th:text="Salvar">
+    <input type="reset" th:text="Limpar">
 
 </form>
 
