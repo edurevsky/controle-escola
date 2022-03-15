@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.views;
 
+import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,14 @@ public class ProfessorViewController {
     public String deletarProfessor(@PathVariable Long id) {
         professorService.remove(id);
         return "redirect:/professores";
+    }
+
+    @GetMapping(value = "/professores/{id}/detalhes")
+    public String detalhesProfessor(@PathVariable Long id, Model model) {
+        Professor professor = professorService.findById(id);
+        model.addAttribute("title", String.format("Detalhes de %s", professor.getNome()));
+        model.addAttribute("professor", professor);
+        return "professores/details";
     }
 
 }

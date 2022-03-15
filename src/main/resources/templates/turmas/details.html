@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://wwww.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -12,35 +12,48 @@
 
 <div class="container mt-3">
 
-    <div class="inline_block">
-        <h1 th:text="${title}"></h1>
-        <a class="btn btn-primary float-end" role="button" th:href="@{/alunos/registrar}" th:text="Registrar"></a>
+    <h1 th:text="|Turma ${turma.turma}|"></h1>
+
+    <div class="row mt-2">
+        <div class="col">
+            <label for="turma-conteudo"><b>Conteúdo</b></label>
+            <p id="turma-conteudo" th:text="${turma.conteudo}"></p>
+        </div>
+
+        <div class="col">
+            <label for="turma-professor"><b>Professor</b></label><br>
+            <a id="turma-professor" th:href="@{|/professores/${turma.professor.id}/detalhes|}"
+               th:text="${turma.professor.nome}"></a>
+        </div>
     </div>
+
+</div>
+
+<div class="container mt-3">
+
+    <h2>Alunos nessa turma</h2>
 
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Nome</th>
-            <th>CPF</th>
             <th>Email</th>
             <th>Status</th>
             <th>Turno</th>
-            <th>Turma</th>
-            <th>Matrícula</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${alunosList.empty}">
-            <td colspan="7">Nenhum aluno registrado</td>
+        <tr th:if="${turma.alunos.empty}">
+            <td colspan="7">Nenhum aluno registrado na turma</td>
         </tr>
-        <tr th:each="aluno : ${alunosList}">
+        <tr th:each="aluno : ${turma.alunos}">
+            <th><span th:text="${aluno.id}">Id</span></th>
             <td><span th:text="${aluno.nome}">Nome</span></td>
-            <td><span th:text="${aluno.cpf}">CPF</span></td>
             <td><span th:text="${aluno.email}">Email</span></td>
             <td><span th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'">Status</span></td>
             <td><span th:text="${aluno.turno}">Turno</span></td>
-            <td><span th:text="${aluno.turma.turma}">Turma</span></td>
-            <td><span th:text="${aluno.dataMatricula}">Matrícula</span></td>
+            <td><a>Ver mais</a></td>
         </tr>
         </tbody>
     </table>

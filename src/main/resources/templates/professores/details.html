@@ -12,33 +12,47 @@
 
 <div class="container mt-3">
 
-    <div class="inline_block">
-        <h1 th:text="${title}"></h1>
-        <a class="btn btn-primary float-end" role="button" th:href="@{/turmas/registrar}" th:text="Registrar"></a>
+    <h1 th:text="|Professor ${professor.nome}|"></h1>
+
+    <div class="row mt-2">
+        <div class="col">
+            <label for="prof-nome"><b>Nome</b></label>
+            <p id="prof-nome" th:text="${professor.nome}"></p>
+        </div>
+
+        <div class="col">
+            <label for="prof-cpf"><b>CPF</b></label>
+            <p id="prof-cpf" th:text="${professor.cpf}"></p>
+        </div>
+
+        <div class="col">
+            <label for="prof-salario"><b>Salário</b></label>
+            <p id="prof-salario" th:text="${professor.salario}"></p>
+        </div>
     </div>
+
+</div>
+
+<div class="container mt-3">
+
+    <h2>Turmas</h2>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Id</th>
             <th>Turma</th>
-            <th>Professor</th>
-            <th></th>
-            <th></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${turmasList.empty}">
-            <td colspan="6">Nenhuma turma registrada</td>
+        <tr th:if="${professor.turmas.empty}">
+            <td colspan="3">Professor não contém turmas</td>
         </tr>
-        <tr th:each="turma : ${turmasList}">
+        <tr th:each="turma : ${professor.turmas}">
             <th><span th:text="${turma.id}">Id</span></th>
             <td><span th:text="${turma.turma}">Turma</span></td>
-            <td><span th:text="${turma.professor != null} ? ${turma.professor.nome} : 'Nenhum'">Professor</span></td>
-            <td><a th:href="@{|/turmas/${turma.id}/detalhes|}">Detalhes</a></td>
-            <td><a>Deletar</a></td>
-            <td><a th:href="@{|/turmas/${turma.id}/editar|}">Editar</a></td>
+            <td><a>Ver mais</a></td>
         </tr>
         </tbody>
     </table>
