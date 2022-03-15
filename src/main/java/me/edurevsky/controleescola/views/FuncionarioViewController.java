@@ -66,4 +66,10 @@ public class FuncionarioViewController {
         return "redirect:/funcionarios";
     }
 
+    @GetMapping(value = "/funcionarios/{id}/detalhes")
+    public String detalhesFuncionario(@PathVariable Long id, Model model) {
+        model.addAttribute("funcionario", funcionarioService.findById(id));
+        return "funcionarios/details";
+    }
+
 }

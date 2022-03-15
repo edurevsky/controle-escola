@@ -12,24 +12,27 @@
 
 <div class="container mt-3">
 
-    <h1 th:text="|Funcionários do cargo ${cargo.cargo}|"></h1>
-
-    <!-- <h2 class="mt-2" th:text="Funcionários"></h2> -->
+    <div class="inline_block">
+        <h1 th:text="|Funcionários do cargo ${cargo.cargo}|"></h1>
+        <a class="btn btn-primary float-end" role="button" th:href="@{|/cargos/${cargo.id}/editar|}">Editar cargo</a>
+    </div>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Id</th>
             <th>Nome</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${cargo.funcionarios.empty}">
-            <td colspan="2">Este cargo não possui funcionários</td>
+            <td colspan="3">Este cargo não possui funcionários</td>
         </tr>
         <tr th:each="funcionario: ${cargo.funcionarios}">
-            <td><span th:text="${funcionario.id}"></span></td>
-            <td><span th:text="${funcionario.nome}"></span></td>
+            <th><span th:text="${funcionario.id}">Id</span></th>
+            <td><span th:text="${funcionario.nome}">Nome</span></td>
+            <td><a th:href="@{|/funcionarios/${funcionario.id}/detalhes|}">Detalhes</a></td>
         </tr>
         </tbody>
     </table>

@@ -12,7 +12,7 @@
 <form action="#" th:action="@{/professores/registrar}" th:object="${professorForm}" method="post">
 
     <input type="text" th:field="*{nome}" placeholder="Nome">
-    <input type="text" th:field="*{cpf}" placeholder="CPF">
+    <input type="text" th:field="*{cpf}" placeholder="123.123.123-12">
     <input type="number" step="any" th:field="*{salario}" placeholder="Salário">
 
     <input type="submit" th:text="Salvar">
