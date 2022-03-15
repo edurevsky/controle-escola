@@ -52,4 +52,10 @@ public class ProfessorViewController {
         return "redirect:/professores";
     }
 
+    @GetMapping(value = "/professores/{id}/deletar")
+    public String deletarProfessor(@PathVariable Long id) {
+        professorService.remove(id);
+        return "redirect:/professores";
+    }
+
 }

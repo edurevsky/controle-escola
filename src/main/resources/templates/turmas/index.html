@@ -31,7 +31,7 @@
         <tr th:each="turma : ${turmasList}">
             <td><span th:text="${turma.turma}"> Turma </span></td>
             <td><span th:text="${turma.conteudo}"> Conteúdo </span></td>
-            <td><span th:text="${turma.professor.nome}"> Professor </span></td>
+            <td><span th:text="${turma.professor != null} ? ${turma.professor.nome} : 'Nenhum'"> Professor </span></td>
         </tr>
         </tbody>
     </table>

@@ -1,8 +1,10 @@
 package me.edurevsky.controleescola.services;
 
 import me.edurevsky.controleescola.entities.Professor;
+import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
+import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import java.util.List;
 public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
+    private final TurmaRepository turmaRepository;
     private static final String NOT_FOUND_MESSAGE = "Professor com id %d não encontrado";
 
     @Autowired
-    public ProfessorService(ProfessorRepository professorRepository) {
+    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository) {
         this.professorRepository = professorRepository;
+        this.turmaRepository = turmaRepository;
     }
 
     public Professor save(ProfessorForm professorForm) {
@@ -35,6 +39,10 @@ public class ProfessorService {
 
     public void remove(Long id) {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
+        List<Turma> turmas = professorRepository.getById(id).getTurmas();
+        turmas.forEach((t) -> t.setProfessor(null));
+        turmaRepository.saveAll(turmas);
         professorRepository.deleteById(id);
     }
 
