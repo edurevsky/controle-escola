@@ -20,19 +20,27 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Nome</th>
             <th>CPF</th>
             <th>Salário</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${professoresList.empty}">
-            <td colspan="3">Nenhum professor registrado</td>
+            <td colspan="7">Nenhum professor registrado</td>
         </tr>
         <tr th:each="prof : ${professoresList}">
+            <th><span th:text="${prof.id}">Id</span></th>
             <td><span th:text="${prof.nome}">Nome</span></td>
             <td><span th:text="${prof.cpf}">CPF</span></td>
             <td><span th:text="${prof.salario}">Salário</span></td>
+            <td><a>Detalhes</a></td>
+            <td><a>Deletar</a></td>
+            <td><a th:href="@{|/professores/${prof.id}/editar|}">Editar</a></td>
         </tr>
         </tbody>
     </table>

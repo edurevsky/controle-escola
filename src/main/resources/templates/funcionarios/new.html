@@ -7,14 +7,13 @@
 </head>
 <body>
 
-<div class="container mt-3">
+<div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
     <form action="#" th:action="@{/funcionarios/registrar}" th:object="${funcionarioForm}" method="post">
 
         <div class="row">
-
             <div class="col">
                 <div class="form-group mt-3">
                     <label for="nome-input">Nome</label>
@@ -25,7 +24,8 @@
             <div class="col">
                 <div class="form-group mt-3">
                     <label for="cpf-input">CPF</label>
-                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}" placeholder="123.123.123-12">
+                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}"
+                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
                 </div>
             </div>
 
@@ -35,11 +35,9 @@
                     <input class="form-control" id="salario-input" type="number" step="0.01" th:field="*{salario}" placeholder="Salário">
                 </div>
             </div>
-
         </div>
 
         <div class="row">
-
             <div class="col">
                 <label for="turno-select">Turno</label>
                 <select class="form-control" id="turno-select" th:field="*{horarioDeTrabalho}">
@@ -54,16 +52,6 @@
                     <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
                 </select>
             </div>
-
-<!--            Turno <select th:field="*{horarioDeTrabalho}">-->
-<!--                <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>-->
-<!--            </select>-->
-<!--    -->
-<!--            Cargo <select th:field="*{cargo}">-->
-<!--                <option th:value="${null}">Nenhum</option>-->
-<!--                <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>-->
-<!--            </select>-->
-
         </div>
 
         <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">

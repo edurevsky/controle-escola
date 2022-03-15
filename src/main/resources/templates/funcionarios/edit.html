@@ -10,44 +10,64 @@
 
 <div th:replace="~{fragments :: main-header}"></div>
 
-<div class="container mt-3">
+<div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
     <form th:action="@{|/funcionarios/${funcionario.id}/editar|}" th:object="${funcionarioForm}" method="post">
 
-        <div class="form-group mt-3">
-            <label for="nome-input">Nome</label>
-            <input class="form-control" id="nome-input" type="text" th:field="*{nome}" th:placeholder="${funcionario.nome}">
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="nome-input">Nome</label>
+                    <input class="form-control" id="nome-input" type="text" th:name="nome" th:value="${funcionario.nome}">
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="cpf-input">CPF</label>
+                    <input class="form-control" id="cpf-input" type="text" th:name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" th:value="${funcionario.cpf}">
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="salario-input">Salário</label>
+                    <input class="form-control" id="salario-input" type="number" step="any" th:name="salario" th:value="${funcionario.salario}">
+                </div>
+            </div>
         </div>
 
-        <div class="form-group mt-2">
-            <label for="cpf-input">CPF</label>
-            <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}" th:placeholder="${funcionario.cpf}">
+        <div class="row mt-2">
+            <div class="col">
+                <div class="form-group mt-2">
+                    <label for="horario-select">Turno</label>
+                    <select class="form-control" id="horario-select" th:name="horarioDeTrabalho">
+                        <option th:each="turno : ${turnos}" th:value="${turno}" th:text="${turno}"
+                                th:selected="(${turno} == ${funcionario.horarioDeTrabalho})"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group mt-2">
+                    <label for="cargo-select">Cargo</label>
+                    <select class="form-control" id="cargo-select" th:name="cargo">
+                        <option th:value="${null}">Nenhum</option>
+                        <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"
+                                th:selected="(${c} == ${funcionario.cargo})"></option>
+                    </select>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group mt-2">
-            <label for="salario-input">Salário</label>
-            <input class="form-control" id="salario-input" type="number" step="any" th:field="*{salario}">
+        <div class="row mt-2">
+            <div class="col">
+                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
+            </div>
         </div>
-
-        <div class="form-group mt-2">
-            <label for="horario-select">Turno</label>
-            <select class="form-control" id="horario-select" th:field="*{horarioDeTrabalho}">
-                <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>
-            </select>
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="cargo-select">Cargo</label>
-            <select class="form-control" id="cargo-select" th:field="*{cargo}">
-                <option th:value="${null}">Nenhum</option>
-                <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
-            </select>
-        </div>
-
-        <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">
-        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Limpar">
 
     </form>
 

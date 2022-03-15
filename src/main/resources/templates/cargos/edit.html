@@ -12,19 +12,27 @@
 
 <div th:replace="~{fragments :: main-header}"></div>
 
-<div class="container mt-3">
+<div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
     <form th:action="@{|/cargos/${cargo.id}/editar|}" th:object="${cargoForm}" method="post">
 
-        <div class="form-group mt-3">
-            <label for="cargo-input">Cargo</label>
-            <input class="form-control" type="text" id="cargo-input" th:field="*{cargo}" th:placeholder="${cargo.cargo}"/>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="cargo-input">Cargo</label>
+                    <input class="form-control" type="text" id="cargo-input" th:name="cargo" th:value="${cargo.cargo}"/>
+                </div>
+            </div>
         </div>
-        
-        <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">
-        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Limpar">
+
+        <div class="row mt-2">
+            <div class="col">
+                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
+            </div>
+        </div>
 
     </form>
 

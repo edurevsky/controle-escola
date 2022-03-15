@@ -7,19 +7,48 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
+<div class="container mt-3">
 
-    <input type="text" th:field="*{turma}" placeholder="Turma">
-    <input type="text" th:field="*{conteudo}" placeholder="Conteúdo">
+    <h1 th:text="${title}"></h1>
 
-    Professor <select th:field="*{professor}">
-        <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"></option>
-    </select>
+    <form th:if="${professoresList.empty}">
+        <div class="alert alert-warning mt-3" role="alert">
+            Você precisa registrar pelo menos um professor para registrar uma turma!
+        </div>
+    </form>
+    <form th:unless="${professoresList.empty}" action="#" th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
 
-    <input type="submit">
-    <input type="reset">
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="turma-input">Turma</label>
+                    <input class="form-control" id="turma-input" type="text" th:field="*{turma}" placeholder="Turma">
+                </div>
+            </div>
 
-</form>
+            <div class="col">
+                <div class="form-group">
+                    <label for="conteudo-input">Conteúdo</label>
+                    <input class="form-control" id="conteudo-input" type="text" th:field="*{conteudo}" placeholder="Conteúdo">
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="prof-select">Professor</label>
+                    <select class="form-control" id="prof-select" th:field="*{professor}">
+                        <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">
+        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Limpar">
+
+    </form>
+
+</div>
 
 </body>
 </html>

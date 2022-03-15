@@ -7,18 +7,41 @@
 </head>
 <body>
 
-<h1 th:text="${title}"></h1>
+<div class="container mt-3 w-50">
 
-<form action="#" th:action="@{/professores/registrar}" th:object="${professorForm}" method="post">
+    <h1 th:text="${title}"></h1>
 
-    <input type="text" th:field="*{nome}" placeholder="Nome">
-    <input type="text" th:field="*{cpf}" placeholder="123.123.123-12">
-    <input type="number" step="any" th:field="*{salario}" placeholder="Salário">
+    <form action="#" th:action="@{/professores/registrar}" th:object="${professorForm}" method="post">
 
-    <input type="submit" th:text="Salvar">
-    <input type="reset" th:text="Limpar">
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="nome-input">Nome</label>
+                    <input class="form-control" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                </div>
+            </div>
 
-</form>
+            <div class="col">
+                <div class="form-group">
+                    <label for="cpf-input">CPF</label>
+                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="salario-input">Salário</label>
+                    <input class="form-control" id="salario-input" type="number" step="any" th:field="*{salario}" placeholder="1000,00">
+                </div>
+            </div>
+        </div>
+
+        <input class="btn btn-outline-primary mt-2" type="submit" th:value="Salvar">
+        <input class="btn btn-outline-secondary mt-2" type="reset" th:value="Limpar">
+
+    </form>
+
+</div>
 
 </body>
 </html>

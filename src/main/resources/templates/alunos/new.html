@@ -7,25 +7,60 @@
 </head>
 <body>
 
-<h1 th:text="${title}"></h1>
+<div class="container mt-3">
 
-<form action="#" th:action="@{/alunos/registrar}" th:object="${alunoForm}" method="post">
+    <h1 th:text="${title}"></h1>
 
-    <input type="text" th:field="*{nome}" placeholder="Nome">
-    <input type="text" th:field="*{cpf}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+    <form action="#" th:action="@{/alunos/registrar}" th:object="${alunoForm}" method="post">
 
-    <select th:field="*{turno}">
-        <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>
-    </select>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="nome-input">Nome</label>
+                    <input class="form-control" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                </div>
+            </div>
 
-    <select th:field="*{turma}">
-        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
-    </select>
+            <div class="col">
+                <div class="form-group">
+                    <label for="cpf-input">CPF</label>
+                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}"
+                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                </div>
+            </div>
 
-    <input type="submit" th:text="Salvar">
-    <input type="reset" th:text="Limpar">
+            <div class="col">
+                <div class="form-group">
+                    <label for="turno-select">Turno</label>
+                    <select class="form-control" id="turno-select" th:field="*{turno}">
+                        <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
-</form>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="form-group">
+                    <label for="turma-select">Turma</label>
+                    <select class="form-control" id="turma-select" th:field="*{turma}">
+                        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
 
 </body>
 </html>
