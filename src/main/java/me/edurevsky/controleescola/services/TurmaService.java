@@ -27,7 +27,11 @@ public class TurmaService {
     private static final String NOT_FOUND_MESSAGE = "Turma com id %d não encontrada";
 
     @Autowired
-    public TurmaService(TurmaRepository turmaRepository, ProfessorRepository professorRepository, AlunoRepository alunoRepository) {
+    public TurmaService(
+            TurmaRepository turmaRepository,
+            ProfessorRepository professorRepository,
+            AlunoRepository alunoRepository
+    ) {
         this.turmaRepository = turmaRepository;
         this.professorRepository = professorRepository;
         this.alunoRepository = alunoRepository;

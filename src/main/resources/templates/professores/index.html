@@ -38,9 +38,9 @@
             <td><span th:text="${prof.nome}">Nome</span></td>
             <td><span th:text="${prof.cpf}">CPF</span></td>
             <td><span th:text="${prof.salario}">Salário</span></td>
-            <td><a th:href="@{|/professores/${prof.id}/editar|}">Editar</a></td>
-            <td><a th:href="@{|/professores/${prof.id}/deletar|}">Deletar</a></td>
-            <td><a th:href="@{|/professores/${prof.id}/detalhes|}">Ver mais</a></td>
+            <td><a class="link-secondary" th:href="@{|/professores/${prof.id}/editar|}">Editar</a></td>
+            <td><a class="link-danger" th:href="@{|/professores/${prof.id}/deletar|}">Deletar</a></td>
+            <td><a class="link-info" th:href="@{|/professores/${prof.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

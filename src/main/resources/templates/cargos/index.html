@@ -34,9 +34,9 @@
         <tr th:each="cargo : ${cargosList}">
             <th><span th:text="${cargo.id}">Id</span></th>
             <td><span th:text="${cargo.cargo}">Cargo</span></td>
-            <td><a th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a></td>
-            <td><a th:href="@{|/cargos/${cargo.id}/deletar|}" onclick="messageAlert()">Deletar</a></td>
-            <td><a th:href="@{|/cargos/${cargo.id}/detalhes|}">Ver mais</a></td>
+            <td><a class="link-secondary" th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a></td>
+            <td><a class="link-danger" th:href="@{|/cargos/${cargo.id}/deletar|}" onclick="messageAlert()">Deletar</a></td>
+            <td><a class="link-info" th:href="@{|/cargos/${cargo.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

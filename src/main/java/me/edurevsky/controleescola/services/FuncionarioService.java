@@ -15,6 +15,7 @@ import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FuncionarioService {
@@ -34,6 +35,7 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
+    @Transactional
     public Funcionario update(Long id, FuncionarioForm funcionarioForm) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Funcionario funcionario = funcionarioRepository.getById(id);
@@ -41,12 +43,14 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
+    @Transactional
     public void remove(Long id) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         
         funcionarioRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateSalary(Long id, BigDecimal salario) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
@@ -60,6 +64,7 @@ public class FuncionarioService {
             .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
     }
 
+    @Transactional
     public void updateCpf(Long id, String cpf) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
 
@@ -68,6 +73,7 @@ public class FuncionarioService {
         funcionarioRepository.save(funcionario);
     }
 
+    @Transactional
     public Funcionario addCargo(Long idFuncionario, Long idCargo) {
         Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
         Cargo cargo = cargoRepository.getById(idCargo);

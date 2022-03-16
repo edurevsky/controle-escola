@@ -9,6 +9,7 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ProfessorService {
         return professorRepository.save(ProfessorForm.convertToProfessor(professorForm));
     }
 
+    @Transactional
     public Professor update(Long id, ProfessorForm professorForm) {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Professor professor = professorRepository.getById(id);
@@ -37,6 +39,7 @@ public class ProfessorService {
         return professorRepository.save(professor);
     }
 
+    @Transactional
     public void remove(Long id) {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
