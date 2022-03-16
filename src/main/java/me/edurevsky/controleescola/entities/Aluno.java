@@ -1,6 +1,7 @@
 package me.edurevsky.controleescola.entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -30,5 +31,9 @@ public class Aluno extends PessoaFisica {
     @ManyToOne
     @JoinColumn(name = "turma_id")
     private Turma turma;
+
+    public String getMatriculaFormatada() {
+        return dataMatricula.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
 
 }

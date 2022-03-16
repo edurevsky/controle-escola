@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.views;
 
+import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
@@ -64,6 +65,21 @@ public class AlunosViewController {
     public String editAlunoPost(@PathVariable("id") Long id, @ModelAttribute AlunoForm alunoForm) {
         alunoService.update(id, alunoForm);
         return "redirect:/alunos";
+    }
+
+    @GetMapping(value = "/alunos/{id}/detalhes")
+    public String detailsAluno(@PathVariable("id") Long id, Model model) {
+        Aluno aluno = alunoService.findById(id);
+        model.addAttribute("title", String.format("Detalhes de %s", aluno.getNome()));
+        model.addAttribute("aluno", aluno);
+        model.addAttribute("mstatus", !aluno.getEstaAtivo() ? "Ativo" : "Inativo");
+        return "alunos/details";
+    }
+
+    @GetMapping(value = "/alunos/{id}/alterar-status")
+    public String switchStatus(@PathVariable("id") Long id) {
+        alunoService.switchEstaAtivo(id);
+        return "redirect:/alunos/{id}/detalhes";
     }
 
 }

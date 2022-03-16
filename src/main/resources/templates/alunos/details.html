@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymemeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link th:replace="~{fragments :: bootstrap-css}">
+</head>
+<body>
+
+<div th:replace="~{fragments :: main-header}"></div>
+
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col">
+            <h1 th:text="|Aluno(a) ${aluno.nome}|"></h1>
+            <a class="btn btn-primary float-end" role="button" th:href="@{|/alunos/${aluno.id}/editar|}">Editar</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="container mt-2">
+
+    <div class="row mt-2">
+        <div class="col">
+            <label for="aluno-nome"><b>Nome</b></label>
+            <p id="aluno-nome" th:text="${aluno.nome}"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-cpf"><b>CPF</b></label>
+            <p id="aluno-cpf" th:text="${aluno.cpf}"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-email"><b>Email</b></label>
+            <p id="aluno-email" th:text="${aluno.email}"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="aluno-status"><b>Status</b></label>
+            <p id="aluno-status" th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-matricula"><b>Matrícula</b></label>
+            <p id="aluno-matricula" th:text="${aluno.getMatriculaFormatada()}"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-turno"><b>Turno</b></label>
+            <p id="aluno-turno" th:text="${aluno.turno}"></p>
+        </div>
+    </div>
+
+</div>
+
+<div class="container mt-2">
+
+    <div class="row">
+        <div class="col">
+            <a th:href="@{|/alunos/${aluno.id}/alterar-status|}">
+                <p th:text="|Alterar status para ${mstatus}|"></p>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments :: main-footer}"></div>
+
+<script th:replace="~{fragments :: bootstrap-js}"></script>
+
+</body>
+</html>
