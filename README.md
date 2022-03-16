@@ -94,3 +94,25 @@
 - A página permite que o usuário:
   - Tenha mais informações sobre a turma.
   - Edite a turma.
+
+## Alunos
+
+### Página de Alunos
+#### acessado em - "/alunos"
+![pagina_alunos](screenshots/pagina_alunos.png)
+- A página permite que o usuário:
+  - Visualize e gerencie os alunos registrados.
+
+### Registro de um Aluno
+#### acessado em - "/alunos/registrar"
+![registrar_aluno](screenshots/registrar_aluno.png)
+- A página permite que o usuário:
+  - Registre um novo aluno.
+
+### Aluno - Ver mais
+#### acessado em - "/alunos/{id}/detalhes"
+![alunos_ver_mais](screenshots/alunos_ver_mais.png)
+- A página permite que o usuário:
+  - Veja mais informações do aluno.
+  - Altere o status do aluno.
+  - Edite o aluno.
