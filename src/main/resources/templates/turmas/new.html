@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container mt-3">
+<div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
@@ -37,6 +37,7 @@
                 <div class="form-group">
                     <label for="prof-select">Professor</label>
                     <select class="form-control" id="prof-select" th:field="*{professor}">
+                        <option th:value="${null}">Nenhum</option>
                         <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"></option>
                     </select>
                 </div>
@@ -49,7 +50,6 @@
                 <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
             </div>
         </div>
-
 
     </form>
 

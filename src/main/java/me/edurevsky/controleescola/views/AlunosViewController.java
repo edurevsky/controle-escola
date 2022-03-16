@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -41,6 +42,27 @@ public class AlunosViewController {
     @PostMapping(value = "/alunos/registrar")
     public String novoAlunoPost(@ModelAttribute AlunoForm alunoForm, Model model) {
         alunoService.save(alunoForm);
+        return "redirect:/alunos";
+    }
+
+    @GetMapping(value = "/alunos/{id}/deletar")
+    public String deleteAluno(@PathVariable("id") Long id) {
+        alunoService.remove(id);
+        return "redirect:/alunos";
+    }
+
+    @GetMapping(value = "/alunos/{id}/editar")
+    public String editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm, Model model) {
+        model.addAttribute("title", "Editar Aluno");
+        model.addAttribute("aluno", alunoService.findById(id));
+        model.addAttribute("turnos", Turno.values());
+        model.addAttribute("turmasList", turmaService.findAll());
+        return "alunos/edit";
+    }
+
+    @PostMapping(value = "/alunos/{id}/editar")
+    public String editAlunoPost(@PathVariable("id") Long id, @ModelAttribute AlunoForm alunoForm) {
+        alunoService.update(id, alunoForm);
         return "redirect:/alunos";
     }
 

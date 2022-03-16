@@ -54,6 +54,7 @@ public class TurmasViewController {
 
     @GetMapping(value = "/turmas/{id}/editar")
     public String editarTurma(@PathVariable Long id, TurmaForm turmaForm, Model model) {
+        model.addAttribute("title", "Editar Turma");
         model.addAttribute("turma", turmaService.findById(id));
         model.addAttribute("professoresList", professorService.findAll());
         return "turmas/edit";
@@ -62,6 +63,12 @@ public class TurmasViewController {
     @PostMapping(value = "/turmas/{id}/editar")
     public String editarTurmaPost(@PathVariable Long id, @ModelAttribute TurmaForm turmaForm) {
         turmaService.update(id, turmaForm);
+        return "redirect:/turmas";
+    }
+
+    @GetMapping(value = "/turmas/{id}/deletar")
+    public String deletarTurma(@PathVariable Long id) {
+        turmaService.delete(id);
         return "redirect:/turmas";
     }
 

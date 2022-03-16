@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.views;
 
+import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.forms.CargoForm;
 import me.edurevsky.controleescola.services.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,9 @@ public class CargoViewController {
 
     @GetMapping(value = "/cargos/{id}/detalhes")
     public String detalhesCargo(@PathVariable Long id, Model model) {
-        model.addAttribute("cargo", cargoService.findById(id));
+        Cargo cargo = cargoService.findById(id);
+        model.addAttribute("title", String.format("Detalhes do cargo %s", cargo.getCargo()));
+        model.addAttribute("cargo", cargo);
         return "cargos/details";
     }
 

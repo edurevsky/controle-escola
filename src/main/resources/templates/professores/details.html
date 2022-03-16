@@ -12,7 +12,16 @@
 
 <div class="container mt-3">
 
-    <h1 th:text="|Professor ${professor.nome}|"></h1>
+    <div class="row">
+        <div class="col">
+            <h1 th:text="|Professor ${professor.nome}|"></h1>
+            <a class="btn btn-primary float-end" role="button" th:href="@{|/professores/${professor.id}/editar|}">Editar Professor</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="container mt-2">
 
     <div class="row mt-2">
         <div class="col">
@@ -33,7 +42,7 @@
 
 </div>
 
-<div class="container mt-3">
+<div class="container mt-2">
 
     <h2>Turmas</h2>
 
@@ -52,7 +61,7 @@
         <tr th:each="turma : ${professor.turmas}">
             <th><span th:text="${turma.id}">Id</span></th>
             <td><span th:text="${turma.turma}">Turma</span></td>
-            <td><a>Ver mais</a></td>
+            <td><a th:href="@{|/turmas/${turma.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

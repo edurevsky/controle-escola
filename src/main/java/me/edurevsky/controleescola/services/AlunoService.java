@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.repositories.TurmaRepository;
+import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,11 @@ public class AlunoService {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Aluno aluno = alunoRepository.getById(id);
         BeanUtils.copyProperties(alunoForm, aluno);
+
+        if (alunoForm.getNome().equalsIgnoreCase(aluno.getNome())) {
+            aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
+        }
+
         return alunoRepository.save(aluno);
     }
 

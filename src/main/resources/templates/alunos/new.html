@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container mt-3">
+<div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
@@ -44,6 +44,7 @@
                 <div class="form-group">
                     <label for="turma-select">Turma</label>
                     <select class="form-control" id="turma-select" th:field="*{turma}">
+                        <option th:value="${null}">Nenhuma</option>
                         <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
                     </select>
                 </div>

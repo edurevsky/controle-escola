@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.entities.Aluno;
+import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
@@ -79,7 +80,9 @@ public class TurmaService {
     public void delete(Long id) {
         Handlers.handleEntityNotFound(turmaRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
-        List<Aluno> alunos = turmaRepository.getById(id).getAlunos();
+        Turma turma = turmaRepository.getById(id);
+
+        List<Aluno> alunos = turma.getAlunos();
         alunos.forEach((aluno) -> aluno.setTurma(null));
         alunoRepository.saveAll(alunos);
         turmaRepository.deleteById(id);

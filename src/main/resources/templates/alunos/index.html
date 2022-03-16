@@ -20,13 +20,13 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Nome</th>
-            <th>CPF</th>
             <th>Email</th>
             <th>Status</th>
-            <th>Turno</th>
             <th>Turma</th>
-            <th>Matrícula</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -34,13 +34,14 @@
             <td colspan="7">Nenhum aluno registrado</td>
         </tr>
         <tr th:each="aluno : ${alunosList}">
+            <th><span th:text="${aluno.id}">Id</span></th>
             <td><span th:text="${aluno.nome}">Nome</span></td>
-            <td><span th:text="${aluno.cpf}">CPF</span></td>
             <td><span th:text="${aluno.email}">Email</span></td>
             <td><span th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'">Status</span></td>
-            <td><span th:text="${aluno.turno}">Turno</span></td>
-            <td><span th:text="${aluno.turma.turma}">Turma</span></td>
-            <td><span th:text="${aluno.dataMatricula}">Matrícula</span></td>
+            <td><span th:text="${aluno.turma != null} ? ${aluno.turma.turma} : 'Nenhuma'">Turma</span></td>
+            <td><a class="link-secondary" th:href="@{|alunos/${aluno.id}/editar|}">Editar</a></td>
+            <td><a class="link-danger" th:href="@{|/alunos/${aluno.id}/deletar|}">Deletar</a></td>
+            <td><a class="link-info">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

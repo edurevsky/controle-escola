@@ -36,9 +36,9 @@
             <th><span th:text="${turma.id}">Id</span></th>
             <td><span th:text="${turma.turma}">Turma</span></td>
             <td><span th:text="${turma.professor != null} ? ${turma.professor.nome} : 'Nenhum'">Professor</span></td>
-            <td><a th:href="@{|/turmas/${turma.id}/detalhes|}">Detalhes</a></td>
-            <td><a>Deletar</a></td>
             <td><a th:href="@{|/turmas/${turma.id}/editar|}">Editar</a></td>
+            <td><a th:href="@{|/turmas/${turma.id}/deletar|}">Deletar</a></td>
+            <td><a th:href="@{|/turmas/${turma.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

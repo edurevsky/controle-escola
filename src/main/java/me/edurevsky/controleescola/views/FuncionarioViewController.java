@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.views;
 
+import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.services.CargoService;
@@ -53,10 +54,10 @@ public class FuncionarioViewController {
 
     @GetMapping(value = "/funcionarios/{id}/editar")
     public String editarFuncionario(FuncionarioForm funcionarioForm, @PathVariable Long id, Model model) {
+        model.addAttribute("title", "Editar funcionário");
         model.addAttribute("funcionario", funcionarioService.findById(id));
         model.addAttribute("turnos", Turno.values());
         model.addAttribute("cargosList", !cargoService.findAll().isEmpty() ? cargoService.findAll() : null);
-        model.addAttribute("title", "Editar funcionário");
         return "funcionarios/edit";
     }
 
@@ -68,7 +69,9 @@ public class FuncionarioViewController {
 
     @GetMapping(value = "/funcionarios/{id}/detalhes")
     public String detalhesFuncionario(@PathVariable Long id, Model model) {
-        model.addAttribute("funcionario", funcionarioService.findById(id));
+        Funcionario funcionario = funcionarioService.findById(id);
+        model.addAttribute("title", String.format("Detalhes de %s", funcionario.getNome()));
+        model.addAttribute("funcionario", funcionario);
         return "funcionarios/details";
     }
 

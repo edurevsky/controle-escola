@@ -12,10 +12,19 @@
 
 <div class="container mt-3">
 
-    <div class="inline_block">
-        <h1 th:text="|Funcionários do cargo ${cargo.cargo}|"></h1>
-        <a class="btn btn-primary float-end" role="button" th:href="@{|/cargos/${cargo.id}/editar|}">Editar cargo</a>
+    <div class="row">
+        <div class="col">
+            <h1 th:text="|Funcionários do cargo ${cargo.cargo}|"></h1>
+            <a class="btn btn-primary float-end" role="button" th:href="@{|/cargos/${cargo.id}/editar|}">Editar cargo</a>
+        </div>
     </div>
+
+</div>
+
+<div class="container mt-2">
+
+<!--    <div class="inline_block">-->
+<!--    </div>-->
 
     <table class="table table-striped">
         <thead>
@@ -32,7 +41,7 @@
         <tr th:each="funcionario: ${cargo.funcionarios}">
             <th><span th:text="${funcionario.id}">Id</span></th>
             <td><span th:text="${funcionario.nome}">Nome</span></td>
-            <td><a th:href="@{|/funcionarios/${funcionario.id}/detalhes|}">Detalhes</a></td>
+            <td><a th:href="@{|/funcionarios/${funcionario.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
     </table>

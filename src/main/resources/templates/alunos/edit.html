@@ -14,32 +14,43 @@
 
     <h1 th:text="${title}"></h1>
 
-    <form th:action="@{|/turmas/${turma.id}/editar|}" th:object="${turmaForm}" method="post">
+    <form th:action="@{|/alunos/${aluno.id}/editar|}" th:object="${alunoForm}" method="post">
 
         <div class="row mt-3">
             <div class="col">
                 <div class="form-group">
-                    <label for="turma-input">Turma</label>
-                    <input class="form-control" id="turma-input" type="text" th:name="turma"
-                           th:value="${turma.turma}">
+                    <label for="nome-input">Nome</label>
+                    <input class="form-control" id="nome-input" type="text" th:name="nome" th:value="${aluno.nome}">
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
-                    <label for="conteudo-input">Conteúdo</label>
-                    <input class="form-control" id="conteudo-input" type="text" th:name="conteudo"
-                           th:value="${turma.conteudo}">
+                    <label for="cpf-input">CPF</label>
+                    <input class="form-control" id="cpf-input" type="text" th:name="cpf"
+                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" th:value="${aluno.cpf}">
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
-                    <label for="prof-select">Professor</label>
-                    <select class="form-control" id="prof-select" th:name="professor">
-                        <option th:value="${null}">Nenhum</option>
-                        <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"
-                                th:selected="(${prof} == ${turma.professor})"></option>
+                    <label for="turno-select">Turno</label>
+                    <select class="form-control" id="turno-select" th:name="turno">
+                        <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"
+                                th:selected="(${turno} == ${aluno.turno})"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <div class="form-group">
+                    <label for="turma-select">Turma</label>
+                    <select class="form-control" id="turma-select" th:name="turma">
+                        <option th:value="${null}">Nenhuma</option>
+                        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"
+                                th:selected="(${t} == ${aluno.turma})"></option>
                     </select>
                 </div>
             </div>
