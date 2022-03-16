@@ -16,7 +16,7 @@
 <!--            Você precisa registrar pelo menos um professor para registrar uma turma!-->
 <!--        </div>-->
 <!--    </form>-->
-    <form th:unless="${professoresList.empty}" action="#" th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
+    <form th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
 
         <div class="row mt-3">
             <div class="col">
