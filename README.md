@@ -1,6 +1,6 @@
 # Controle-Escola
 > Status: Em desenvolvimento
-- Este projeto foi realizado para a aprendizagem do <a href="https://spring.io/">Framework Spring</a> em geral.
+- Este projeto está sendo desenvolvido para a aprendizagem do <a href="https://spring.io/">Framework Spring</a> em geral.
 
 ## Páginas
 
