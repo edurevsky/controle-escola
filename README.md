@@ -2,12 +2,16 @@
 > Status: Em desenvolvimento
 - Este projeto está sendo desenvolvido para a aprendizagem do <a href="https://spring.io/">Framework Spring</a> em geral.
 
-## Páginas
+# Páginas
+
+<!-- ## Login -->
 
 ### Página de Login
 #### acessado em - "/login"
 ![form_login](screenshots/form_login.png)
 - Acesso ao sistema
+
+## Cargos
 
 ### Página de Cargos
 #### acessado em - "/cargos"
@@ -28,6 +32,8 @@
   - Visualize os funcionários relacionados com o cargo.
   - Edite o cargo.
 
+## Funcionários
+
 ### Página de Funcionários
 #### acessado em - "/funcionarios"
 ![pagina_funcionarios](screenshots/pagina_funcionarios.png)
@@ -46,3 +52,45 @@
 - A página permite que o usuário:
   - Visualize mais informações sobre o funcionário.
   - Edite o funcionário.
+
+## Professores
+
+### Página de Professores
+#### acessado em - "/professores"
+![pagina_professores](screenshots/pagina_professores.png)
+- A página permite que o usuário:
+  - Visualize e gerencie os professores registrados.
+
+### Registro de um Professor
+#### acessado em - "/professores/registrar"
+![registrar_professor](screenshots/registrar_professor.png)
+- A página permite que o usuário:
+  - Registre um novo professor.
+
+### Professor - Ver mais
+#### acessado em - "/professores/{id}/detalhes"
+![professor_ver_mais](screenshots/professor_ver_mais.png)
+- A página permite que o usuário:
+  - Visualize as turmas do professor
+  - Edite o professor.
+
+## Turmas
+
+### Página de Turmas
+#### acessado em - "/turmas"
+![pagina_turmas](screenshots/pagina_turmas.png)
+- A página permite que o usuário:
+  - Visualize e gerencie as turmas registradas.
+
+### Registro de uma Turma
+#### acessado em - "/turmas/registrar"
+![registrar_turma](screenshots/registrar_turma.png)
+- A página permite que o usuário:
+  - Registre uma nova turma.
+
+### Turmas - Ver mais
+#### acessado em - "/turmas/{id}/detalhes"
+![turmas_ver_mais](screenshots/turmas_ver_mais.png)
+- A página permite que o usuário:
+  - Tenha mais informações sobre a turma.
+  - Edite a turma.
