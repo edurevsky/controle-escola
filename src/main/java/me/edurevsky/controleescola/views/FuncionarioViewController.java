@@ -35,7 +35,7 @@ public class FuncionarioViewController {
     @GetMapping(value = "/funcionarios/registrar")
     public String addFuncionarioView(FuncionarioForm funcionarioForm, Model model) {
         model.addAttribute("title", "Registrar Funcionário");
-        model.addAttribute("cargosList", !cargoService.findAll().isEmpty() ? cargoService.findAll() : null);
+        model.addAttribute("cargosList", cargoService.findAll());
         model.addAttribute("turnos", Turno.values());
         return "funcionarios/new";
     }

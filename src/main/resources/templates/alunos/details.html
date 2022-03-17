@@ -56,13 +56,24 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col">
+            <label for="aluno-turma"><b>Turma</b></label><br>
+            <a class="link-dark" th:if="${aluno.turma == null}"
+               th:href="@{|/alunos/${aluno.id}/editar|}">Sem turma, adicionar?</a>
+
+            <a th:unless="${aluno.turma == null}" id="aluno-turma"
+               th:href="@{|/turmas/${aluno.turma.id}/detalhes|}" th:text="${aluno.turma.turma}"></a>
+        </div>
+    </div>
+
 </div>
 
 <div class="container mt-2">
 
     <div class="row">
         <div class="col">
-            <a class="btn btn-primary" th:href="@{|/alunos/${aluno.id}/alterar-status|}">
+            <a class="btn btn-primary btn-sm" th:href="@{|/alunos/${aluno.id}/alterar-status|}">
                 <p th:text="|Alterar status para ${mstatus}|"></p>
             </a>
         </div>
