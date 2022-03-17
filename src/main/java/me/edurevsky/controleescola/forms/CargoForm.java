@@ -10,6 +10,10 @@ public class CargoForm {
 
     private String cargo;
 
+    public CargoForm(String cargo) {
+        this.cargo = cargo;
+    }
+
     public static Cargo convertToCargo(CargoForm cargoForm) {
         return new Cargo().withCargo(cargoForm.getCargo());
     }

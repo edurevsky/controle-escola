@@ -10,6 +10,9 @@ import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Cargo;
@@ -80,6 +83,11 @@ public class CargoService {
         funcionarios.forEach((funcionario) -> funcionario.setCargo(null));
         funcionarioRepository.saveAll(funcionarios);
         cargoRepository.deleteById(id);
+    }
+
+    public Page<Cargo> findPaginated(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return cargoRepository.findAll(pageable);
     }
 
 }

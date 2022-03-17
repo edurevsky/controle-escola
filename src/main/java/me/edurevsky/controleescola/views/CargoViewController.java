@@ -4,14 +4,18 @@ import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.forms.CargoForm;
 import me.edurevsky.controleescola.services.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CargoViewController {
 
     private final CargoService cargoService;
+    private static final int pageSize = 10;
 
     @Autowired
     public CargoViewController(CargoService cargoService) {
@@ -20,8 +24,24 @@ public class CargoViewController {
 
     @GetMapping(value = "/cargos")
     public String index(Model model) {
+        return paginatedCargos(1, model);
+    }
+
+    @GetMapping(value = "/cargos/{page}")
+    public String paginatedCargos(@PathVariable("page") Integer page, Model model)
+    {
+        Page<Cargo> cargosPage = cargoService.findPaginated(page, pageSize);
+        List<Cargo> cargosList = cargosPage.getContent();
+
+        // Title
         model.addAttribute("title", "Lista de Cargos");
-        model.addAttribute("cargosList", cargoService.findAll());
+
+        // Pagination
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", cargosPage.getTotalPages());
+        model.addAttribute("totalItems", cargosPage.getTotalElements());
+
+        model.addAttribute("cargosList", cargosList);
         return "cargos/index";
     }
 
