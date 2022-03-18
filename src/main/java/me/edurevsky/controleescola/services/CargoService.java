@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.entities.Funcionario;
@@ -19,6 +20,10 @@ import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.repositories.CargoRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author edurevsky
+ * @version 1.0
+ */
 @Service
 public class CargoService {
 
@@ -71,7 +76,7 @@ public class CargoService {
 
     /**
      * If the id exists, removes the cargo and
-     * sets all the funcionarios cargo to null
+     * sets all the related funcionarios cargo to null
      *
      * @param id The cargo id
      */

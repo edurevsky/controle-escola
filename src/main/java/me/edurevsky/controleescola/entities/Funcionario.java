@@ -20,7 +20,7 @@ public class Funcionario extends PessoaFisica {
 
     private Turno horarioDeTrabalho;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Cargo cargo;
 
 }

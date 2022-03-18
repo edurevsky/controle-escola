@@ -6,8 +6,12 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.entities.Cargo;
+import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Funcionario;
@@ -52,37 +56,45 @@ public class FuncionarioService {
 
     @Transactional
     public void updateSalary(Long id, BigDecimal salario) {
-        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
-
-        Funcionario funcionario = funcionarioRepository.getById(id);
-        funcionario.setSalario(salario);
-        funcionarioRepository.save(funcionario);
+        throw new NotImplementedException();
+//        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+//
+//        Funcionario funcionario = funcionarioRepository.getById(id);
+//        funcionario.setSalario(salario);
+//        funcionarioRepository.save(funcionario);
     }
 
     public Funcionario findById(Long id) {
         return funcionarioRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário com id " + id + " não encontrado."));
     }
 
     @Transactional
     public void updateCpf(Long id, String cpf) {
-        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
-
-        Funcionario funcionario = funcionarioRepository.getById(id);
-        funcionario.setCpf(cpf);
-        funcionarioRepository.save(funcionario);
+        throw new NotImplementedException();
+//        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
+//
+//        Funcionario funcionario = funcionarioRepository.getById(id);
+//        funcionario.setCpf(cpf);
+//        funcionarioRepository.save(funcionario);
     }
 
     @Transactional
     public Funcionario addCargo(Long idFuncionario, Long idCargo) {
-        Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
-        Cargo cargo = cargoRepository.getById(idCargo);
-        funcionario.setCargo(cargo);
-        return funcionarioRepository.save(funcionario);
+        throw new NotImplementedException();
+//        Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
+//        Cargo cargo = cargoRepository.getById(idCargo);
+//        funcionario.setCargo(cargo);
+//        return funcionarioRepository.save(funcionario);
     }
 
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
+    }
+
+    public Page<Funcionario> findPaginated(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return funcionarioRepository.findAll(pageable);
     }
 
 }

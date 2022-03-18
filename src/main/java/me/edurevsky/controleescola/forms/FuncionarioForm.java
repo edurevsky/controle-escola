@@ -33,6 +33,14 @@ public class FuncionarioForm {
     @NotNull
     private Cargo cargo;
 
+    public FuncionarioForm(String nome, String cpf, BigDecimal salario, Turno horarioDeTrabalho, Cargo cargo) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.salario = salario;
+        this.horarioDeTrabalho = horarioDeTrabalho;
+        this.cargo = cargo;
+    }
+
     public static Funcionario convertToFuncionario(FuncionarioForm funcionarioForm) {
         Funcionario funcionario = new Funcionario();
         BeanUtils.copyProperties(funcionarioForm, funcionario);

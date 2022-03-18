@@ -6,6 +6,7 @@ import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.Professor;
+import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.AlunoRepository;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
@@ -60,12 +61,13 @@ public class TurmaService {
 
     @Transactional
     public Turma addProfessor(Long idTurma, Long idProfessor) {
-        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format(NOT_FOUND_MESSAGE, idTurma));
-        Handlers.handleEntityNotFound(professorRepository, idProfessor, String.format("Professor com id %d não encontrado", idProfessor));
-
-        Turma turma = turmaRepository.getById(idTurma);
-        turma.setProfessor(professorRepository.getById(idProfessor));
-        return turmaRepository.save(turma);
+        throw new NotImplementedException();
+//        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format(NOT_FOUND_MESSAGE, idTurma));
+//        Handlers.handleEntityNotFound(professorRepository, idProfessor, String.format("Professor com id %d não encontrado", idProfessor));
+//
+//        Turma turma = turmaRepository.getById(idTurma);
+//        turma.setProfessor(professorRepository.getById(idProfessor));
+//        return turmaRepository.save(turma);
     }
 
     public List<Aluno> findByIdGetAlunos(Long id) {

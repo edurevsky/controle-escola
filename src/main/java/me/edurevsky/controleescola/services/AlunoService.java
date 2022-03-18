@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
@@ -40,14 +41,13 @@ public class AlunoService {
         alunoRepository.deleteById(id);
     }
 
+    @Transactional
     public Aluno update(Long id, AlunoForm alunoForm) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Aluno aluno = alunoRepository.getById(id);
         BeanUtils.copyProperties(alunoForm, aluno);
 
-        if (alunoForm.getNome().equalsIgnoreCase(aluno.getNome())) {
-            aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
-        }
+        aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
 
         return alunoRepository.save(aluno);
     }
@@ -63,23 +63,31 @@ public class AlunoService {
 
     @Transactional
     public Aluno addTurma(Long idAluno, Long idTurma) {
-        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
-        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format("Turma com id %d não encontrada", idTurma));
-
-        Aluno aluno = alunoRepository.findById(idAluno).get();
-        aluno.setTurma(turmaRepository.getById(idTurma));
-        return alunoRepository.save(aluno);
+        throw new NotImplementedException();
+//        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
+//        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format("Turma com id %d não encontrada", idTurma));
+//
+//        Aluno aluno = alunoRepository.findById(idAluno).get();
+//        aluno.setTurma(turmaRepository.getById(idTurma));
+//        return alunoRepository.save(aluno);
     }
 
     @Transactional
     public Aluno updateCpf(Long idAluno, String cpf) {
-        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
-
-        Aluno aluno = alunoRepository.getById(idAluno);
-        aluno.setCpf(cpf);
-        return alunoRepository.save(aluno);
+        throw new NotImplementedException();
+//        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
+//
+//        Aluno aluno = alunoRepository.getById(idAluno);
+//        aluno.setCpf(cpf);
+//        return alunoRepository.save(aluno);
     }
 
+    /**
+     * Switches the Aluno attribute 'estaAtivo'
+     *
+     * @param id the Aluno id
+     * @return the updated Aluno Object
+     */
     @Transactional
     public Aluno switchEstaAtivo(Long id) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));

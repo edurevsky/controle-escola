@@ -28,8 +28,7 @@ public class CargoViewController {
     }
 
     @GetMapping(value = "/cargos/{page}")
-    public String paginatedCargos(@PathVariable("page") Integer page, Model model)
-    {
+    public String paginatedCargos(@PathVariable("page") Integer page, Model model) {
         Page<Cargo> cargosPage = cargoService.findPaginated(page, pageSize);
         List<Cargo> cargosList = cargosPage.getContent();
 
