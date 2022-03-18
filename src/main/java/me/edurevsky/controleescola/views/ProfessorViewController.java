@@ -4,6 +4,7 @@ import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class ProfessorViewController {
 
     private final ProfessorService professorService;
+    private static final int pageSize = 10;
 
     @Autowired
     public ProfessorViewController(ProfessorService professorService) {
@@ -23,8 +27,23 @@ public class ProfessorViewController {
 
     @GetMapping(value = "/professores")
     public String index(Model model) {
+        return paginatedProfessores(1, model);
+    }
+
+    @GetMapping(value = "/professores/{page}")
+    public String paginatedProfessores(@PathVariable("page") Integer page, Model model) {
+        Page<Professor> professoresPage = professorService.findPaginated(page, pageSize);
+        List<Professor> professoresList = professoresPage.getContent();
+
+        // Title
         model.addAttribute("title", "Lista de Professores");
-        model.addAttribute("professoresList", professorService.findAll());
+
+        // Pagination
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", professoresPage.getTotalPages());
+        model.addAttribute("totalItems", professoresPage.getTotalElements());
+
+        model.addAttribute("professoresList", professoresList);
         return "professores/index";
     }
 

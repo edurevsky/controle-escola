@@ -49,7 +49,6 @@
 
     <div th:if="${totalPages > 1}">
         <div class="row">
-
             <div class="col">
                 Total: [[${totalItems}]] - Página [[${currentPage}]] de [[${totalPages}]]
             </div>
@@ -69,7 +68,6 @@
             <div class="col">
                 <a th:if="${currentPage < totalPages}" th:href="@{|/funcionarios/${currentPage + 1}|}">Próximo</a>
             </div>
-
         </div>
     </div>
 

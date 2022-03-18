@@ -45,6 +45,30 @@
         </tbody>
     </table>
 
+    <div th:if="${totalPages > 1}">
+        <div class="row">
+            <div class="col">
+                Total: [[${totalItems}]] - Página [[${currentPage}]] de [[${totalPages}]]
+            </div>
+
+            <div class="col">
+                <a th:if="${currentPage <= totalPages && currentPage != 1}"
+                   th:href="@{|/professores/${currentPage - 1}|}">Anterior</a>
+            </div>
+
+            <div class="col">
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{|/professores/${i}|}">[[${i}]]</a>
+                    <span th:unless="${currentPage != i}">[[${i}]]</span>
+                </span>
+            </div>
+
+            <div class="col">
+                <a th:if="${currentPage < totalPages}" th:href="@{|/professores/${currentPage + 1}|}">Próximo</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div th:replace="~{fragments :: main-footer}"></div>
