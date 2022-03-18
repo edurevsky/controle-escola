@@ -6,6 +6,7 @@ import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
 import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class AlunosViewController {
 
     private final AlunoService alunoService;
     private final TurmaService turmaService;
+    private static final int pageSize = 10;
 
     @Autowired
     public AlunosViewController(AlunoService alunoService, TurmaService turmaService) {
@@ -27,8 +31,23 @@ public class AlunosViewController {
 
     @GetMapping(value = "/alunos")
     public String index(Model model) {
+        return paginatedAlunos(1, model);
+    }
+
+    @GetMapping(value = "/alunos/{page}")
+    public String paginatedAlunos(@PathVariable("page") Integer page, Model model) {
+        Page<Aluno> alunosPage = alunoService.findPaginated(page, pageSize);
+        List<Aluno> alunosList = alunosPage.getContent();
+
+        // Title
         model.addAttribute("title", "Lista de Alunos");
-        model.addAttribute("alunosList", alunoService.findAll());
+
+        // Pagination
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", alunosPage.getTotalPages());
+        model.addAttribute("totalItems", alunosPage.getTotalElements());
+
+        model.addAttribute("alunosList", alunosList);
         return "alunos/index";
     }
 

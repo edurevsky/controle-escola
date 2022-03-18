@@ -5,6 +5,7 @@ import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.services.ProfessorService;
 import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class TurmasViewController {
 
     private final TurmaService turmaService;
     private final ProfessorService professorService;
+    private static final int pageSize = 10;
 
     @Autowired
     public TurmasViewController(TurmaService turmaService, ProfessorService professorService) {
@@ -26,8 +30,23 @@ public class TurmasViewController {
 
     @GetMapping(value = "/turmas")
     public String index(Model model) {
+        return paginatedTurmas(1, model);
+    }
+
+    @GetMapping(value = "/turmas/{page}")
+    public String paginatedTurmas(@PathVariable("page") Integer page, Model model) {
+        Page<Turma> turmasPage = turmaService.findPaginated(page, pageSize);
+        List<Turma> turmasList = turmasPage.getContent();
+
+        // Title
         model.addAttribute("title", "Lista de Turmas");
-        model.addAttribute("turmasList", turmaService.findAll());
+
+        // Pagination
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalItems", turmasPage.getTotalElements());
+        model.addAttribute("totalPages", turmasPage.getTotalPages());
+
+        model.addAttribute("turmasList", turmasList);
         return "turmas/index";
     }
 

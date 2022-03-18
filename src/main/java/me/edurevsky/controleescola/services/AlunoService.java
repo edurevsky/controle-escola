@@ -9,6 +9,9 @@ import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Aluno;
@@ -99,6 +102,11 @@ public class AlunoService {
 
     public List<Aluno> findByEstaAtivo(Boolean estaAtivo) {
         return alunoRepository.findByEstaAtivo(estaAtivo);
+    }
+
+    public Page<Aluno> findPaginated(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return alunoRepository.findAll(pageable);
     }
 
 }

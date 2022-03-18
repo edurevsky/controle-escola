@@ -13,6 +13,9 @@ import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import me.edurevsky.controleescola.entities.Turma;
@@ -92,6 +95,11 @@ public class TurmaService {
         alunos.forEach((aluno) -> aluno.setTurma(null));
         alunoRepository.saveAll(alunos);
         turmaRepository.deleteById(id);
+    }
+
+    public Page<Turma> findPaginated(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return turmaRepository.findAll(pageable);
     }
     
 }
