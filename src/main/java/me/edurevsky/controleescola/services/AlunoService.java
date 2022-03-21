@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
+import me.edurevsky.controleescola.forms.AlterarTurmaForm;
+import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
@@ -66,13 +69,21 @@ public class AlunoService {
 
     @Transactional
     public Aluno addTurma(Long idAluno, Long idTurma) {
-        throw new NotImplementedException();
-//        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
-//        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format("Turma com id %d não encontrada", idTurma));
-//
-//        Aluno aluno = alunoRepository.findById(idAluno).get();
-//        aluno.setTurma(turmaRepository.getById(idTurma));
-//        return alunoRepository.save(aluno);
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
+        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format("Turma com id %d não encontrada", idTurma));
+
+        Aluno aluno = alunoRepository.getById(idAluno);
+        aluno.setTurma(turmaRepository.getById(idTurma));
+        return alunoRepository.save(aluno);
+    }
+
+    @Transactional
+    public Aluno addTurma(Long idAluno, AlterarTurmaForm turmaForm) {
+        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
+
+        Aluno aluno = alunoRepository.getById(idAluno);
+        aluno.setTurma(turmaForm.getTurma());
+        return alunoRepository.save(aluno);
     }
 
     @Transactional

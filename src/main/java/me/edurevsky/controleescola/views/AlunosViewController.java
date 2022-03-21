@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.views;
 
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
+import me.edurevsky.controleescola.forms.AlterarTurmaForm;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
 import me.edurevsky.controleescola.services.TurmaService;
@@ -98,6 +99,19 @@ public class AlunosViewController {
     @GetMapping(value = "/alunos/{id}/alterar-status")
     public String switchStatus(@PathVariable("id") Long id) {
         alunoService.switchEstaAtivo(id);
+        return "redirect:/alunos/{id}/detalhes";
+    }
+
+    @GetMapping(value = "/alunos/{id}/alterar-turma")
+    public String changeTurmaGet(@PathVariable("id") Long id, AlterarTurmaForm turmaForm, Model model) {
+        model.addAttribute("aluno", alunoService.findById(id));
+        model.addAttribute("turmasList", turmaService.findAll());
+        return "alunos/changeturma";
+    }
+
+    @PostMapping(value = "/alunos/{id}/alterar-turma")
+    public String changeTurmaPost(@PathVariable("id") Long id, @ModelAttribute AlterarTurmaForm turmaForm) {
+        alunoService.addTurma(id, turmaForm);
         return "redirect:/alunos/{id}/detalhes";
     }
 
