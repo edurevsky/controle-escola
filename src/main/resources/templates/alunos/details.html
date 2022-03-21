@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymemeaf.org">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymemeaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -69,12 +71,20 @@
 
 </div>
 
-<div class="container mt-2">
+<div class="container mt-3">
 
-    <div class="row">
+    <h1>Outras ações</h1>
+
+    <div class="row mt-2">
         <div class="col">
-            <a class="btn btn-primary btn-sm" th:href="@{|/alunos/${aluno.id}/alterar-status|}">
+            <a th:href="@{|/alunos/${aluno.id}/alterar-status|}">
                 <p th:text="|Alterar status para ${mstatus}|"></p>
+            </a>
+        </div>
+
+        <div class="col">
+            <a th:href="@{|/alunos/${aluno.id}/alterar-turma|}">
+                <p>Alterar turma</p>
             </a>
         </div>
     </div>
