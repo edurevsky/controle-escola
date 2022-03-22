@@ -90,11 +90,9 @@ public class TurmaService {
         Handlers.handleEntityNotFound(turmaRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         Turma turma = turmaRepository.getById(id);
-
-        List<Aluno> alunos = turma.getAlunos();
-        alunos.forEach((aluno) -> aluno.setTurma(null));
-        alunoRepository.saveAll(alunos);
-        turmaRepository.deleteById(id);
+        turma.setAllAlunosTurmaNull();
+        alunoRepository.saveAll(turma.getAlunos());
+        turmaRepository.delete(turma);
     }
 
     public Page<Turma> findPaginated(Integer page, Integer size) {

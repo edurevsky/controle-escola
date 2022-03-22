@@ -76,7 +76,7 @@ public class FuncionarioViewController {
         model.addAttribute("title", "Editar funcionário");
         model.addAttribute("funcionario", funcionarioService.findById(id));
         model.addAttribute("turnos", Turno.values());
-        model.addAttribute("cargosList", !cargoService.findAll().isEmpty() ? cargoService.findAll() : null);
+        model.addAttribute("cargosList", cargoService.findAll());
         return "funcionarios/edit";
     }
 

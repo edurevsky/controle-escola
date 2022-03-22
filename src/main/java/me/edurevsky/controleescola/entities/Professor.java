@@ -24,4 +24,9 @@ public class Professor extends PessoaFisica {
     @OneToMany(mappedBy = "professor")
     private List<Turma> turmas = new ArrayList<>();
 
+    // On Professor delete
+    public void setAllTurmasProfessorNull() {
+        turmas.forEach(turma -> turma.setProfessor(null));
+    }
+
 }

@@ -36,4 +36,9 @@ public class Cargo {
         return this;
     }
 
+    // On Cargo delete
+    public void setAllFuncionariosCargoNull() {
+        funcionarios.forEach(funcionario -> funcionario.setCargo(null));
+    }
+
 }

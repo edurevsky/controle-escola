@@ -26,7 +26,7 @@ public class CpfHandler {
 
     public void ifAlreadyRegistered_ThrowException(String cpf) {
         if (alunoRepository.existsByCpf(cpf) || professorRepository.existsByCpf(cpf) || funcionarioRepository.existsByCpf(cpf)) {
-            throw new CpfJaExisteException("CPF já está em uso");
+            throw new CpfJaExisteException(String.format("O CPF %s já está em uso", cpf));
         }
     }
 

@@ -51,10 +51,10 @@ public class ProfessorService {
     public void remove(Long id) {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
-        List<Turma> turmas = professorRepository.getById(id).getTurmas();
-        turmas.forEach((t) -> t.setProfessor(null));
-        turmaRepository.saveAll(turmas);
-        professorRepository.deleteById(id);
+        Professor professor = professorRepository.getById(id);
+        professor.setAllTurmasProfessorNull();
+        turmaRepository.saveAll(professor.getTurmas());
+        professorRepository.delete(professor);
     }
 
     public Professor findById(Long id) {

@@ -33,4 +33,9 @@ public class Turma {
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
+    // On Turma delete
+    public void setAllAlunosTurmaNull() {
+        alunos.forEach(aluno -> aluno.setTurma(null));
+    }
+
 }

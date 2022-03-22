@@ -2,10 +2,8 @@ package me.edurevsky.controleescola.services;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 
-import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.forms.CargoForm;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
@@ -84,10 +82,10 @@ public class CargoService {
     public void remove(Long id) {
         Handlers.handleEntityNotFound(cargoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
-        List<Funcionario> funcionarios = cargoRepository.getById(id).getFuncionarios();
-        funcionarios.forEach((funcionario) -> funcionario.setCargo(null));
-        funcionarioRepository.saveAll(funcionarios);
-        cargoRepository.deleteById(id);
+        Cargo cargo = cargoRepository.getById(id);
+        cargo.setAllFuncionariosCargoNull();
+        funcionarioRepository.saveAll(cargo.getFuncionarios());
+        cargoRepository.delete(cargo);
     }
 
     public Page<Cargo> findPaginated(Integer page, Integer size) {
