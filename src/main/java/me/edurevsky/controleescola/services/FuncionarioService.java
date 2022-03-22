@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
-import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
+import me.edurevsky.controleescola.services.utils.CpfHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,17 +26,20 @@ public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
     private final CargoRepository cargoRepository;
+    private final CpfHandler cpfHandler;
     private static final String NOT_FOUND_MESSAGE = "Funcionario com id %d não encontrado.";
 
     @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository) {
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository, CpfHandler cpfHandler) {
         this.funcionarioRepository = funcionarioRepository;
         this.cargoRepository = cargoRepository;
+        this.cpfHandler = cpfHandler;
     }
 
+    @Transactional
     public Funcionario save(FuncionarioForm funcionarioForm) {
-        Funcionario funcionario = FuncionarioForm.convertToFuncionario(funcionarioForm);
-        return funcionarioRepository.save(funcionario);
+        cpfHandler.ifAlreadyRegistered_ThrowException(funcionarioForm.getCpf());
+        return funcionarioRepository.save(FuncionarioForm.convertToFuncionario(funcionarioForm));
     }
 
     @Transactional

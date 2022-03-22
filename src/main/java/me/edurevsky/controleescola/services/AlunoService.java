@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
-import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.forms.AlterarTurmaForm;
-import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
+import me.edurevsky.controleescola.services.utils.CpfHandler;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,19 @@ public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private final TurmaRepository turmaRepository;
+    private final CpfHandler cpfHandler;
     private static final String NOT_FOUND_MESSAGE = "Aluno com id %d não encontrado";
 
     @Autowired
-    public AlunoService(AlunoRepository alunoRepository, TurmaRepository turmaRepository) {
+    public AlunoService(AlunoRepository alunoRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler) {
         this.alunoRepository = alunoRepository;
         this.turmaRepository = turmaRepository;
+        this.cpfHandler = cpfHandler;
     }
 
+    @Transactional
     public Aluno save(AlunoForm alunoForm) {
+        cpfHandler.ifAlreadyRegistered_ThrowException(alunoForm.getCpf());
         return alunoRepository.save(AlunoForm.convertToAluno(alunoForm));
     }
 

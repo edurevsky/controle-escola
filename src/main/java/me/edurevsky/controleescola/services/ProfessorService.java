@@ -5,6 +5,7 @@ import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
+import me.edurevsky.controleescola.services.utils.CpfHandler;
 import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,19 @@ public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
     private final TurmaRepository turmaRepository;
+    private final CpfHandler cpfHandler;
     private static final String NOT_FOUND_MESSAGE = "Professor com id %d não encontrado";
 
     @Autowired
-    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository) {
+    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler) {
         this.professorRepository = professorRepository;
         this.turmaRepository = turmaRepository;
+        this.cpfHandler = cpfHandler;
     }
 
+    @Transactional
     public Professor save(ProfessorForm professorForm) {
+        cpfHandler.ifAlreadyRegistered_ThrowException(professorForm.getCpf());
         return professorRepository.save(ProfessorForm.convertToProfessor(professorForm));
     }
 

@@ -13,4 +13,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     
     public List<Funcionario> findByCargo(Cargo cargo);
 
+    Boolean existsByCpf(String cpf);
+
 }

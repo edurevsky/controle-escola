@@ -12,4 +12,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     public List<Aluno> findByEstaAtivo(Boolean estaAtivo);
 
+    Boolean existsByCpf(String cpf);
+
 }
