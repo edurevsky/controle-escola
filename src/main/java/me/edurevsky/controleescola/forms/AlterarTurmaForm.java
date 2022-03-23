@@ -7,18 +7,17 @@ import javax.validation.constraints.NotNull;
 public class AlterarTurmaForm {
 
     @NotNull
-    private Turma turma;
+    private Long turmaId;
 
-    public AlterarTurmaForm(Turma turma) {
-        this.turma = turma;
+    public AlterarTurmaForm(Long turmaId) {
+        this.turmaId = turmaId;
     }
 
-    public Turma getTurma() {
-        return turma;
+    public Long getTurmaId() {
+        return turmaId;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    public void setTurmaId(Long turmaId) {
+        this.turmaId = turmaId;
     }
-
 }
