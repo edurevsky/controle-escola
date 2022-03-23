@@ -43,6 +43,11 @@ public class ProfessorService {
     public Professor update(Long id, ProfessorForm professorForm) {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Professor professor = professorRepository.getById(id);
+
+        if (!professorForm.getCpf().equals(professor.getCpf())) {
+            cpfHandler.ifAlreadyRegistered_ThrowException(professorForm.getCpf());
+        }
+
         BeanUtils.copyProperties(professorForm, professor);
         return professorRepository.save(professor);
     }

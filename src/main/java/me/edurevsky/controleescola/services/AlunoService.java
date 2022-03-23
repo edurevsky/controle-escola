@@ -53,9 +53,14 @@ public class AlunoService {
     @Transactional
     public Aluno update(Long id, AlunoForm alunoForm) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
-        Aluno aluno = alunoRepository.getById(id);
-        BeanUtils.copyProperties(alunoForm, aluno);
 
+        Aluno aluno = alunoRepository.getById(id);
+
+        if (!alunoForm.getCpf().equals(aluno.getCpf())) {
+            cpfHandler.ifAlreadyRegistered_ThrowException(alunoForm.getCpf());
+        }
+
+        BeanUtils.copyProperties(alunoForm, aluno);
         aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
 
         return alunoRepository.save(aluno);
@@ -92,11 +97,6 @@ public class AlunoService {
     @Transactional
     public Aluno updateCpf(Long idAluno, String cpf) {
         throw new NotImplementedException();
-//        Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
-//
-//        Aluno aluno = alunoRepository.getById(idAluno);
-//        aluno.setCpf(cpf);
-//        return alunoRepository.save(aluno);
     }
 
     /**

@@ -65,12 +65,6 @@ public class TurmaService {
     @Transactional
     public Turma addProfessor(Long idTurma, Long idProfessor) {
         throw new NotImplementedException();
-//        Handlers.handleEntityNotFound(turmaRepository, idTurma, String.format(NOT_FOUND_MESSAGE, idTurma));
-//        Handlers.handleEntityNotFound(professorRepository, idProfessor, String.format("Professor com id %d não encontrado", idProfessor));
-//
-//        Turma turma = turmaRepository.getById(idTurma);
-//        turma.setProfessor(professorRepository.getById(idProfessor));
-//        return turmaRepository.save(turma);
     }
 
     public List<Aluno> findByIdGetAlunos(Long id) {

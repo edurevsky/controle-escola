@@ -46,6 +46,11 @@ public class FuncionarioService {
     public Funcionario update(Long id, FuncionarioForm funcionarioForm) {
         Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Funcionario funcionario = funcionarioRepository.getById(id);
+
+        if (!funcionarioForm.getCpf().equals(funcionario.getCpf())) {
+            cpfHandler.ifAlreadyRegistered_ThrowException(funcionarioForm.getCpf());
+        }
+
         BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionarioRepository.save(funcionario);
     }
@@ -60,11 +65,6 @@ public class FuncionarioService {
     @Transactional
     public void updateSalary(Long id, BigDecimal salario) {
         throw new NotImplementedException();
-//        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
-//
-//        Funcionario funcionario = funcionarioRepository.getById(id);
-//        funcionario.setSalario(salario);
-//        funcionarioRepository.save(funcionario);
     }
 
     public Funcionario findById(Long id) {
@@ -75,20 +75,11 @@ public class FuncionarioService {
     @Transactional
     public void updateCpf(Long id, String cpf) {
         throw new NotImplementedException();
-//        Handlers.handleEntityNotFound(funcionarioRepository, id, "Funcionario com id " + id + " não encontrado.");
-//
-//        Funcionario funcionario = funcionarioRepository.getById(id);
-//        funcionario.setCpf(cpf);
-//        funcionarioRepository.save(funcionario);
     }
 
     @Transactional
     public Funcionario addCargo(Long idFuncionario, Long idCargo) {
         throw new NotImplementedException();
-//        Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
-//        Cargo cargo = cargoRepository.getById(idCargo);
-//        funcionario.setCargo(cargo);
-//        return funcionarioRepository.save(funcionario);
     }
 
     public List<Funcionario> findAll() {
