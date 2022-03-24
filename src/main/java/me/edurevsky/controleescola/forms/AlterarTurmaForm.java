@@ -1,7 +1,5 @@
 package me.edurevsky.controleescola.forms;
 
-import me.edurevsky.controleescola.entities.Turma;
-
 import javax.validation.constraints.NotNull;
 
 public class AlterarTurmaForm {
@@ -20,4 +18,5 @@ public class AlterarTurmaForm {
     public void setTurmaId(Long turmaId) {
         this.turmaId = turmaId;
     }
+    
 }

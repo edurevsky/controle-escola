@@ -18,7 +18,11 @@ public class CpfHandler {
     private final FuncionarioRepository funcionarioRepository;
 
     @Autowired
-    public CpfHandler(AlunoRepository alunoRepository, ProfessorRepository professorRepository, FuncionarioRepository funcionarioRepository) {
+    public CpfHandler(
+            AlunoRepository alunoRepository,
+            ProfessorRepository professorRepository,
+            FuncionarioRepository funcionarioRepository
+    ) {
         this.alunoRepository = alunoRepository;
         this.professorRepository = professorRepository;
         this.funcionarioRepository = funcionarioRepository;
