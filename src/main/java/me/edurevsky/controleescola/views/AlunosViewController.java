@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -61,9 +64,16 @@ public class AlunosViewController {
     }
 
     @PostMapping(value = "/alunos/registrar")
-    public String novoAlunoPost(@ModelAttribute AlunoForm alunoForm, Model model) {
+    public ModelAndView novoAlunoPost(@Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mv = new ModelAndView("alunos/new");
+            mv.addObject("title", "Registrar Aluno");
+            mv.addObject("turmasList", turmaService.findAll());
+            mv.addObject("turnos", Turno.values());
+            return mv;
+        }
         alunoService.save(alunoForm);
-        return "redirect:/alunos";
+        return new ModelAndView("redirect:/alunos");
     }
 
     @GetMapping(value = "/alunos/{id}/deletar")

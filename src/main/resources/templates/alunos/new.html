@@ -19,15 +19,17 @@
             <div class="col">
                 <div class="form-group">
                     <label for="nome-input">Nome</label>
-                    <input class="form-control" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                    <input class="form-control" th:errorclass="is-invalid" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                    <div class="invalid-feedback" th:errors="*{nome}"></div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label for="cpf-input">CPF</label>
-                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}"
+                    <input class="form-control" th:errorclass="is-invalid" id="cpf-input" type="text" th:field="*{cpf}"
                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                    <div class="invalid-feedback" th:errors="*{cpf}"></div>
                 </div>
             </div>
 
@@ -47,7 +49,7 @@
                     <label for="turma-select">Turma</label>
                     <select class="form-control" id="turma-select" th:field="*{turma}">
                         <option th:value="${null}">Nenhuma</option>
-                        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
+                        <option th:if="${turmasList != null}" th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
                     </select>
                 </div>
             </div>
@@ -66,7 +68,7 @@
 
 <div class="container mt-2 w-50">
 
-    <div th:if="${turmasList.empty}" class="alert alert-warning" role="alert">
+    <div th:if="${turmasList == null}" class="alert alert-warning" role="alert">
         Você ainda não registrou nenhuma turma.
         Clique <a th:href="@{/turmas/registrar}">aqui</a> para registrar uma turma.
     </div>

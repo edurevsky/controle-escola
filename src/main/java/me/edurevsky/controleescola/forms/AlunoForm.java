@@ -18,18 +18,14 @@ import org.springframework.beans.BeanUtils;
 @Setter
 public class AlunoForm {
 
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "O nome não pode estar em branco")
     private String nome;
 
-    @CPF
+    @CPF(message = "O CPF inserido é inválido")
     private String cpf;
 
-    @NotNull
     private Turno turno;
 
-    @NotNull
     private Turma turma;
 
     public static Aluno convertToAluno(AlunoForm alunoForm) {
