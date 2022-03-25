@@ -83,18 +83,31 @@ public class AlunosViewController {
     }
 
     @GetMapping(value = "/alunos/{id}/editar")
-    public String editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm, Model model) {
-        model.addAttribute("title", "Editar Aluno");
-        model.addAttribute("aluno", alunoService.findById(id));
-        model.addAttribute("turnos", Turno.values());
-        model.addAttribute("turmasList", turmaService.findAll());
-        return "alunos/edit";
+    public ModelAndView editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm, Model model) {
+        Aluno aluno = alunoService.findById(id);
+        if (aluno == null) return new ModelAndView("redirect:/alunos");
+
+        alunoForm.loadFromAluno(aluno);
+        ModelAndView mv = new ModelAndView("alunos/edit");
+        mv.addObject("title", "Editar Aluno");
+        mv.addObject("id", id);
+        mv.addObject("turnos", Turno.values());
+        mv.addObject("turmasList", turmaService.findAll());
+        return mv;
     }
 
     @PostMapping(value = "/alunos/{id}/editar")
-    public String editAlunoPost(@PathVariable("id") Long id, @ModelAttribute AlunoForm alunoForm) {
+    public ModelAndView editAlunoPost(@PathVariable("id") Long id, @Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mv = new ModelAndView("alunos/edit");
+            mv.addObject("title", "Editar Aluno");
+            mv.addObject("aluno", alunoService.findById(id));
+            mv.addObject("turnos", Turno.values());
+            mv.addObject("turmasList", turmaService.findAll());
+            return mv;
+        }
         alunoService.update(id, alunoForm);
-        return "redirect:/alunos";
+        return new ModelAndView("redirect:/alunos");
     }
 
     @GetMapping(value = "/alunos/{id}/detalhes")

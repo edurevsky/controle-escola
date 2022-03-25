@@ -6,6 +6,7 @@ import javax.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -35,6 +36,14 @@ public class AlunoForm {
         aluno.setEstaAtivo(true);
         aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
         return aluno;
+    }
+
+    public AlunoForm loadFromAluno(Aluno aluno) {
+        this.nome = aluno.getNome();
+        this.cpf = aluno.getCpf();
+        this.turno = aluno.getTurno();
+        this.turma = aluno.getTurma();
+        return this;
     }
 
 }
