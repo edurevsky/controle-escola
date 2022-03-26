@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import me.edurevsky.controleescola.entities.Cargo;
+import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
 
 import me.edurevsky.controleescola.entities.Funcionario;
@@ -22,6 +23,7 @@ public class FuncionarioForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
+    @AlreadyRegisteredCpf
     private String cpf;
 
     @NotNull(message = "O salário precisa ser preenchido")

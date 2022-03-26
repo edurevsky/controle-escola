@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
+import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
 
 import me.edurevsky.controleescola.entities.Aluno;
@@ -23,6 +24,7 @@ public class AlunoForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
+    @AlreadyRegisteredCpf
     private String cpf;
 
     private Turno turno;

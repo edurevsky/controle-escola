@@ -34,4 +34,11 @@ public class CpfHandler {
         }
     }
 
+    public boolean isNotRegistered(String cpf) {
+        if (alunoRepository.existsByCpf(cpf) || professorRepository.existsByCpf(cpf) || funcionarioRepository.existsByCpf(cpf)) {
+            return false;
+        }
+        return true;
+    }
+
 }

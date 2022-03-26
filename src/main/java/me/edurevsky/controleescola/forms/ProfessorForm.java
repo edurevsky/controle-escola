@@ -3,10 +3,10 @@ package me.edurevsky.controleescola.forms;
 import lombok.Getter;
 import lombok.Setter;
 import me.edurevsky.controleescola.entities.Professor;
+import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -18,6 +18,7 @@ public class ProfessorForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
+    @AlreadyRegisteredCpf
     private String cpf;
 
     @NotNull(message = "O salário precisa ser preenchido")
