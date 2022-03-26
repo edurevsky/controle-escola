@@ -15,15 +15,14 @@
 
     <h1 th:text="${title}"></h1>
 
-    <form th:action="@{|/alunos/${aluno.id}/alterar-turma|}" th:object="${turmaForm}" method="post">
+    <form th:action="@{|/alunos/${id}/alterar-turma|}" th:object="${alterarTurmaForm}" method="post">
         <div class="row mt-2">
             <div class="col">
                 <div class="form-group">
                     <label for="turma-select">Turma</label>
-                    <select class="form-control" id="turma-select" th:name="turmaId">
+                    <select class="form-control" id="turma-select" th:field="*{turma}">
                         <option th:value="${null}">Nenhuma</option>
-                        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"
-                                th:selected="(${t} == ${aluno.turma})"></option>
+                        <option th:each="t: ${turmasList}" th:value="${t.id}" th:text="${t.turma}"></option>
                     </select>
                 </div>
             </div>

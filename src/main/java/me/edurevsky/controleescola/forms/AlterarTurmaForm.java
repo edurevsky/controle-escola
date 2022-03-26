@@ -1,22 +1,27 @@
 package me.edurevsky.controleescola.forms;
 
-import javax.validation.constraints.NotNull;
+import me.edurevsky.controleescola.entities.Aluno;
+import me.edurevsky.controleescola.entities.Turma;
 
 public class AlterarTurmaForm {
 
-    @NotNull
-    private Long turmaId;
+    // @NotNull
+    private Turma turma;
 
-    public AlterarTurmaForm(Long turmaId) {
-        this.turmaId = turmaId;
+    public AlterarTurmaForm(Turma turma) {
+        this.turma = turma;
     }
 
-    public Long getTurmaId() {
-        return turmaId;
+    public Turma getTurma() {
+        return turma;
     }
 
-    public void setTurmaId(Long turmaId) {
-        this.turmaId = turmaId;
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    public void loadFromAluno(Aluno aluno) {
+        this.turma = aluno.getTurma();
     }
     
 }

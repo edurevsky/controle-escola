@@ -90,7 +90,7 @@ public class AlunoService {
         Handlers.handleEntityNotFound(alunoRepository, idAluno, String.format(NOT_FOUND_MESSAGE, idAluno));
 
         Aluno aluno = alunoRepository.getById(idAluno);
-        aluno.setTurma(turmaRepository.getById(turmaForm.getTurmaId()));
+        aluno.setTurma(turmaForm.getTurma());
         return alunoRepository.save(aluno);
     }
 

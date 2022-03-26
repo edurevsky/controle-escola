@@ -83,7 +83,7 @@ public class AlunosViewController {
     }
 
     @GetMapping(value = "/alunos/{id}/editar")
-    public ModelAndView editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm, Model model) {
+    public ModelAndView editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm) {
         Aluno aluno = alunoService.findById(id);
         if (aluno == null) return new ModelAndView("redirect:/alunos");
 
@@ -126,10 +126,12 @@ public class AlunosViewController {
     }
 
     @GetMapping(value = "/alunos/{id}/alterar-turma")
-    public String changeTurmaGet(@PathVariable("id") Long id, AlterarTurmaForm turmaForm, Model model) {
-        model.addAttribute("aluno", alunoService.findById(id));
-        model.addAttribute("turmasList", turmaService.findAll());
-        return "alunos/changeturma";
+    public ModelAndView changeTurmaGet(@PathVariable("id") Long id, AlterarTurmaForm turmaForm) {
+        turmaForm.loadFromAluno(alunoService.findById(id));
+        ModelAndView mv = new ModelAndView("alunos/changeturma");
+        mv.addObject("id", id);
+        mv.addObject("turmasList", turmaService.findAll());
+        return mv;
     }
 
     @PostMapping(value = "/alunos/{id}/alterar-turma")
