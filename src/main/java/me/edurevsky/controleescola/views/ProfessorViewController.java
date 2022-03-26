@@ -7,18 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class ProfessorViewController {
 
     private final ProfessorService professorService;
-    private static final int pageSize = 10;
+    private static final int PAGE_SIZE = 10;
 
     @Autowired
     public ProfessorViewController(ProfessorService professorService) {
@@ -32,7 +35,7 @@ public class ProfessorViewController {
 
     @GetMapping(value = "/professores/{page}")
     public String paginatedProfessores(@PathVariable("page") Integer page, Model model) {
-        Page<Professor> professoresPage = professorService.findPaginated(page, pageSize);
+        Page<Professor> professoresPage = professorService.findPaginated(page, PAGE_SIZE);
         List<Professor> professoresList = professoresPage.getContent();
 
         // Title
@@ -48,38 +51,50 @@ public class ProfessorViewController {
     }
 
     @GetMapping(value = "/professores/registrar")
-    public String addProfessorView(ProfessorForm professorForm, Model model) {
-        model.addAttribute("title", "Registrar Professor");
-        return "professores/new";
+    public ModelAndView addProfessorView(ProfessorForm professorForm) {
+        ModelAndView mv = new ModelAndView("professores/new");
+        mv.addObject("title", "Registrar Professor");
+        return mv;
     }
 
     @PostMapping(value = "/professores/registrar")
-    public String addProfessorPost(@ModelAttribute ProfessorForm professorForm) {
+    public ModelAndView addProfessorPost(@Valid @ModelAttribute ProfessorForm professorForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return addProfessorView(professorForm);
+        }
         professorService.save(professorForm);
-        return "redirect:/professores";
+        return new ModelAndView("redirect:/professores");
     }
 
     @GetMapping(value = "/professores/{id}/editar")
-    public String editarProfessor(@PathVariable Long id, ProfessorForm professorForm, Model model) {
-        model.addAttribute("title", "Editar Professor");
-        model.addAttribute("professor", professorService.findById(id));
-        return "professores/edit";
+    public ModelAndView editProfessorView(@PathVariable("id") Long id, ProfessorForm professorForm) {
+        Professor professor = professorService.findById(id);
+        if (professor == null) return new ModelAndView("redirect:/professores");
+
+        professorForm.loadFromProfessor(professor);
+        ModelAndView mv = new ModelAndView("professores/edit");
+        mv.addObject("title", "Editar Professor");
+        mv.addObject("id", id);
+        return mv;
     }
 
     @PostMapping(value = "/professores/{id}/editar")
-    public String editarProfessorPost(@PathVariable Long id, @ModelAttribute ProfessorForm professorForm) {
+    public ModelAndView editProfessorPost(@PathVariable("id") Long id, @Valid @ModelAttribute ProfessorForm professorForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return editProfessorView(id, professorForm);
+        }
         professorService.update(id, professorForm);
-        return "redirect:/professores";
+        return new ModelAndView("redirect:/professores");
     }
 
     @GetMapping(value = "/professores/{id}/deletar")
-    public String deletarProfessor(@PathVariable Long id) {
+    public String deletarProfessor(@PathVariable("id") Long id) {
         professorService.remove(id);
         return "redirect:/professores";
     }
 
     @GetMapping(value = "/professores/{id}/detalhes")
-    public String detalhesProfessor(@PathVariable Long id, Model model) {
+    public String detalhesProfessor(@PathVariable("id") Long id, Model model) {
         Professor professor = professorService.findById(id);
         model.addAttribute("title", String.format("Detalhes de %s", professor.getNome()));
         model.addAttribute("professor", professor);

@@ -24,7 +24,7 @@ public class FuncionarioForm {
     @CPF(message = "O CPF inserido é inválido")
     private String cpf;
 
-    @NotNull(message = "O salário precisa ser inserido")
+    @NotNull(message = "O salário precisa ser preenchido")
     private BigDecimal salario;
 
     private Turno horarioDeTrabalho;

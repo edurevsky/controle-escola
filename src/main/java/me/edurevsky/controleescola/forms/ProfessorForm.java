@@ -14,15 +14,13 @@ import java.math.BigDecimal;
 @Setter
 public class ProfessorForm {
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "O nome não pode estar em branco")
     private String nome;
 
-    @CPF
+    @CPF(message = "O CPF inserido é inválido")
     private String cpf;
 
-    @NotNull
+    @NotNull(message = "O salário precisa ser preenchido")
     private BigDecimal salario;
 
     public static Professor convertToProfessor(ProfessorForm professorForm) {
@@ -31,6 +29,13 @@ public class ProfessorForm {
         professor.setCpf(professorForm.getCpf());
         professor.setSalario(professorForm.getSalario());
         return professor;
+    }
+
+    public ProfessorForm loadFromProfessor(Professor professor) {
+        this.nome = professor.getNome();
+        this.cpf = professor.getCpf();
+        this.salario = professor.getSalario();
+        return this;
     }
 
 }

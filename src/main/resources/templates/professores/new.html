@@ -19,21 +19,24 @@
             <div class="col">
                 <div class="form-group">
                     <label for="nome-input">Nome</label>
-                    <input class="form-control" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                    <input class="form-control" th:errorclass="is-invalid" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                    <div class="invalid-feedback" th:errors="*{nome}"></div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label for="cpf-input">CPF</label>
-                    <input class="form-control" id="cpf-input" type="text" th:field="*{cpf}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                    <input class="form-control" th:errorclass="is-invalid" id="cpf-input" type="text" th:field="*{cpf}" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                    <div class="invalid-feedback" th:errors="*{cpf}"></div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label for="salario-input">Salário</label>
-                    <input class="form-control" id="salario-input" type="number" step="any" th:field="*{salario}" placeholder="1000,00">
+                    <input class="form-control" th:errorclass="is-invalid" id="salario-input" type="number" step="any" th:field="*{salario}" placeholder="1000,00">
+                    <div class="invalid-feedback" th:errors="*{salario}"></div>
                 </div>
             </div>
         </div>
