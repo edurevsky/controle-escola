@@ -25,7 +25,7 @@ public class AlunosViewController {
 
     private final AlunoService alunoService;
     private final TurmaService turmaService;
-    private static final int pageSize = 10;
+    private static final int PAGE_SIZE = 10;
 
     @Autowired
     public AlunosViewController(AlunoService alunoService, TurmaService turmaService) {
@@ -40,7 +40,7 @@ public class AlunosViewController {
 
     @GetMapping(value = "/alunos/{page}")
     public String paginatedAlunos(@PathVariable("page") Integer page, Model model) {
-        Page<Aluno> alunosPage = alunoService.findPaginated(page, pageSize);
+        Page<Aluno> alunosPage = alunoService.findPaginated(page, PAGE_SIZE);
         List<Aluno> alunosList = alunosPage.getContent();
 
         // Title
@@ -56,21 +56,18 @@ public class AlunosViewController {
     }
 
     @GetMapping(value = "/alunos/registrar")
-    public String novoAlunoView(AlunoForm alunoForm, Model model) {
-        model.addAttribute("title", "Registrar Aluno");
-        model.addAttribute("turmasList", turmaService.findAll());
-        model.addAttribute("turnos", Turno.values());
-        return "alunos/new";
+    public ModelAndView novoAlunoView(AlunoForm alunoForm) {
+        ModelAndView mv = new ModelAndView("alunos/new");
+        mv.addObject("title", "Registrar Aluno");
+        mv.addObject("turmasList", turmaService.findAll());
+        mv.addObject("turnos", Turno.values());
+        return mv;
     }
 
     @PostMapping(value = "/alunos/registrar")
     public ModelAndView novoAlunoPost(@Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView mv = new ModelAndView("alunos/new");
-            mv.addObject("title", "Registrar Aluno");
-            mv.addObject("turmasList", turmaService.findAll());
-            mv.addObject("turnos", Turno.values());
-            return mv;
+            return novoAlunoView(alunoForm);
         }
         alunoService.save(alunoForm);
         return new ModelAndView("redirect:/alunos");
@@ -99,12 +96,7 @@ public class AlunosViewController {
     @PostMapping(value = "/alunos/{id}/editar")
     public ModelAndView editAlunoPost(@PathVariable("id") Long id, @Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView mv = new ModelAndView("alunos/edit");
-            mv.addObject("title", "Editar Aluno");
-            mv.addObject("aluno", alunoService.findById(id));
-            mv.addObject("turnos", Turno.values());
-            mv.addObject("turmasList", turmaService.findAll());
-            return mv;
+            return editAlunoView(id, alunoForm);
         }
         alunoService.update(id, alunoForm);
         return new ModelAndView("redirect:/alunos");

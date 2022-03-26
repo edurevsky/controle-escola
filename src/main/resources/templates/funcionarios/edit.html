@@ -16,51 +16,49 @@
 
     <h1 th:text="${title}"></h1>
 
-    <form th:action="@{|/funcionarios/${funcionario.id}/editar|}" th:object="${funcionarioForm}" method="post">
+    <form th:action="@{|/funcionarios/${id}/editar|}" th:object="${funcionarioForm}" method="post">
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col">
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="nome-input">Nome</label>
-                    <input class="form-control" id="nome-input" type="text" th:name="nome" th:value="${funcionario.nome}">
+                    <input class="form-control" th:errorclass="is-invalid" id="nome-input" type="text" th:field="*{nome}" placeholder="Nome">
+                    <div class="invalid-feedback" th:errors="*{nome}"></div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="cpf-input">CPF</label>
-                    <input class="form-control" id="cpf-input" type="text" th:name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" th:value="${funcionario.cpf}">
+                    <input class="form-control" th:errorclass="is-invalid" id="cpf-input" type="text" th:field="*{cpf}"
+                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                    <div class="invalid-feedback" th:errors="*{cpf}"></div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="salario-input">Salário</label>
-                    <input class="form-control" id="salario-input" type="number" step="any" th:name="salario" th:value="${funcionario.salario}">
+                    <input class="form-control" th:errorclass="is-invalid" id="salario-input" type="number" step="0.01" th:field="*{salario}" placeholder="Salário">
+                    <div class="invalid-feedback" th:errors="*{salario}"></div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-2">
+        <div class="row">
             <div class="col">
-                <div class="form-group mt-2">
-                    <label for="horario-select">Turno</label>
-                    <select class="form-control" id="horario-select" th:name="horarioDeTrabalho">
-                        <option th:each="turno : ${turnos}" th:value="${turno}" th:text="${turno}"
-                                th:selected="(${turno} == ${funcionario.horarioDeTrabalho})"></option>
-                    </select>
-                </div>
+                <label for="turno-select">Turno</label>
+                <select class="form-control" id="turno-select" th:field="*{horarioDeTrabalho}">
+                    <option th:each="turno: ${turnos}" th:value="${turno}" th:text="${turno}"></option>
+                </select>
             </div>
 
             <div class="col">
-                <div class="form-group mt-2">
-                    <label for="cargo-select">Cargo</label>
-                    <select class="form-control" id="cargo-select" th:name="cargo">
-                        <option th:value="${null}">Nenhum</option>
-                        <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"
-                                th:selected="(${c} == ${funcionario.cargo})"></option>
-                    </select>
-                </div>
+                <label for="cargo-select">Cargo</label>
+                <select class="form-control" id="cargo-select" th:field="*{cargo}">
+                    <option th:value="${null}">Nenhum</option>
+                    <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
+                </select>
             </div>
         </div>
 

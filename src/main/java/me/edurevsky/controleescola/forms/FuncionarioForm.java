@@ -18,19 +18,18 @@ import org.springframework.beans.BeanUtils;
 @Setter
 public class FuncionarioForm {
     
-    @NotBlank
+    @NotBlank(message = "O nome não pode estar em branco")
     private String nome;
 
-    @CPF
+    @CPF(message = "O CPF inserido é inválido")
     private String cpf;
 
-    @NotNull
+    @NotNull(message = "O salário precisa ser inserido")
     private BigDecimal salario;
 
-    @NotNull
     private Turno horarioDeTrabalho;
 
-    @NotNull
+    // @NotNull
     private Cargo cargo;
 
     public FuncionarioForm(String nome, String cpf, BigDecimal salario, Turno horarioDeTrabalho, Cargo cargo) {
@@ -45,6 +44,15 @@ public class FuncionarioForm {
         Funcionario funcionario = new Funcionario();
         BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionario;
+    }
+
+    public FuncionarioForm loadFromFuncionario(Funcionario funcionario) {
+        this.nome = funcionario.getNome();
+        this.cpf = funcionario.getCpf();
+        this.salario = funcionario.getSalario();
+        this.horarioDeTrabalho = funcionario.getHorarioDeTrabalho();
+        this.cargo = funcionario.getCargo();
+        return this;
     }
 
 }
