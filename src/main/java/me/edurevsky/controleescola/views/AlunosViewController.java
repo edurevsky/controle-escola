@@ -4,6 +4,7 @@ import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.forms.AlterarTurmaForm;
 import me.edurevsky.controleescola.forms.AlunoForm;
+import me.edurevsky.controleescola.forms.EditAlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
 import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,7 @@ public class AlunosViewController {
     }
 
     @GetMapping(value = "/{id}/editar")
-    public ModelAndView editAlunoGet(@PathVariable("id") Long id, AlunoForm alunoForm) {
+    public ModelAndView editAlunoGet(@PathVariable("id") Long id, EditAlunoForm alunoForm) {
         Aluno aluno = alunoService.findById(id);
         if (Objects.isNull(aluno)) return new ModelAndView("redirect:/alunos");
 
@@ -87,13 +88,14 @@ public class AlunosViewController {
         ModelAndView mv = new ModelAndView("alunos/edit");
         mv.addObject("title", "Editar Aluno");
         mv.addObject("id", id);
+        mv.addObject("cpf", aluno.getCpf());
         mv.addObject("turnos", Turno.values());
         mv.addObject("turmasList", turmaService.findAll());
         return mv;
     }
 
     @PostMapping(value = "/{id}/editar")
-    public ModelAndView editAlunoPost(@PathVariable("id") Long id, @Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
+    public ModelAndView editAlunoPost(@PathVariable("id") Long id, @Valid @ModelAttribute EditAlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return this.editAlunoGet(id, alunoForm);
         }

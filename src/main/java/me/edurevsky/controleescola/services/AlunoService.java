@@ -6,6 +6,7 @@ import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.forms.AlterarTurmaForm;
+import me.edurevsky.controleescola.forms.EditAlunoForm;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.services.utils.CpfHandler;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
@@ -64,6 +65,15 @@ public class AlunoService {
         aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
 
         return alunoRepository.save(aluno);
+    }
+
+    @Transactional
+    public Aluno update(Long id, EditAlunoForm alunoForm) {
+        Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
+        Aluno aluno = alunoRepository.getById(id);
+        aluno.setEmail(GeradorDeEmail.gerarEmailParaAluno(alunoForm.getNome()));
+        return alunoRepository.save(EditAlunoForm.update(aluno, alunoForm));
     }
 
     public List<Aluno> findAll() {

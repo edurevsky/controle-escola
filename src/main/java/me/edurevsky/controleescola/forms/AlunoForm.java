@@ -23,7 +23,7 @@ public class AlunoForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
-    // @AlreadyRegisteredCpf
+    @AlreadyRegisteredCpf
     private String cpf;
 
     private Turno turno;
