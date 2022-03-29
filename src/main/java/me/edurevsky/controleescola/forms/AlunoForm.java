@@ -6,7 +6,6 @@ import javax.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;

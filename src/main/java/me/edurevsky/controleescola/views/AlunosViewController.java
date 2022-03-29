@@ -9,18 +9,16 @@ import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/alunos")
 public class AlunosViewController {
 
     private final AlunoService alunoService;
@@ -28,35 +26,36 @@ public class AlunosViewController {
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public AlunosViewController(AlunoService alunoService, TurmaService turmaService) {
+    public AlunosViewController(final AlunoService alunoService, final TurmaService turmaService) {
         this.alunoService = alunoService;
         this.turmaService = turmaService;
     }
 
-    @GetMapping(value = "/alunos")
-    public String index(Model model) {
-        return paginatedAlunos(1, model);
+    @GetMapping
+    public ModelAndView index() {
+        return this.paginatedAlunos(1);
     }
 
-    @GetMapping(value = "/alunos/{page}")
-    public String paginatedAlunos(@PathVariable("page") Integer page, Model model) {
+    @GetMapping(value = "/{page}")
+    public ModelAndView paginatedAlunos(@PathVariable("page") Integer page) {
+        ModelAndView mv = new ModelAndView("alunos/index");
         Page<Aluno> alunosPage = alunoService.findPaginated(page, PAGE_SIZE);
         List<Aluno> alunosList = alunosPage.getContent();
 
         // Title
-        model.addAttribute("title", "Lista de Alunos");
+        mv.addObject("title", "Lista de Alunos");
 
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", alunosPage.getTotalPages());
         // Pagination
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", alunosPage.getTotalPages());
-        model.addAttribute("totalItems", alunosPage.getTotalElements());
+        mv.addObject("totalItems", alunosPage.getTotalElements());
 
-        model.addAttribute("alunosList", alunosList);
-        return "alunos/index";
+        mv.addObject("alunosList", alunosList);
+        return mv;
     }
 
-    @GetMapping(value = "/alunos/registrar")
-    public ModelAndView novoAlunoView(AlunoForm alunoForm) {
+    @GetMapping(value = "/registrar")
+    public ModelAndView newAlunoGet(AlunoForm alunoForm) {
         ModelAndView mv = new ModelAndView("alunos/new");
         mv.addObject("title", "Registrar Aluno");
         mv.addObject("turmasList", turmaService.findAll());
@@ -64,25 +63,25 @@ public class AlunosViewController {
         return mv;
     }
 
-    @PostMapping(value = "/alunos/registrar")
-    public ModelAndView novoAlunoPost(@Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
+    @PostMapping(value = "/registrar")
+    public ModelAndView newAlunoPost(@Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return novoAlunoView(alunoForm);
+            return this.newAlunoGet(alunoForm);
         }
         alunoService.save(alunoForm);
         return new ModelAndView("redirect:/alunos");
     }
 
-    @GetMapping(value = "/alunos/{id}/deletar")
-    public String deleteAluno(@PathVariable("id") Long id) {
+    @GetMapping(value = "/{id}/deletar")
+    public ModelAndView deleteAluno(@PathVariable("id") Long id) {
         alunoService.remove(id);
-        return "redirect:/alunos";
+        return new ModelAndView("redirect:/alunos");
     }
 
-    @GetMapping(value = "/alunos/{id}/editar")
-    public ModelAndView editAlunoView(@PathVariable("id") Long id, AlunoForm alunoForm) {
+    @GetMapping(value = "/{id}/editar")
+    public ModelAndView editAlunoGet(@PathVariable("id") Long id, AlunoForm alunoForm) {
         Aluno aluno = alunoService.findById(id);
-        if (aluno == null) return new ModelAndView("redirect:/alunos");
+        if (Objects.isNull(aluno)) return new ModelAndView("redirect:/alunos");
 
         alunoForm.loadFromAluno(aluno);
         ModelAndView mv = new ModelAndView("alunos/edit");
@@ -93,31 +92,32 @@ public class AlunosViewController {
         return mv;
     }
 
-    @PostMapping(value = "/alunos/{id}/editar")
+    @PostMapping(value = "/{id}/editar")
     public ModelAndView editAlunoPost(@PathVariable("id") Long id, @Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return editAlunoView(id, alunoForm);
+            return this.editAlunoGet(id, alunoForm);
         }
         alunoService.update(id, alunoForm);
         return new ModelAndView("redirect:/alunos");
     }
 
-    @GetMapping(value = "/alunos/{id}/detalhes")
-    public String detailsAluno(@PathVariable("id") Long id, Model model) {
+    @GetMapping(value = "/{id}/detalhes")
+    public ModelAndView detailsAluno(@PathVariable("id") Long id) {
         Aluno aluno = alunoService.findById(id);
-        model.addAttribute("title", String.format("Detalhes de %s", aluno.getNome()));
-        model.addAttribute("aluno", aluno);
-        model.addAttribute("mstatus", !aluno.getEstaAtivo() ? "Ativo" : "Inativo");
-        return "alunos/details";
+        ModelAndView mv = new ModelAndView("alunos/details");
+        mv.addObject("title", String.format("Detalhes de %s", aluno.getNome()));
+        mv.addObject("aluno", aluno);
+        mv.addObject("mstatus", !aluno.getEstaAtivo() ? "Ativo" : "Inativo");
+        return mv;
     }
 
-    @GetMapping(value = "/alunos/{id}/alterar-status")
+    @GetMapping(value = "/{id}/alterar-status")
     public String switchStatus(@PathVariable("id") Long id) {
         alunoService.switchEstaAtivo(id);
         return "redirect:/alunos/{id}/detalhes";
     }
 
-    @GetMapping(value = "/alunos/{id}/alterar-turma")
+    @GetMapping(value = "/{id}/alterar-turma")
     public ModelAndView changeTurmaGet(@PathVariable("id") Long id, AlterarTurmaForm turmaForm) {
         turmaForm.loadFromAluno(alunoService.findById(id));
         ModelAndView mv = new ModelAndView("alunos/changeturma");
@@ -126,10 +126,10 @@ public class AlunosViewController {
         return mv;
     }
 
-    @PostMapping(value = "/alunos/{id}/alterar-turma")
-    public String changeTurmaPost(@PathVariable("id") Long id, @ModelAttribute AlterarTurmaForm turmaForm) {
+    @PostMapping(value = "/{id}/alterar-turma")
+    public ModelAndView changeTurmaPost(@PathVariable("id") Long id, @ModelAttribute AlterarTurmaForm turmaForm) {
         alunoService.addTurma(id, turmaForm);
-        return "redirect:/alunos/{id}/detalhes";
+        return new ModelAndView("redirect:/alunos/{id}/detalhes");
     }
 
 }

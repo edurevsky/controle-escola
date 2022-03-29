@@ -18,4 +18,9 @@ public class CargoForm {
         return new Cargo().withCargo(cargoForm.getCargo());
     }
 
+    public CargoForm loadFromCargo(Cargo cargo) {
+        this.cargo = cargo.getCargo();
+        return this;
+    }
+
 }
