@@ -13,7 +13,6 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Cargo {
 
     @Id
@@ -26,14 +25,8 @@ public class Cargo {
     @OneToMany(targetEntity = Funcionario.class, mappedBy = "cargo")
     private List<Funcionario> funcionarios = new ArrayList<>();
 
-    /**
-     * Método Builder
-     * @param cargo o nome do cargo
-     * @return Objeto Cargo
-     */
-    public Cargo withCargo(String cargo) {
-        this.cargo = cargo;
-        return this;
+    public Cargo() {
+
     }
 
     // On Cargo delete

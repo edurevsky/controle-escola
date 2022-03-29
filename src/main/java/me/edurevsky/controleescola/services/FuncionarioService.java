@@ -47,10 +47,9 @@ public class FuncionarioService {
         Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
         Funcionario funcionario = funcionarioRepository.getById(id);
 
-        if (!funcionarioForm.getCpf().equals(funcionario.getCpf())) {
-            cpfHandler.ifAlreadyRegistered_ThrowException(funcionarioForm.getCpf());
-        }
-
+//        if (!funcionarioForm.getCpf().equals(funcionario.getCpf())) {
+//            cpfHandler.ifAlreadyRegistered_ThrowException(funcionarioForm.getCpf());
+//        }
         BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionarioRepository.save(funcionario);
     }

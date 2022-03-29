@@ -18,7 +18,7 @@ public class ProfessorForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
-    @AlreadyRegisteredCpf
+    // @AlreadyRegisteredCpf
     private String cpf;
 
     @NotNull(message = "O salário precisa ser preenchido")

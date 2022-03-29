@@ -23,7 +23,7 @@ public class FuncionarioForm {
     private String nome;
 
     @CPF(message = "O CPF inserido é inválido")
-    @AlreadyRegisteredCpf
+    // @AlreadyRegisteredCpf
     private String cpf;
 
     @NotNull(message = "O salário precisa ser preenchido")
@@ -31,7 +31,6 @@ public class FuncionarioForm {
 
     private Turno horarioDeTrabalho;
 
-    // @NotNull
     private Cargo cargo;
 
     public FuncionarioForm(String nome, String cpf, BigDecimal salario, Turno horarioDeTrabalho, Cargo cargo) {

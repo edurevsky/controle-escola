@@ -8,18 +8,16 @@ import me.edurevsky.controleescola.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/funcionarios")
 public class FuncionarioViewController {
 
     private final FuncionarioService funcionarioService;
@@ -27,35 +25,36 @@ public class FuncionarioViewController {
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public FuncionarioViewController(FuncionarioService funcionarioService, CargoService cargoService) {
+    public FuncionarioViewController(final FuncionarioService funcionarioService, final CargoService cargoService) {
         this.funcionarioService = funcionarioService;
         this.cargoService = cargoService;
     }
 
-    @GetMapping(value = "/funcionarios")
-    public String index(Model model) {
-        return paginatedFuncionarios(1, model);
+    @GetMapping
+    public ModelAndView index() {
+        return this.paginatedFuncionarios(1);
     }
 
-    @GetMapping(value = "/funcionarios/{page}")
-    public String paginatedFuncionarios(@PathVariable("page") Integer page, Model model) {
+    @GetMapping(value = "/{page}")
+    public ModelAndView paginatedFuncionarios(@PathVariable("page") Integer page) {
+        ModelAndView mv = new ModelAndView("funcionarios/index");
         Page<Funcionario> funcionariosPage = funcionarioService.findPaginated(page, PAGE_SIZE);
         List<Funcionario> funcionariosList = funcionariosPage.getContent();
 
         // Title
-        model.addAttribute("title", "Lista de Funcionários");
+        mv.addObject("title", "Lista de Funcionários");
 
         // Pagination
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", funcionariosPage.getTotalPages());
-        model.addAttribute("totalItems", funcionariosPage.getTotalElements());
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", funcionariosPage.getTotalPages());
+        mv.addObject("totalItems", funcionariosPage.getTotalElements());
 
-        model.addAttribute("funcionariosList", funcionariosList);
-        return "funcionarios/index";
+        mv.addObject("funcionariosList", funcionariosList);
+        return mv;
     }
 
-    @GetMapping(value = "/funcionarios/registrar")
-    public ModelAndView addFuncionarioView(FuncionarioForm funcionarioForm) {
+    @GetMapping(value = "/registrar")
+    public ModelAndView newFuncionarioGet(FuncionarioForm funcionarioForm) {
         ModelAndView mv = new ModelAndView("funcionarios/new");
         mv.addObject("title", "Registrar Funcionário");
         mv.addObject("cargosList", cargoService.findAll());
@@ -63,25 +62,25 @@ public class FuncionarioViewController {
         return mv;
     }
 
-    @PostMapping(value = "/funcionarios/registrar")
-    public ModelAndView addFuncionarioPost(@Valid @ModelAttribute FuncionarioForm funcionarioForm, BindingResult bindingResult) {
+    @PostMapping(value = "/registrar")
+    public ModelAndView newFuncionarioPost(@Valid @ModelAttribute FuncionarioForm funcionarioForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return addFuncionarioView(funcionarioForm);
+            return this.newFuncionarioGet(funcionarioForm);
         }
         funcionarioService.save(funcionarioForm);
         return new ModelAndView("redirect:/funcionarios");
     }
 
-    @GetMapping(value = "/funcionarios/{id}/deletar")
-    public String deletarFuncionario(@PathVariable Long id) {
+    @GetMapping(value = "/{id}/deletar")
+    public ModelAndView deleteFuncionario(@PathVariable Long id) {
         funcionarioService.remove(id);
-        return "redirect:/funcionarios";
+        return new ModelAndView("redirect:/funcionarios");
     }
 
-    @GetMapping(value = "/funcionarios/{id}/editar")
-    public ModelAndView editarFuncionario(FuncionarioForm funcionarioForm, @PathVariable Long id) {
+    @GetMapping(value = "/{id}/editar")
+    public ModelAndView editFuncionarioGet(FuncionarioForm funcionarioForm, @PathVariable Long id) {
         Funcionario funcionario = funcionarioService.findById(id);
-        if (funcionario == null) return new ModelAndView("redirect:/funcionarios");
+        if (Objects.isNull(funcionario)) return new ModelAndView("redirect:/funcionarios");
 
         funcionarioForm.loadFromFuncionario(funcionario);
         ModelAndView mv = new ModelAndView("funcionarios/edit");
@@ -92,21 +91,22 @@ public class FuncionarioViewController {
         return mv;
     }
 
-    @PostMapping(value = "/funcionarios/{id}/editar")
-    public ModelAndView editarFuncionarioPost(@PathVariable("id") Long id, @Valid @ModelAttribute FuncionarioForm funcionarioForm, BindingResult bindingResult) {
+    @PostMapping(value = "/{id}/editar")
+    public ModelAndView editFuncionarioPost(@PathVariable("id") Long id, @Valid @ModelAttribute FuncionarioForm funcionarioForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return editarFuncionario(funcionarioForm, id);
+            return this.editFuncionarioGet(funcionarioForm, id);
         }
         funcionarioService.update(id, funcionarioForm);
         return new ModelAndView("redirect:/funcionarios");
     }
 
-    @GetMapping(value = "/funcionarios/{id}/detalhes")
-    public String detalhesFuncionario(@PathVariable Long id, Model model) {
+    @GetMapping(value = "/{id}/detalhes")
+    public ModelAndView detailsFuncionario(@PathVariable Long id) {
         Funcionario funcionario = funcionarioService.findById(id);
-        model.addAttribute("title", String.format("Detalhes de %s", funcionario.getNome()));
-        model.addAttribute("funcionario", funcionario);
-        return "funcionarios/details";
+        ModelAndView mv = new ModelAndView("funcionarios/details");
+        mv.addObject("title", String.format("Detalhes de %s", funcionario.getNome()));
+        mv.addObject("funcionario", funcionario);
+        return mv;
     }
 
 }

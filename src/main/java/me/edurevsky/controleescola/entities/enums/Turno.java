@@ -8,7 +8,7 @@ public enum Turno {
 
     private final String turno;
 
-    private Turno(String turno) {
+    Turno(String turno) {
         this.turno = turno;
     }
 

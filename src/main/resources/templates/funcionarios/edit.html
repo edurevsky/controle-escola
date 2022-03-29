@@ -31,7 +31,7 @@
                 <div class="form-group mt-3">
                     <label for="cpf-input">CPF</label>
                     <input class="form-control" th:errorclass="is-invalid" id="cpf-input" type="text" th:field="*{cpf}"
-                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12">
+                           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12" readonly>
                     <div class="invalid-feedback" th:errors="*{cpf}"></div>
                 </div>
             </div>

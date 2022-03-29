@@ -15,7 +15,9 @@ public class CargoForm {
     }
 
     public static Cargo convertToCargo(CargoForm cargoForm) {
-        return new Cargo().withCargo(cargoForm.getCargo());
+        Cargo cargo = new Cargo();
+        cargo.setCargo(cargoForm.getCargo());
+        return cargo;
     }
 
     public CargoForm loadFromCargo(Cargo cargo) {

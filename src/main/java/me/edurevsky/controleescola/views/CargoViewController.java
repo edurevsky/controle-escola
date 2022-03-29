@@ -6,81 +6,91 @@ import me.edurevsky.controleescola.services.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/cargos")
 public class CargoViewController {
 
     private final CargoService cargoService;
     private static final int pageSize = 10;
 
     @Autowired
-    public CargoViewController(CargoService cargoService) {
+    public CargoViewController(final CargoService cargoService) {
         this.cargoService = cargoService;
     }
 
-    @GetMapping(value = "/cargos")
-    public String index(Model model) {
-        return paginatedCargos(1, model);
+    @GetMapping
+    public ModelAndView index() {
+        return paginatedCargos(1);
     }
 
-    @GetMapping(value = "/cargos/{page}")
-    public String paginatedCargos(@PathVariable("page") Integer page, Model model) {
+    @GetMapping(value = "/{page}")
+    public ModelAndView paginatedCargos(@PathVariable("page") Integer page) {
+        ModelAndView mv = new ModelAndView("cargos/index");
         Page<Cargo> cargosPage = cargoService.findPaginated(page, pageSize);
         List<Cargo> cargosList = cargosPage.getContent();
 
         // Title
-        model.addAttribute("title", "Lista de Cargos");
+        mv.addObject("title", "Lista de Cargos");
 
         // Pagination
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", cargosPage.getTotalPages());
-        model.addAttribute("totalItems", cargosPage.getTotalElements());
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", cargosPage.getTotalPages());
+        mv.addObject("totalItems", cargosPage.getTotalElements());
 
-        model.addAttribute("cargosList", cargosList);
-        return "cargos/index";
+        mv.addObject("cargosList", cargosList);
+        return mv;
     }
 
-    @GetMapping(value = "/cargos/registrar")
-    public String novoCargoView(CargoForm cargoForm, Model model) {
-        model.addAttribute("title", "Registrar Cargo");
-        return "cargos/new";
+    @GetMapping(value = "/registrar")
+    public ModelAndView newCargoGet(CargoForm cargoForm) {
+        ModelAndView mv = new ModelAndView("cargos/new");
+        mv.addObject("title", "Registrar Cargo");
+        return mv;
     }
 
-    @PostMapping(value = "/cargos/registrar")
-    public String novoCargoPost(@ModelAttribute CargoForm cargoForm) {
+    @PostMapping(value = "/registrar")
+    public ModelAndView newCargoPost(@ModelAttribute CargoForm cargoForm) {
         cargoService.save(cargoForm);
-        return "redirect:/cargos";
+        return new ModelAndView("redirect:/cargos");
     }
 
-    @GetMapping(value = "/cargos/{id}/deletar")
-    public String deletarCargo(@PathVariable Long id) {
+    @GetMapping(value = "/{id}/deletar")
+    public ModelAndView deleteCargo(@PathVariable Long id) {
         cargoService.remove(id);
-        return "redirect:/cargos";
+        return new ModelAndView("redirect:/cargos");
     }
 
-    @GetMapping(value = "/cargos/{id}/detalhes")
-    public String detalhesCargo(@PathVariable Long id, Model model) {
+    @GetMapping(value = "/{id}/detalhes")
+    public ModelAndView detailsCargo(@PathVariable Long id) {
         Cargo cargo = cargoService.findById(id);
-        model.addAttribute("title", String.format("Detalhes do cargo %s", cargo.getCargo()));
-        model.addAttribute("cargo", cargo);
-        return "cargos/details";
+        ModelAndView mv = new ModelAndView("cargos/details");
+        mv.addObject("title", String.format("Detalhes do cargo %s", cargo.getCargo()));
+        mv.addObject("cargo", cargo);
+        return mv;
     }
 
-    @GetMapping(value = "/cargos/{id}/editar")
-    public String editarCargo(@ModelAttribute CargoForm cargoForm, @PathVariable Long id, Model model) {
-        model.addAttribute("cargo", cargoService.findById(id));
-        model.addAttribute("title", "Editar cargo");
-        return "cargos/edit";
+    @GetMapping(value = "/{id}/editar")
+    public ModelAndView editCargoGet(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
+        Cargo cargo = cargoService.findById(id);
+        if (Objects.isNull(cargo)) return new ModelAndView("redirect:/cargos");
+
+        cargoForm.loadFromCargo(cargo);
+        ModelAndView mv = new ModelAndView("cargos/edit");
+        mv.addObject("id", id);
+        mv.addObject("title", "Editar cargo");
+        return new ModelAndView("cargos/edit");
     }
 
-    @PostMapping(value = "/cargos/{id}/editar")
-    public String editarCargoPost(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
+    @PostMapping(value = "/{id}/editar")
+    public ModelAndView editCargoPost(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
         cargoService.update(id, cargoForm);
-        return "redirect:/cargos";
+        return new ModelAndView("redirect:/cargos");
     }
 
 }

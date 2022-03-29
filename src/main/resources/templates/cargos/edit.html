@@ -18,13 +18,13 @@
 
     <h1 th:text="${title}"></h1>
 
-    <form th:action="@{|/cargos/${cargo.id}/editar|}" th:object="${cargoForm}" method="post">
+    <form th:action="@{|/cargos/${id}/editar|}" th:object="${cargoForm}" method="post">
 
         <div class="row mt-3">
             <div class="col">
                 <div class="form-group">
                     <label for="cargo-input">Cargo</label>
-                    <input class="form-control" type="text" id="cargo-input" th:name="cargo" th:value="${cargo.cargo}"/>
+                    <input class="form-control" type="text" id="cargo-input" th:field="*{cargo}"/>
                 </div>
             </div>
         </div>

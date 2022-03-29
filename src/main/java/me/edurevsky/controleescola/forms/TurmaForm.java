@@ -20,4 +20,11 @@ public class TurmaForm {
         return turma;
     }
 
+    public TurmaForm loadFromTurma(Turma turma) {
+        this.turma = turma.getTurma();
+        this.conteudo = turma.getConteudo();
+        this.professor = turma.getProfessor();
+        return this;
+    }
+
 }

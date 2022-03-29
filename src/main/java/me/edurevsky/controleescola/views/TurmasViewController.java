@@ -7,88 +7,95 @@ import me.edurevsky.controleescola.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/turmas")
 public class TurmasViewController {
 
     private final TurmaService turmaService;
     private final ProfessorService professorService;
-    private static final int pageSize = 10;
+    private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public TurmasViewController(TurmaService turmaService, ProfessorService professorService) {
+    public TurmasViewController(final TurmaService turmaService, final ProfessorService professorService) {
         this.turmaService = turmaService;
         this.professorService = professorService;
     }
 
-    @GetMapping(value = "/turmas")
-    public String index(Model model) {
-        return paginatedTurmas(1, model);
+    @GetMapping
+    public ModelAndView index() {
+        return paginatedTurmas(1);
     }
 
-    @GetMapping(value = "/turmas/{page}")
-    public String paginatedTurmas(@PathVariable("page") Integer page, Model model) {
-        Page<Turma> turmasPage = turmaService.findPaginated(page, pageSize);
+    @GetMapping(value = "/{page}")
+    public ModelAndView paginatedTurmas(@PathVariable("page") Integer page) {
+        ModelAndView mv = new ModelAndView("turmas/index");
+        Page<Turma> turmasPage = turmaService.findPaginated(page, PAGE_SIZE);
         List<Turma> turmasList = turmasPage.getContent();
 
         // Title
-        model.addAttribute("title", "Lista de Turmas");
+        mv.addObject("title", "Lista de Turmas");
 
         // Pagination
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalItems", turmasPage.getTotalElements());
-        model.addAttribute("totalPages", turmasPage.getTotalPages());
+        mv.addObject("currentPage", page);
+        mv.addObject("totalItems", turmasPage.getTotalElements());
+        mv.addObject("totalPages", turmasPage.getTotalPages());
 
-        model.addAttribute("turmasList", turmasList);
-        return "turmas/index";
+        mv.addObject("turmasList", turmasList);
+        return mv;
     }
 
-    @GetMapping(value = "/turmas/registrar")
-    public String addTurmaView(TurmaForm turmaForm, Model model) {
-        model.addAttribute("title", "Registrar Turma");
-        model.addAttribute("professoresList", professorService.findAll());
-        return "turmas/new";
+    @GetMapping(value = "/registrar")
+    public ModelAndView newTurmaGet(TurmaForm turmaForm) {
+        ModelAndView mv = new ModelAndView("turmas/new");
+        mv.addObject("title", "Registrar Turma");
+        mv.addObject("professoresList", professorService.findAll());
+        return mv;
     }
 
-    @PostMapping(value = "/turmas/registrar")
-    public String addTurmaPost(@ModelAttribute TurmaForm turmaForm) {
+    @PostMapping(value = "/registrar")
+    public ModelAndView newTurmaPost(@ModelAttribute TurmaForm turmaForm) {
         turmaService.save(turmaForm);
-        return "redirect:/turmas";
+        return new ModelAndView("redirect:/turmas");
     }
 
-    @GetMapping(value = "/turmas/{id}/detalhes")
-    public String detalhesTurmas(@PathVariable Long id, Model model) {
+    @GetMapping(value = "/{id}/detalhes")
+    public ModelAndView detailsTurma(@PathVariable Long id) {
         Turma turma = turmaService.findById(id);
-        model.addAttribute("title", String.format("Detalhes da turma %s", turma.getTurma()));
-        model.addAttribute("turma", turma);
-        return "turmas/details";
+        ModelAndView mv = new ModelAndView("turmas/details");
+        mv.addObject("title", String.format("Detalhes da turma %s", turma.getTurma()));
+        mv.addObject("turma", turma);
+        return mv;
     }
 
-    @GetMapping(value = "/turmas/{id}/editar")
-    public String editarTurma(@PathVariable Long id, TurmaForm turmaForm, Model model) {
-        model.addAttribute("title", "Editar Turma");
-        model.addAttribute("turma", turmaService.findById(id));
-        model.addAttribute("professoresList", professorService.findAll());
-        return "turmas/edit";
+    @GetMapping(value = "/{id}/editar")
+    public ModelAndView editTurmaGet(@PathVariable Long id, TurmaForm turmaForm) {
+        Turma turma = turmaService.findById(id);
+        if (Objects.isNull(turma)) return new ModelAndView("redirect:/turmas");
+
+        turmaForm.loadFromTurma(turma);
+        ModelAndView mv = new ModelAndView("turmas/edit");
+        mv.addObject("title", "Editar Turma");
+        mv.addObject("id", id);
+        mv.addObject("professoresList", professorService.findAll());
+        return mv;
     }
 
-    @PostMapping(value = "/turmas/{id}/editar")
-    public String editarTurmaPost(@PathVariable Long id, @ModelAttribute TurmaForm turmaForm) {
+    @PostMapping(value = "/{id}/editar")
+    public ModelAndView editTurmaPost(@PathVariable Long id, @ModelAttribute TurmaForm turmaForm) {
         turmaService.update(id, turmaForm);
-        return "redirect:/turmas";
+        return new ModelAndView("redirect:/turmas");
     }
 
-    @GetMapping(value = "/turmas/{id}/deletar")
-    public String deletarTurma(@PathVariable Long id) {
+    @GetMapping(value = "/{id}/deletar")
+    public ModelAndView deleteTurma(@PathVariable Long id) {
         turmaService.delete(id);
-        return "redirect:/turmas";
+        return new ModelAndView("redirect:/turmas");
     }
 
 }
