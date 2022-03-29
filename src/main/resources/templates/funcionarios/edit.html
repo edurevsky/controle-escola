@@ -16,7 +16,7 @@
 
     <h1 th:text="${title}"></h1>
 
-    <form th:action="@{|/funcionarios/${id}/editar|}" th:object="${funcionarioForm}" method="post">
+    <form th:action="@{|/funcionarios/${id}/editar|}" th:object="${editFuncionarioForm}" method="post">
 
         <div class="row">
             <div class="col">
@@ -30,9 +30,8 @@
             <div class="col">
                 <div class="form-group mt-3">
                     <label for="cpf-input">CPF</label>
-                    <input class="form-control" th:errorclass="is-invalid" id="cpf-input" type="text" th:field="*{cpf}"
+                    <input class="form-control" id="cpf-input" type="text" th:value="${cpf}"
                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="123.123.123-12" readonly>
-                    <div class="invalid-feedback" th:errors="*{cpf}"></div>
                 </div>
             </div>
 

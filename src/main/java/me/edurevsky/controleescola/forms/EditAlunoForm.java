@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 public class EditAlunoForm {
 
-    @NotEmpty(message = "fodase")
+    @NotEmpty(message = "O nome não pode estar em branco")
     private String nome;
     
     private Boolean estaAtivo;

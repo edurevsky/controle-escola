@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
+import me.edurevsky.controleescola.forms.EditFuncionarioForm;
 import me.edurevsky.controleescola.services.utils.CpfHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,13 @@ public class FuncionarioService {
 //        }
         BeanUtils.copyProperties(funcionarioForm, funcionario);
         return funcionarioRepository.save(funcionario);
+    }
+
+    public Funcionario update(Long id, EditFuncionarioForm funcionarioForm) {
+        Handlers.handleEntityNotFound(funcionarioRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
+        Funcionario funcionario = funcionarioRepository.getById(id);
+        return funcionarioRepository.save(EditFuncionarioForm.update(funcionario, funcionarioForm));
     }
 
     @Transactional

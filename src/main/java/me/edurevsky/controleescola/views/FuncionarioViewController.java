@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.views;
 
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
+import me.edurevsky.controleescola.forms.EditFuncionarioForm;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.services.CargoService;
 import me.edurevsky.controleescola.services.FuncionarioService;
@@ -72,13 +73,13 @@ public class FuncionarioViewController {
     }
 
     @GetMapping(value = "/{id}/deletar")
-    public ModelAndView deleteFuncionario(@PathVariable Long id) {
+    public ModelAndView deleteFuncionario(@PathVariable("id") Long id) {
         funcionarioService.remove(id);
         return new ModelAndView("redirect:/funcionarios");
     }
 
     @GetMapping(value = "/{id}/editar")
-    public ModelAndView editFuncionarioGet(FuncionarioForm funcionarioForm, @PathVariable Long id) {
+    public ModelAndView editFuncionarioGet(@PathVariable("id") Long id, EditFuncionarioForm funcionarioForm) {
         Funcionario funcionario = funcionarioService.findById(id);
         if (Objects.isNull(funcionario)) return new ModelAndView("redirect:/funcionarios");
 
@@ -86,15 +87,16 @@ public class FuncionarioViewController {
         ModelAndView mv = new ModelAndView("funcionarios/edit");
         mv.addObject("title", "Editar funcionário");
         mv.addObject("id", id);
+        mv.addObject("cpf", funcionario.getCpf());
         mv.addObject("turnos", Turno.values());
         mv.addObject("cargosList", cargoService.findAll());
         return mv;
     }
 
     @PostMapping(value = "/{id}/editar")
-    public ModelAndView editFuncionarioPost(@PathVariable("id") Long id, @Valid @ModelAttribute FuncionarioForm funcionarioForm, BindingResult bindingResult) {
+    public ModelAndView editFuncionarioPost(@PathVariable("id") Long id, @Valid @ModelAttribute EditFuncionarioForm funcionarioForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return this.editFuncionarioGet(funcionarioForm, id);
+            return this.editFuncionarioGet(id, funcionarioForm);
         }
         funcionarioService.update(id, funcionarioForm);
         return new ModelAndView("redirect:/funcionarios");
