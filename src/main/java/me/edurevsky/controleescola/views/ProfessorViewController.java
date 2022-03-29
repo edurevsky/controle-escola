@@ -1,6 +1,7 @@
 package me.edurevsky.controleescola.views;
 
 import me.edurevsky.controleescola.entities.Professor;
+import me.edurevsky.controleescola.forms.EditProfessorForm;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class ProfessorViewController {
     }
 
     @GetMapping(value = "/{id}/editar")
-    public ModelAndView editProfessorView(@PathVariable("id") Long id, ProfessorForm professorForm) {
+    public ModelAndView editProfessorView(@PathVariable("id") Long id, EditProfessorForm professorForm) {
         Professor professor = professorService.findById(id);
         if (professor == null) return new ModelAndView("redirect:/professores");
 
@@ -73,11 +74,12 @@ public class ProfessorViewController {
         ModelAndView mv = new ModelAndView("professores/edit");
         mv.addObject("title", "Editar Professor");
         mv.addObject("id", id);
+        mv.addObject("cpf", professor.getCpf());
         return mv;
     }
 
     @PostMapping(value = "/{id}/editar")
-    public ModelAndView editProfessorPost(@PathVariable("id") Long id, @Valid @ModelAttribute ProfessorForm professorForm, BindingResult bindingResult) {
+    public ModelAndView editProfessorPost(@PathVariable("id") Long id, @Valid @ModelAttribute EditProfessorForm professorForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return editProfessorView(id, professorForm);
         }

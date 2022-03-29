@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.services;
 
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
+import me.edurevsky.controleescola.forms.EditProfessorForm;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
@@ -50,6 +51,14 @@ public class ProfessorService {
 
         BeanUtils.copyProperties(professorForm, professor);
         return professorRepository.save(professor);
+    }
+
+    @Transactional
+    public Professor update(Long id, EditProfessorForm professorForm) {
+        Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
+
+        Professor professor = professorRepository.getById(id);
+        return professorRepository.save(EditProfessorForm.update(professor, professorForm));
     }
 
     @Transactional
