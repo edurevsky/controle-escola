@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.forms;
 
-import me.edurevsky.controleescola.user.AppUser;
 import me.edurevsky.controleescola.user.Role;
 
 import javax.validation.constraints.NotBlank;

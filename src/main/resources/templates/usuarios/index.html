@@ -18,25 +18,25 @@
         <tr>
             <th>Id</th>
             <th>Usuário</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN')"></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN')"></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${usuariosList.empty}">
-            <td colspan="5">Nenhuma usuário registrado</td>
+            <td colspan="5">Nenhum usuário registrado</td>
         </tr>
         <tr th:each="usuario : ${usuariosList}">
             <th><span th:text="${usuario.id}">Id</span></th>
             <td><span th:text="${usuario.username}">Usuário</span></td>
             <td>
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
                     <a class="link-secondary" >Editar</a>
                 </div>
             </td>
             <td>
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
                     <a class="link-danger" >Deletar</a>
                 </div>
             </td>

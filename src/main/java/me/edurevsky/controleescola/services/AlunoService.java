@@ -132,5 +132,4 @@ public class AlunoService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return alunoRepository.findAll(pageable);
     }
-
 }
