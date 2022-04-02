@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -17,7 +17,9 @@
     <div class="row">
         <div class="col">
             <h1 th:text="|Turma ${turma.turma}|"></h1>
-            <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar Turma</a>
+            <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar Turma</a>
+            </div>
         </div>
     </div>
 
@@ -33,11 +35,9 @@
 
         <div class="col">
             <label for="turma-professor"><b>Professor</b></label><br>
-            <a class="link-dark" th:if="${turma.professor == null}"
-               th:href="@{|/turmas/${turma.id}/editar|}">Sem professor, adicionar?</a>
+            <a class="link-dark" th:if="${turma.professor == null}">Sem professor</a>
 
-            <a th:unless="${turma.professor == null}" id="turma-professor"
-               th:href="@{|/professores/${turma.professor.id}/detalhes|}" th:text="${turma.professor.nome}"></a>
+            <a th:unless="${turma.professor == null}" id="turma-professor" th:href="@{|/professores/${turma.professor.id}/detalhes|}" th:text="${turma.professor.nome}"></a>
         </div>
     </div>
 
@@ -55,6 +55,7 @@
             <th>Email</th>
             <th>Status</th>
             <th>Turno</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -14,10 +14,12 @@
 
 <div class="container mt-3">
 
-<!--    <div class="inline_block">-->
-    <h1 th:text="${title}"></h1>
-    <a class="btn btn-primary float-end" role="button" th:href="@{/professores/registrar}">Registrar</a>
-<!--    </div>-->
+    <div class="inline_block">
+        <h1 th:text="${title}"></h1>
+        <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+            <a class="btn btn-primary float-end" role="button" th:href="@{/professores/registrar}">Registrar</a>
+        </div>
+    </div>
 
     <table class="table table-striped">
         <thead>
@@ -26,8 +28,8 @@
             <th>Nome</th>
             <th>CPF</th>
             <th>Salário</th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
             <th></th>
         </tr>
         </thead>
@@ -40,8 +42,16 @@
             <td><span th:text="${prof.nome}">Nome</span></td>
             <td><span th:text="${prof.cpf}">CPF</span></td>
             <td><span th:text="${prof.salario}">Salário</span></td>
-            <td><a class="link-secondary" th:href="@{|/professores/${prof.id}/editar|}">Editar</a></td>
-            <td><a class="link-danger" th:href="@{|/professores/${prof.id}/deletar|}">Deletar</a></td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-secondary" th:href="@{|/professores/${prof.id}/editar|}">Editar</a>
+                </div>
+            </td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-danger" th:href="@{|/professores/${prof.id}/deletar|}">Deletar</a>
+                </div>
+            </td>
             <td><a class="link-info" th:href="@{|/professores/${prof.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>

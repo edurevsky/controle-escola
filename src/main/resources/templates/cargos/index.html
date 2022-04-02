@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -16,7 +16,9 @@
 
     <div class="inline_block">
         <h1 th:text="${title}"></h1>
-        <a class="btn btn-primary float-end" role="button" th:href="@{/cargos/registrar}" th:text="Registrar"></a>
+        <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+            <a class="btn btn-primary float-end" role="button" th:href="@{/cargos/registrar}" th:text="Registrar"></a>
+        </div>
     </div>
 
     <table class="table table-striped">
@@ -24,8 +26,8 @@
         <tr>
             <th>Id</th>
             <th>Cargo</th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
             <th></th>
         </tr>
         </thead>
@@ -36,8 +38,16 @@
         <tr th:each="cargo : ${cargosList}">
             <th><span th:text="${cargo.id}">Id</span></th>
             <td><span th:text="${cargo.cargo}">Cargo</span></td>
-            <td><a class="link-secondary" th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a></td>
-            <td><a class="link-danger" th:href="@{|/cargos/${cargo.id}/deletar|}" onclick="messageAlert()">Deletar</a></td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-secondary" th:href="@{|/cargos/${cargo.id}/editar|}">Editar</a>
+                </div>
+            </td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-danger" th:href="@{|/cargos/${cargo.id}/deletar|}">Deletar</a>
+                </div>
+            </td>
             <td><a class="link-info" th:href="@{|/cargos/${cargo.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
@@ -52,7 +62,6 @@
 
             <div class="col">
                 <a th:if="${currentPage <= totalPages && currentPage != 1}" th:href="@{|/cargos/${currentPage - 1}|}">Anterior</a>
-<!--                <span th:unless="${currentPage <= totalPages && currentPage != 1}">Anterior</span>-->
             </div>
 
             <div class="col">
@@ -77,12 +86,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
-<script>
-    function messageAlert() {
-        alert("Os funcionários relacionados com esse cargo serão setados com 'nenhum'");
-    }
-</script>
 
 </body>
 </html>

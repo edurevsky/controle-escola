@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymemeaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -16,7 +16,9 @@
     <div class="row">
         <div class="col">
             <h1 th:text="|Aluno(a) ${aluno.nome}|"></h1>
-            <a class="btn btn-primary float-end" role="button" th:href="@{|/alunos/${aluno.id}/editar|}">Editar</a>
+            <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                <a class="btn btn-primary float-end" role="button" th:href="@{|/alunos/${aluno.id}/editar|}">Editar</a>
+            </div>
         </div>
     </div>
 
@@ -68,7 +70,7 @@
 
 </div>
 
-<div class="container mt-3">
+<div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')" class="container mt-3">
 
     <h2>Outras ações</h2>
 

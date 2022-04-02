@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.views;
+package me.edurevsky.controleescola.web.controllers;
 
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;

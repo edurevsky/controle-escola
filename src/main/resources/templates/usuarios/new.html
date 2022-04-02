@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link th:replace="~{fragments :: bootstrap-css}">
+</head>
+<body>
+
+<div class="container mt-3 w-50">
+
+    <h1 th:text="${title}"></h1>
+
+    <form th:action="@{|/usuarios/registrar|}" th:object="${usuarioForm}" method="post">
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="username-input">Nome de usuário</label>
+                    <input class="form-control" th:errorclass="is-invalid" id="username-input" type="text" th:field="*{username}">
+                    <div class="invalid-feedback" th:errors="*{username}"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="password-input">Senha</label>
+                    <input class="form-control" th:errorclass="is-invalid" id="password-input" type="text" th:field="*{password}">
+                    <div class="invalid-feedback" th:errors="*{password}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <div class="form-group">
+                    <label for="roles-select">Autorizações</label>
+                    <select class="form-select" th:errorclass="is-invalid" id="roles-select" th:field="*{roles}" multiple>
+                        <option th:each="role : ${rolesList}" th:value="${role.id}" th:text="${role.name}"></option>
+                    </select>
+                    <div class="invalid-feedback" th:errors="*{roles}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script th:replace="~{fragments :: bootstrap-js}"></script>
+
+</body>
+</html>

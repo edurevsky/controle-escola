@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.views;
+package me.edurevsky.controleescola.web.controllers;
 
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.enums.Turno;
@@ -46,9 +46,9 @@ public class AlunosViewController {
         // Title
         mv.addObject("title", "Lista de Alunos");
 
+        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalPages", alunosPage.getTotalPages());
-        // Pagination
         mv.addObject("totalItems", alunosPage.getTotalElements());
 
         mv.addObject("alunosList", alunosList);

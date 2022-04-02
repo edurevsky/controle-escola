@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
@@ -16,7 +16,9 @@
 
     <div class="inline_block">
         <h1 th:text="${title}"></h1>
-        <a class="btn btn-primary float-end" role="button" th:href="@{/funcionarios/registrar}" th:text="Registrar"></a>
+        <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+            <a class="btn btn-primary float-end" role="button" th:href="@{/funcionarios/registrar}" th:text="Registrar"></a>
+        </div>
     </div>
 
     <table class="table table-striped">
@@ -27,8 +29,8 @@
             <th>CPF</th>
             <th>Turno</th>
             <th>Cargo</th>
-            <th></th>
-            <th></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
+            <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
             <th></th>
         </tr>
         </thead>
@@ -42,8 +44,16 @@
             <td><span th:text="${funcionario.cpf}">CPF</span></td>
             <td><span th:text="${funcionario.horarioDeTrabalho}">Turno</span></td>
             <td><span th:text="${funcionario.cargo != null} ? ${funcionario.cargo.cargo} : 'Nenhum'">Cargo</span></td>
-            <td><a class="link-secondary" th:href="@{|funcionarios/${funcionario.id}/editar|}">Editar</a></td>
-            <td><a class="link-danger" th:href="@{|/funcionarios/${funcionario.id}/deletar|}">Deletar</a></td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-secondary" th:href="@{|funcionarios/${funcionario.id}/editar|}">Editar</a>
+                </div>
+            </td>
+            <td>
+                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                    <a class="link-danger" th:href="@{|/funcionarios/${funcionario.id}/deletar|}">Deletar</a>
+                </div>
+            </td>
             <td><a class="link-info" th:href="@{|/funcionarios/${funcionario.id}/detalhes|}">Ver mais</a></td>
         </tr>
         </tbody>
