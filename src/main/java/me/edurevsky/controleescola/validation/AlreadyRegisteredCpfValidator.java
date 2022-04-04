@@ -26,5 +26,4 @@ public class AlreadyRegisteredCpfValidator implements ConstraintValidator<Alread
     public boolean isValid(String value, ConstraintValidatorContext context) {
         return cpfHandler.isNotRegistered(value);
     }
-
 }

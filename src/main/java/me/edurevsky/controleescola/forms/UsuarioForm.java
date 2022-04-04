@@ -1,6 +1,7 @@
 package me.edurevsky.controleescola.forms;
 
 import me.edurevsky.controleescola.entities.Role;
+import me.edurevsky.controleescola.validation.AlreadyRegisteredUsername;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +13,7 @@ public class UsuarioForm {
     private String completeName;
 
     @NotBlank(message = "O nome de usuário não pode estar em branco")
+    @AlreadyRegisteredUsername
     private String username;
 
     @NotBlank(message = "A senha não pode estar em branco")

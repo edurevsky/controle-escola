@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AlreadyRegisteredCpfValidator.class)
-public @interface AlreadyRegisteredCpf {
+@Constraint(validatedBy = AlreadyRegisteredUsernameValidator.class)
+public @interface AlreadyRegisteredUsername {
 
-    String message() default "O CPF inserido já está em uso";
+    String message() default "O nome de usuário já está em uso";
 
     Class<?>[] groups() default {};
 
