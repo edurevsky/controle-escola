@@ -37,5 +37,4 @@ public class Turma {
     public void setAllAlunosTurmaNull() {
         alunos.forEach(aluno -> aluno.setTurma(null));
     }
-
 }

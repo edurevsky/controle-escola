@@ -88,7 +88,7 @@ public class AlunosViewController {
         ModelAndView mv = new ModelAndView("alunos/edit");
         mv.addObject("title", "Editar Aluno");
         mv.addObject("id", id);
-        mv.addObject("cpf", aluno.getCpf());
+        // mv.addObject("cpf", aluno.getCpf());
         mv.addObject("turnos", Turno.values());
         mv.addObject("turmasList", turmaService.findAll());
         return mv;

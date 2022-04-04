@@ -28,5 +28,4 @@ public class Professor extends PessoaFisica {
     public void setAllTurmasProfessorNull() {
         turmas.forEach(turma -> turma.setProfessor(null));
     }
-
 }

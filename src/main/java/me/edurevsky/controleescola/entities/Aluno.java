@@ -35,5 +35,4 @@ public class Aluno extends PessoaFisica {
     public String getMatriculaFormatada() {
         return dataMatricula.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
-
 }

@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.user;
+package me.edurevsky.controleescola.entities;
 
 import javax.persistence.*;
 
@@ -13,6 +13,7 @@ public class Role {
 
     @Column(name = "role_name")
     private String name;
+
 
     public Role() {
 

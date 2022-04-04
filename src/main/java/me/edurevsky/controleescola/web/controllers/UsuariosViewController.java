@@ -3,7 +3,7 @@ package me.edurevsky.controleescola.web.controllers;
 import me.edurevsky.controleescola.forms.UsuarioForm;
 import me.edurevsky.controleescola.repositories.RoleRepository;
 import me.edurevsky.controleescola.repositories.UserRepository;
-import me.edurevsky.controleescola.user.AppUser;
+import me.edurevsky.controleescola.entities.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;

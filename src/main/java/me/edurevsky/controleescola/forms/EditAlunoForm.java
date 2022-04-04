@@ -10,6 +10,9 @@ public class EditAlunoForm {
 
     @NotEmpty(message = "O nome não pode estar em branco")
     private String nome;
+
+    // CPF não é editável
+    private String cpf;
     
     private Boolean estaAtivo;
 
@@ -17,12 +20,14 @@ public class EditAlunoForm {
 
     private Turma turma;
 
+
     public EditAlunoForm() {
 
     }
 
-    public EditAlunoForm(String nome, Boolean estaAtivo, Turno turno, Turma turma) {
+    public EditAlunoForm(String nome, String cpf, Boolean estaAtivo, Turno turno, Turma turma) {
         this.nome = nome;
+        this.cpf = cpf;
         this.estaAtivo = estaAtivo;
         this.turno = turno;
         this.turma = turma;
@@ -38,6 +43,7 @@ public class EditAlunoForm {
 
     public EditAlunoForm loadFromAluno(Aluno aluno) {
         this.nome = aluno.getNome();
+        this.cpf = aluno.getCpf();
         this.estaAtivo = aluno.getEstaAtivo();
         this.turno = aluno.getTurno();
         this.turma = aluno.getTurma();
@@ -50,6 +56,14 @@ public class EditAlunoForm {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Boolean getEstaAtivo() {

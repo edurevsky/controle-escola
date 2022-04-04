@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.user;
+package me.edurevsky.controleescola.entities;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,6 +18,9 @@ public class AppUser {
     @Column(name = "u_password")
     private String password;
 
+    @Column(name = "complete_name")
+    private String completeName;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -26,14 +29,16 @@ public class AppUser {
     )
     private Set<Role> roles = new HashSet<>();
 
+
     public AppUser() {
 
     }
 
-    public AppUser(Long id, String username, String password, Set<Role> roles) {
+    public AppUser(Long id, String username, String password, String completeName, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.completeName = completeName;
         this.roles = roles;
     }
 
@@ -59,6 +64,14 @@ public class AppUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCompleteName() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName = completeName;
     }
 
     public Set<Role> getRoles() {

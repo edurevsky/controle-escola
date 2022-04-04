@@ -1,6 +1,6 @@
 package me.edurevsky.controleescola.security;
 
-import me.edurevsky.controleescola.user.AppUser;
+import me.edurevsky.controleescola.entities.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +12,7 @@ import java.util.List;
 public class UserDetailsImpl implements UserDetails {
 
     private AppUser user;
+
 
     public UserDetailsImpl() {
 
@@ -26,6 +27,10 @@ public class UserDetailsImpl implements UserDetails {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach( r -> authorities.add(new SimpleGrantedAuthority(r.getName())) );
         return authorities;
+    }
+
+    public AppUser getUser() {
+        return user;
     }
 
     @Override

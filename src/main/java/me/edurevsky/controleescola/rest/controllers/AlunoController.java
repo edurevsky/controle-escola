@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.rest.controllers;
 
 import javax.validation.Valid;
 
+import me.edurevsky.controleescola.forms.EditAlunoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class AlunoController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AlunoForm alunoForm) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid EditAlunoForm alunoForm) {
         return ResponseEntity.ok(alunoService.update(id, alunoForm));
     }
 

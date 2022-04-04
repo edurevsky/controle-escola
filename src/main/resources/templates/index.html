@@ -14,7 +14,10 @@
 
 <div class="container mt-3">
     <div sec:authorize="isAuthenticated()">
-        <h1>Você está logado como <span sec:authentication="name">username</span></h1>
+        <h1>
+            Olá <span sec:authentication="principal.user.completeName">username</span>!
+        </h1>
+        Suas autorizações são: <p sec:authentication="authorities"></p>
     </div>
 </div>
 

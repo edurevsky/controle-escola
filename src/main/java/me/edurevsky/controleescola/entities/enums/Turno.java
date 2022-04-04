@@ -15,5 +15,4 @@ public enum Turno {
     public String getTurno() {
         return turno;
     }
-    
 }

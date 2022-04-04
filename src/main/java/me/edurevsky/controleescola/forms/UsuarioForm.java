@@ -1,12 +1,15 @@
 package me.edurevsky.controleescola.forms;
 
-import me.edurevsky.controleescola.user.Role;
+import me.edurevsky.controleescola.entities.Role;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 public class UsuarioForm {
+
+    @NotBlank(message = "O nome não pode estar em branco")
+    private String completeName;
 
     @NotBlank(message = "O nome de usuário não pode estar em branco")
     private String username;
@@ -17,10 +20,19 @@ public class UsuarioForm {
     @NotEmpty(message = "É preciso selecionar ao menos uma autorização")
     private Set<Role> roles;
 
+
     public UsuarioForm(String username, String password, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public String getCompleteName() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName = completeName;
     }
 
     public String getUsername() {
