@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.security;
+package me.edurevsky.controleescola.configuration.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

@@ -13,6 +13,13 @@
 
 <div class="container mt-3">
 
+    <div class="inline_block">
+        <h1 th:text="${title}"></h1>
+        <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
+            <a class="btn btn-primary float-end" role="button" th:href="@{/usuarios/registrar}" th:text="Registrar"></a>
+        </div>
+    </div>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -37,7 +44,7 @@
             </td>
             <td>
                 <div sec:authorize="hasAnyAuthority('ADMIN')">
-                    <a class="link-danger" >Deletar</a>
+                    <a class="link-danger" th:href="@{|usuarios/${usuario.id}/deletar|}">Deletar</a>
                 </div>
             </td>
             <td><a class="link-info" >Ver mais</a></td>

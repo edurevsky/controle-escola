@@ -1,7 +1,7 @@
 package me.edurevsky.controleescola.web.controllers;
 
-import me.edurevsky.controleescola.security.UserDetailsImpl;
-import me.edurevsky.controleescola.security.LoggedUser;
+import me.edurevsky.controleescola.configuration.security.UserDetailsImpl;
+import me.edurevsky.controleescola.configuration.security.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;

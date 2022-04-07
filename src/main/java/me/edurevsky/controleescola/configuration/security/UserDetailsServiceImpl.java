@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.security;
+package me.edurevsky.controleescola.configuration.security;
 
 import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;

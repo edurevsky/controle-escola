@@ -31,5 +31,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         err.setMessage(e.getMessage());
         return new ResponseEntity<>(err, new HttpHeaders(), HttpStatus.NOT_IMPLEMENTED);
     }
-
 }

@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.forms;
 
+import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.entities.Role;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredUsername;
 
@@ -27,6 +28,15 @@ public class UsuarioForm {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public static AppUser convertToAppUser(UsuarioForm usuarioForm) {
+        AppUser appUser = new AppUser();
+        appUser.setUsername(usuarioForm.getUsername());
+        appUser.setPassword(usuarioForm.getPassword());
+        appUser.setRoles(usuarioForm.getRoles());
+        appUser.setCompleteName(usuarioForm.getCompleteName());
+        return appUser;
     }
 
     public String getCompleteName() {

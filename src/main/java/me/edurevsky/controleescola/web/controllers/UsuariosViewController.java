@@ -4,6 +4,7 @@ import me.edurevsky.controleescola.forms.UsuarioForm;
 import me.edurevsky.controleescola.repositories.RoleRepository;
 import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;
+import me.edurevsky.controleescola.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -21,19 +22,16 @@ import javax.validation.Valid;
 @RequestMapping(value = "/usuarios")
 public class UsuariosViewController {
 
+    private final AppUserService appUserService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final static Integer PAGE_SIZE = 10;
 
     @Autowired
-    public UsuariosViewController(UserRepository userRepository, RoleRepository roleRepository) {
+    public UsuariosViewController(AppUserService appUserService, UserRepository userRepository, RoleRepository roleRepository) {
+        this.appUserService = appUserService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-    }
-
-    @Bean
-    private BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @GetMapping
@@ -72,11 +70,13 @@ public class UsuariosViewController {
         if (bindingResult.hasErrors()) {
             return this.newUsuarioGet(usuarioForm);
         }
-        AppUser user = new AppUser();
-        user.setUsername(usuarioForm.getUsername());
-        user.setPassword(encoder().encode(usuarioForm.getPassword()));
-        user.setRoles(usuarioForm.getRoles());
-        userRepository.save(user);
+        appUserService.save(usuarioForm);
+        return new ModelAndView("redirect:/usuarios");
+    }
+
+    @GetMapping(value = "/{id}/deletar")
+    public ModelAndView deleteUsuario(@PathVariable("id") Long id) {
+        appUserService.remove(id);
         return new ModelAndView("redirect:/usuarios");
     }
 }
