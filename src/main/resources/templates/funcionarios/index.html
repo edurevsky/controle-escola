@@ -26,7 +26,6 @@
         <tr>
             <th>Id</th>
             <th>Nome</th>
-            <th>CPF</th>
             <th>Turno</th>
             <th>Cargo</th>
             <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
@@ -36,23 +35,18 @@
         </thead>
         <tbody>
         <tr th:if="${funcionariosList.empty}">
-            <td colspan="8">Nenhum funcionário registrado</td>
+            <td colspan="7">Nenhum funcionário registrado</td>
         </tr>
         <tr th:each="funcionario : ${funcionariosList}">
             <th><span th:text="${funcionario.id}">Id</span></th>
             <td><span th:text="${funcionario.nome}">Nome</span></td>
-            <td><span th:text="${funcionario.cpf}">CPF</span></td>
             <td><span th:text="${funcionario.horarioDeTrabalho}">Turno</span></td>
             <td><span th:text="${funcionario.cargo != null} ? ${funcionario.cargo.cargo} : 'Nenhum'">Cargo</span></td>
-            <td>
-                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
-                    <a class="link-secondary" th:href="@{|funcionarios/${funcionario.id}/editar|}">Editar</a>
-                </div>
+            <td sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                <a class="link-secondary" th:href="@{|funcionarios/${funcionario.id}/editar|}">Editar</a>
             </td>
-            <td>
-                <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
-                    <a class="link-danger" th:href="@{|/funcionarios/${funcionario.id}/deletar|}">Deletar</a>
-                </div>
+            <td sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                <a class="link-danger" th:href="@{|/funcionarios/${funcionario.id}/deletar|}">Deletar</a>
             </td>
             <td><a class="link-info" th:href="@{|/funcionarios/${funcionario.id}/detalhes|}">Ver mais</a></td>
         </tr>

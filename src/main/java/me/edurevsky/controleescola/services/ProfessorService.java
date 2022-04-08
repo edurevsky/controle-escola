@@ -84,5 +84,4 @@ public class ProfessorService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return professorRepository.findAll(pageable);
     }
-
 }

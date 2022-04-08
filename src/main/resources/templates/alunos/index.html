@@ -26,7 +26,6 @@
         <tr>
             <th>Id</th>
             <th>Nome</th>
-            <th>Email</th>
             <th>Status</th>
             <th>Turma</th>
             <th sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')"></th>
@@ -41,7 +40,6 @@
         <tr th:each="aluno : ${alunosList}">
             <th><span th:text="${aluno.id}">Id</span></th>
             <td><span th:text="${aluno.nome}">Nome</span></td>
-            <td><span th:text="${aluno.email}">Email</span></td>
             <td><span th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'">Status</span></td>
             <td><span th:text="${aluno.turma != null} ? ${aluno.turma.turma} : 'Nenhuma'">Turma</span></td>
             <td>

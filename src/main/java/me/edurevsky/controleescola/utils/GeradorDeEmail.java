@@ -13,5 +13,4 @@ public class GeradorDeEmail {
         String dominio = "@professor.com";
         return base + dominio;
     }
-
 }

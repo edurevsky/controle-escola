@@ -92,5 +92,4 @@ public class CargoService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return cargoRepository.findAll(pageable);
     }
-
 }

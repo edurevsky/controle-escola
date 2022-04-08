@@ -6,17 +6,15 @@ import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/usuarios")
@@ -42,8 +40,8 @@ public class UsuariosViewController {
     @GetMapping(value = "/{page}")
     public ModelAndView paginatedUsuarios(@PathVariable("page") Integer page) {
         ModelAndView mv = new ModelAndView("usuarios/index");
-        Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE);
-        Page<AppUser> users = userRepository.findAll(pageable);
+        Page<AppUser> users = appUserService.findPaginated(page, PAGE_SIZE);
+        List<AppUser> usersList = users.getContent();
 
         // Title
         mv.addObject("title", "Lista de Usuários");
@@ -53,7 +51,7 @@ public class UsuariosViewController {
         mv.addObject("totalPages", users.getTotalPages());
         mv.addObject("totalItems", users.getTotalElements());
 
-        mv.addObject("usuariosList", users.getContent());
+        mv.addObject("usuariosList", usersList);
         return mv;
     }
 

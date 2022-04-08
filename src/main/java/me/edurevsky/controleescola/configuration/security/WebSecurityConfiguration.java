@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -48,6 +47,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // aluno
                 .antMatchers("/**/alterar-status").hasAnyAuthority("EDITOR", "ADMIN")
                 .antMatchers("/**/alterar-turma").hasAnyAuthority("EDITOR", "ADMIN")
+
+                // usuarios
+                .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN")
 
                 //
                 .anyRequest()

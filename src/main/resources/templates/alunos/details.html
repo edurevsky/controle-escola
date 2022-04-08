@@ -15,13 +15,12 @@
 
     <div class="row">
         <div class="col">
-            <h1 th:text="|Aluno(a) ${aluno.nome}|"></h1>
+            <h1 th:text="|Aluno #${aluno.id}|"></h1>
             <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
                 <a class="btn btn-primary float-end" role="button" th:href="@{|/alunos/${aluno.id}/editar|}">Editar</a>
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="container mt-2">
@@ -30,23 +29,6 @@
         <div class="col">
             <label for="aluno-nome"><b>Nome</b></label>
             <p id="aluno-nome" th:text="${aluno.nome}"></p>
-        </div>
-
-        <div class="col">
-            <label for="aluno-cpf"><b>CPF</b></label>
-            <p id="aluno-cpf" th:text="${aluno.cpf}"></p>
-        </div>
-
-        <div class="col">
-            <label for="aluno-email"><b>Email</b></label>
-            <p id="aluno-email" th:text="${aluno.email}"></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <label for="aluno-status"><b>Status</b></label>
-            <p id="aluno-status" th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'"></p>
         </div>
 
         <div class="col">
@@ -60,6 +42,23 @@
         </div>
     </div>
 
+    <div class="row" sec:authorize="hasAnyAuthority('CREATOR', 'EDITOR', 'ADMIN')">
+        <div class="col">
+            <label for="aluno-cpf"><b>CPF</b></label>
+            <p id="aluno-cpf" th:text="${aluno.cpf}"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-email"><b>Email</b></label>
+            <p id="aluno-email" th:text="${aluno.email}"></p>
+        </div>
+
+        <div class="col">
+            <label for="aluno-status"><b>Status</b></label>
+            <p id="aluno-status" th:text="${aluno.estaAtivo} ? 'Ativo' : 'Inativo'"></p>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
             <label for="aluno-turma"><b>Turma</b></label><br>
@@ -67,10 +66,9 @@
             <p th:unless="${aluno.turma == null}" id="aluno-turma" th:text="${aluno.turma.turma}"></p>
         </div>
     </div>
-
 </div>
 
-<div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')" class="container mt-3">
+<div class="container mt-3" sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
 
     <h2>Outras ações</h2>
 
@@ -87,7 +85,6 @@
             </a>
         </div>
     </div>
-
 </div>
 
 <div th:replace="~{fragments :: main-footer}"></div>

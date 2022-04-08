@@ -97,5 +97,4 @@ public class FuncionarioService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return funcionarioRepository.findAll(pageable);
     }
-
 }

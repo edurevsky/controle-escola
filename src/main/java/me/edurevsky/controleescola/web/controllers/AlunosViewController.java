@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -88,7 +92,6 @@ public class AlunosViewController {
         ModelAndView mv = new ModelAndView("alunos/edit");
         mv.addObject("title", "Editar Aluno");
         mv.addObject("id", id);
-        // mv.addObject("cpf", aluno.getCpf());
         mv.addObject("turnos", Turno.values());
         mv.addObject("turmasList", turmaService.findAll());
         return mv;

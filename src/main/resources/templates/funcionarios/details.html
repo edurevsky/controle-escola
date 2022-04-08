@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col">
-            <h1 th:text="|Funcionário(a) ${funcionario.nome}|"></h1>
+            <h1 th:text="|Funcionário #${funcionario.id}|"></h1>
             <div sec:authority="hasAnyAuthority('EDITOR', 'ADMIN')">
                 <a class="btn btn-primary float-end" role="button" th:href="@{|/funcionarios/${funcionario.id}/editar|}">Editar</a>
             </div>
@@ -29,6 +29,23 @@
 
     <div class="row mt-2">
         <div class="col">
+            <label for="func-nome"><b>Nome</b></label>
+            <p id="func-nome" th:text="${funcionario.nome}"></p>
+        </div>
+
+        <div class="col">
+            <label for="func-turno"><b>Turno</b></label>
+            <p id="func-turno" th:text="${funcionario.horarioDeTrabalho}"></p>
+        </div>
+
+        <div class="col">
+            <label for="func-cargo"><b>Cargo</b></label>
+            <p id="func-cargo" th:text="${funcionario.cargo != null} ? ${funcionario.cargo.cargo} : 'Nenhum'"></p>
+        </div>
+    </div>
+
+    <div class="row" sec:authorize="hasAnyAuthority('EDITOR', 'CREATOR', 'ADMIN')">
+        <div class="col">
             <label for="func-cpf"><b>CPF</b></label>
             <p id="func-cpf" th:text="${funcionario.cpf}"></p>
         </div>
@@ -37,19 +54,7 @@
             <label for="func-salario"><b>Salário</b></label>
             <p id="func-salario" th:text="${funcionario.salario}"></p>
         </div>
-
-        <div class="col">
-            <label for="func-turno"><b>Turno</b></label>
-            <p id="func-turno" th:text="${funcionario.horarioDeTrabalho}"></p>
-        </div>
-
     </div>
-
-    <div class="row">
-        <label for="func-cargo"><b>Cargo</b></label>
-        <p id="func-cargo" th:text="${funcionario.cargo != null} ? ${funcionario.cargo.cargo} : 'Nenhum'"></p>
-    </div>
-
 </div>
 
 <div th:replace="~{fragments :: main-footer}"></div>

@@ -93,5 +93,4 @@ public class TurmaService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return turmaRepository.findAll(pageable);
     }
-    
 }

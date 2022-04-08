@@ -11,5 +11,4 @@ public class Handlers {
             throw new EntityNotFoundException(msg);
         }
     }
-
 }
