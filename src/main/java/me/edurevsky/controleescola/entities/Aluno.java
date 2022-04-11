@@ -39,4 +39,19 @@ public class Aluno extends PessoaFisica {
     public String getMatriculaFormatada() {
         return dataMatricula.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @Override
+    public String getNome() {
+        return super.getNome();
+    }
+
+    @Override
+    public String getCpf() {
+        return super.getCpf();
+    }
 }

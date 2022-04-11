@@ -28,4 +28,19 @@ public class Professor extends PessoaFisica {
     public void setAllTurmasProfessorNull() {
         turmas.forEach(turma -> turma.setProfessor(null));
     }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @Override
+    public String getNome() {
+        return super.getNome();
+    }
+
+    @Override
+    public String getCpf() {
+        return super.getCpf();
+    }
 }
