@@ -2,11 +2,12 @@ package me.edurevsky.controleescola.forms;
 
 import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.entities.Funcionario;
-import me.edurevsky.controleescola.entities.enums.Turno;
+import me.edurevsky.controleescola.entities.embeddables.HorarioDeTrabalho;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 
 public class EditFuncionarioForm {
 
@@ -16,7 +17,9 @@ public class EditFuncionarioForm {
     @NotNull(message = "O salário precisa ser preenchido")
     private BigDecimal salario;
 
-    private Turno horarioDeTrabalho;
+    private LocalTime horarioInicio;
+
+    private LocalTime horarioFinal;
 
     private Cargo cargo;
 
@@ -24,17 +27,19 @@ public class EditFuncionarioForm {
 
     }
 
-    public EditFuncionarioForm(String nome, BigDecimal salario, Turno horarioDeTrabalho, Cargo cargo) {
+    public EditFuncionarioForm(String nome, BigDecimal salario, LocalTime horarioInicio, LocalTime horarioFinal, Cargo cargo) {
         this.nome = nome;
         this.salario = salario;
-        this.horarioDeTrabalho = horarioDeTrabalho;
+        this.horarioInicio = horarioInicio;
+        this.horarioFinal = horarioFinal;
         this.cargo = cargo;
     }
 
     public EditFuncionarioForm loadFromFuncionario(Funcionario funcionario) {
         this.nome = funcionario.getNome();
         this.salario = funcionario.getSalario();
-        this.horarioDeTrabalho = funcionario.getHorarioDeTrabalho();
+        this.horarioInicio = funcionario.getHorarioDeTrabalho().getHorarioInicio();
+        this.horarioFinal = funcionario.getHorarioDeTrabalho().getHorarioFinal();
         this.cargo = funcionario.getCargo();
         return this;
     }
@@ -42,8 +47,13 @@ public class EditFuncionarioForm {
     public static Funcionario update(Funcionario funcionario, EditFuncionarioForm editFuncionarioForm) {
         funcionario.setNome(editFuncionarioForm.getNome());
         funcionario.setSalario(editFuncionarioForm.getSalario());
-        funcionario.setHorarioDeTrabalho(editFuncionarioForm.getHorarioDeTrabalho());
         funcionario.setCargo(editFuncionarioForm.getCargo());
+
+        HorarioDeTrabalho horarioDeTrabalho = new HorarioDeTrabalho();
+        horarioDeTrabalho.setHorarioInicio(editFuncionarioForm.getHorarioInicio());
+        horarioDeTrabalho.setHorarioFinal(editFuncionarioForm.getHorarioFinal());
+
+        funcionario.setHorarioDeTrabalho(horarioDeTrabalho);
         return funcionario;
     }
 
@@ -63,12 +73,20 @@ public class EditFuncionarioForm {
         this.salario = salario;
     }
 
-    public Turno getHorarioDeTrabalho() {
-        return horarioDeTrabalho;
+    public LocalTime getHorarioInicio() {
+        return horarioInicio;
     }
 
-    public void setHorarioDeTrabalho(Turno horarioDeTrabalho) {
-        this.horarioDeTrabalho = horarioDeTrabalho;
+    public void setHorarioInicio(LocalTime horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
+
+    public LocalTime getHorarioFinal() {
+        return horarioFinal;
+    }
+
+    public void setHorarioFinal(LocalTime horarioFinal) {
+        this.horarioFinal = horarioFinal;
     }
 
     public Cargo getCargo() {

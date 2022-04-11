@@ -18,6 +18,7 @@ public class HomeViewController {
     public ModelAndView index(@LoggedUser UserDetailsImpl userDetails) {
         ModelAndView mv = new ModelAndView("index");
         mv.addObject("user", userDetails);
+        mv.addObject("title", "Início");
         return mv;
     }
 }
