@@ -8,18 +8,21 @@
 </head>
 <body>
 
+<div th:replace="~{fragments :: main-header}"></div>
+
 <div class="container mt-3 w-50">
 
     <h1 th:text="${title}"></h1>
 
-    <form action="#" th:action="@{/cargos/registrar}" th:object="${cargoForm}" method="post">
+    <form th:action="@{|/funcionarios/${id}/editar-cargo|}" th:object="${editCargoForm}" method="post">
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col">
-                <div class="form-group">
-                    <label for="cargo-input">Cargo</label>
-                    <input class="form-control" id="cargo-input" type="text" th:field="*{cargo}" placeholder="Nome do cargo"/>
-                </div>
+                <label></label>
+                <select class="form-control" id="cargo-select" th:field="*{cargo}">
+                    <option th:value="${null}">Nenhum</option>
+                    <option th:each="c: ${cargosList}" th:value="${c.id}" th:text="${c.cargo}"></option>
+                </select>
             </div>
         </div>
 
@@ -29,14 +32,11 @@
                 <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
             </div>
         </div>
-
     </form>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+<div th:replace="~{fragments :: main-footer}"></div>
 
 </body>
 </html>

@@ -2,12 +2,10 @@ package me.edurevsky.controleescola.web.controllers;
 
 import me.edurevsky.controleescola.forms.UsuarioForm;
 import me.edurevsky.controleescola.repositories.RoleRepository;
-import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +19,12 @@ import java.util.List;
 public class UsuariosViewController {
 
     private final AppUserService appUserService;
-    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final static Integer PAGE_SIZE = 10;
 
     @Autowired
-    public UsuariosViewController(AppUserService appUserService, UserRepository userRepository, RoleRepository roleRepository) {
+    public UsuariosViewController(AppUserService appUserService, RoleRepository roleRepository) {
         this.appUserService = appUserService;
-        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.repositories.CargoRepository;
@@ -85,8 +86,14 @@ public class FuncionarioService {
     }
 
     @Transactional
-    public Funcionario addCargo(Long idFuncionario, Long idCargo) {
-        throw new NotImplementedException();
+    public Funcionario updateCargo(Long idFuncionario, Cargo cargo) {
+        Handlers.handleEntityNotFound(funcionarioRepository, idFuncionario, String.format(NOT_FOUND_MESSAGE, idFuncionario));
+        
+        Funcionario funcionario = funcionarioRepository.getById(idFuncionario);
+        
+        funcionario.setCargo(cargo);
+        
+        return funcionario;
     }
 
     public List<Funcionario> findAll() {

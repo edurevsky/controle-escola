@@ -10,7 +10,6 @@ import me.edurevsky.controleescola.forms.EditAlunoForm;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.services.utils.CpfHandler;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

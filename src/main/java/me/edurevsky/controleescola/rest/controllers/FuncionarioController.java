@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.rest.controllers;
 
+import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class FuncionarioController {
 
     @PutMapping(value = "/{idFuncionario}/atualizar-cargo/{idCargo}")
     public ResponseEntity<?> addCargo(@PathVariable("idFuncionario") Long idFuncionario, @PathVariable("idCargo") Long idCargo) {
-        return ResponseEntity.ok(funcionarioService.addCargo(idFuncionario, idCargo));
+        throw new NotImplementedException();
     }
 
     @PutMapping(value = "/{id}/atualizar-salario")

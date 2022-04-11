@@ -11,89 +11,90 @@ import java.time.LocalTime;
 
 public class EditFuncionarioForm {
 
-    @NotBlank(message = "O nome não pode estar em branco")
-    private String nome;
+	@NotBlank(message = "O nome não pode estar em branco")
+	private String nome;
 
-    @NotNull(message = "O salário precisa ser preenchido")
-    private BigDecimal salario;
+	@NotNull(message = "O salário precisa ser preenchido")
+	private BigDecimal salario;
 
-    private LocalTime horarioInicio;
+	private LocalTime horarioInicio;
 
-    private LocalTime horarioFinal;
+	private LocalTime horarioFinal;
 
-    private Cargo cargo;
+	private Cargo cargo;
 
-    public EditFuncionarioForm() {
+	public EditFuncionarioForm() {
 
-    }
+	}
 
-    public EditFuncionarioForm(String nome, BigDecimal salario, LocalTime horarioInicio, LocalTime horarioFinal, Cargo cargo) {
-        this.nome = nome;
-        this.salario = salario;
-        this.horarioInicio = horarioInicio;
-        this.horarioFinal = horarioFinal;
-        this.cargo = cargo;
-    }
+	public EditFuncionarioForm(String nome, BigDecimal salario, LocalTime horarioInicio, LocalTime horarioFinal,
+			Cargo cargo) {
+		this.nome = nome;
+		this.salario = salario;
+		this.horarioInicio = horarioInicio;
+		this.horarioFinal = horarioFinal;
+		this.cargo = cargo;
+	}
 
-    public EditFuncionarioForm loadFromFuncionario(Funcionario funcionario) {
-        this.nome = funcionario.getNome();
-        this.salario = funcionario.getSalario();
-        this.horarioInicio = funcionario.getHorarioDeTrabalho().getHorarioInicio();
-        this.horarioFinal = funcionario.getHorarioDeTrabalho().getHorarioFinal();
-        this.cargo = funcionario.getCargo();
-        return this;
-    }
+	public EditFuncionarioForm loadFromFuncionario(Funcionario funcionario) {
+		this.nome = funcionario.getNome();
+		this.salario = funcionario.getSalario();
+		this.horarioInicio = funcionario.getHorarioDeTrabalho().getHorarioInicio();
+		this.horarioFinal = funcionario.getHorarioDeTrabalho().getHorarioFinal();
+		this.cargo = funcionario.getCargo();
+		return this;
+	}
 
-    public static Funcionario update(Funcionario funcionario, EditFuncionarioForm editFuncionarioForm) {
-        funcionario.setNome(editFuncionarioForm.getNome());
-        funcionario.setSalario(editFuncionarioForm.getSalario());
-        funcionario.setCargo(editFuncionarioForm.getCargo());
+	public static Funcionario update(Funcionario funcionario, EditFuncionarioForm editFuncionarioForm) {
+		funcionario.setNome(editFuncionarioForm.getNome());
+		funcionario.setSalario(editFuncionarioForm.getSalario());
+		funcionario.setCargo(editFuncionarioForm.getCargo());
 
-        HorarioDeTrabalho horarioDeTrabalho = new HorarioDeTrabalho();
-        horarioDeTrabalho.setHorarioInicio(editFuncionarioForm.getHorarioInicio());
-        horarioDeTrabalho.setHorarioFinal(editFuncionarioForm.getHorarioFinal());
+		HorarioDeTrabalho horarioDeTrabalho = new HorarioDeTrabalho();
+		horarioDeTrabalho.setHorarioInicio(editFuncionarioForm.getHorarioInicio());
+		horarioDeTrabalho.setHorarioFinal(editFuncionarioForm.getHorarioFinal());
 
-        funcionario.setHorarioDeTrabalho(horarioDeTrabalho);
-        return funcionario;
-    }
+		funcionario.setHorarioDeTrabalho(horarioDeTrabalho);
+		return funcionario;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public BigDecimal getSalario() {
-        return salario;
-    }
+	public BigDecimal getSalario() {
+		return salario;
+	}
 
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
-    }
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
+	}
 
-    public LocalTime getHorarioInicio() {
-        return horarioInicio;
-    }
+	public LocalTime getHorarioInicio() {
+		return horarioInicio;
+	}
 
-    public void setHorarioInicio(LocalTime horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
+	public void setHorarioInicio(LocalTime horarioInicio) {
+		this.horarioInicio = horarioInicio;
+	}
 
-    public LocalTime getHorarioFinal() {
-        return horarioFinal;
-    }
+	public LocalTime getHorarioFinal() {
+		return horarioFinal;
+	}
 
-    public void setHorarioFinal(LocalTime horarioFinal) {
-        this.horarioFinal = horarioFinal;
-    }
+	public void setHorarioFinal(LocalTime horarioFinal) {
+		this.horarioFinal = horarioFinal;
+	}
 
-    public Cargo getCargo() {
-        return cargo;
-    }
+	public Cargo getCargo() {
+		return cargo;
+	}
 
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
 }
