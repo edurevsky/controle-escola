@@ -6,15 +6,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Entity
+@Data
 @Table(name = "tb_cargos")
-@Getter
-@Setter
-@AllArgsConstructor
+@Entity
 public class Cargo {
 
     @Id
@@ -35,5 +31,4 @@ public class Cargo {
     public void setAllFuncionariosCargoNull() {
         funcionarios.forEach(funcionario -> funcionario.setCargo(null));
     }
-
 }

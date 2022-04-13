@@ -1,27 +1,15 @@
 package me.edurevsky.controleescola.forms;
 
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.Turma;
 
+@Data
 public class AlterarTurmaForm {
 
-    // @NotNull
     private Turma turma;
-
-    public AlterarTurmaForm(Turma turma) {
-        this.turma = turma;
-    }
-
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
 
     public void loadFromAluno(Aluno aluno) {
         this.turma = aluno.getTurma();
     }
-    
 }

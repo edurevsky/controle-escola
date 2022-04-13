@@ -6,8 +6,7 @@ import java.time.LocalTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.entities.embeddables.HorarioDeTrabalho;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
@@ -16,8 +15,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import me.edurevsky.controleescola.entities.Funcionario;
 import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
+@Data
 public class FuncionarioForm {
     
     @NotBlank(message = "O nome não pode estar em branco")
@@ -66,5 +64,4 @@ public class FuncionarioForm {
         this.cargo = funcionario.getCargo();
         return this;
     }
-
 }

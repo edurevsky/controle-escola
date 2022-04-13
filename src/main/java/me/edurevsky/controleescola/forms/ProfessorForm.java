@@ -1,7 +1,6 @@
 package me.edurevsky.controleescola.forms;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
@@ -10,8 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+@Data
 public class ProfessorForm {
 
     @NotBlank(message = "O nome não pode estar em branco")
@@ -38,5 +36,4 @@ public class ProfessorForm {
         this.salario = professor.getSalario();
         return this;
     }
-
 }

@@ -9,5 +9,9 @@ public class StandardErrorMessage {
     
     private Date timestamp;
     private String message;
-    
+
+    public StandardErrorMessage(Exception e) {
+        this.timestamp = new Date();
+        this.message = e.getMessage();
+    }
 }

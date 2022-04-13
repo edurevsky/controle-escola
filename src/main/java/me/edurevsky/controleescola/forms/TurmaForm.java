@@ -1,13 +1,11 @@
 package me.edurevsky.controleescola.forms;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Turma;
 import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
+@Data
 public class TurmaForm {
 
     private String turma;
@@ -26,5 +24,4 @@ public class TurmaForm {
         this.professor = turma.getProfessor();
         return this;
     }
-
 }

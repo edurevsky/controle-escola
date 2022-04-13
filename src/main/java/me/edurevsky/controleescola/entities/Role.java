@@ -3,8 +3,8 @@ package me.edurevsky.controleescola.entities;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Table(name = "tb_roles")
+@Entity
 public class Role {
 
     @Id

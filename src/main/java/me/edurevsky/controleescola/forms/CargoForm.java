@@ -1,11 +1,9 @@
 package me.edurevsky.controleescola.forms;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Cargo;
 
-@Getter
-@Setter
+@Data
 public class CargoForm {
 
     private String cargo;
@@ -24,5 +22,4 @@ public class CargoForm {
         this.cargo = cargo.getCargo();
         return this;
     }
-
 }

@@ -4,8 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
@@ -15,8 +14,7 @@ import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
 
-@Getter
-@Setter
+@Data
 public class AlunoForm {
 
     @NotBlank(message = "O nome não pode estar em branco")
@@ -46,5 +44,4 @@ public class AlunoForm {
         this.turma = aluno.getTurma();
         return this;
     }
-
 }

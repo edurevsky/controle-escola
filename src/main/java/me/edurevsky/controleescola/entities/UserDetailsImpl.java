@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.entities;
 
-import me.edurevsky.controleescola.entities.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

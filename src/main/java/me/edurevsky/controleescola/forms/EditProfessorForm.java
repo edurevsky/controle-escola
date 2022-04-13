@@ -1,11 +1,13 @@
 package me.edurevsky.controleescola.forms;
 
+import lombok.Data;
 import me.edurevsky.controleescola.entities.Professor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@Data
 public class EditProfessorForm {
 
     @NotBlank(message = "O nome não pode estar em branco")
@@ -13,15 +15,6 @@ public class EditProfessorForm {
 
     @NotNull(message = "O salário precisa ser preenchido")
     private BigDecimal salario;
-
-    public EditProfessorForm() {
-
-    }
-
-    public EditProfessorForm(String nome, BigDecimal salario) {
-        this.nome = nome;
-        this.salario = salario;
-    }
 
     public EditProfessorForm loadFromProfessor(Professor professor) {
         this.nome = professor.getNome();
@@ -33,21 +26,5 @@ public class EditProfessorForm {
         professor.setNome(professorForm.getNome());
         professor.setSalario(professorForm.getSalario());
         return professor;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public BigDecimal getSalario() {
-        return salario;
-    }
-
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
     }
 }
