@@ -1,6 +1,5 @@
 package me.edurevsky.controleescola.web.controllers;
 
-import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.forms.EditCargoForm;
@@ -25,14 +24,14 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/funcionarios")
-public class FuncionarioViewController {
+public class FuncionarioController {
 
 	private final FuncionarioService funcionarioService;
 	private final CargoService cargoService;
 	private static final int PAGE_SIZE = 10;
 
 	@Autowired
-	public FuncionarioViewController(final FuncionarioService funcionarioService, final CargoService cargoService) {
+	public FuncionarioController(final FuncionarioService funcionarioService, final CargoService cargoService) {
 		this.funcionarioService = funcionarioService;
 		this.cargoService = cargoService;
 	}
@@ -48,10 +47,8 @@ public class FuncionarioViewController {
 		Page<Funcionario> funcionariosPage = funcionarioService.findPaginated(page, PAGE_SIZE);
 		List<Funcionario> funcionariosList = funcionariosPage.getContent();
 
-		// Title
 		mv.addObject("title", "Lista de Funcionários");
 
-		// Pagination
 		mv.addObject("currentPage", page);
 		mv.addObject("totalPages", funcionariosPage.getTotalPages());
 		mv.addObject("totalItems", funcionariosPage.getTotalElements());
@@ -140,7 +137,7 @@ public class FuncionarioViewController {
 	@PostMapping(value = "/{id}/editar-cargo")
 	public ModelAndView editCargoPost(@PathVariable("id") Long id, @Valid @ModelAttribute EditCargoForm editCargoForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return this.editCargoGet(id, editCargoForm);
+			return editCargoGet(id, editCargoForm);
 		}
 		funcionarioService.updateCargo(id, editCargoForm.getCargo());
 		return new ModelAndView("redirect:/funcionarios/{id}/detalhes");

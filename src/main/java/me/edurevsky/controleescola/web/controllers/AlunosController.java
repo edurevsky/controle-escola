@@ -24,14 +24,14 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/alunos")
-public class AlunosViewController {
+public class AlunosController {
 
     private final AlunoService alunoService;
     private final TurmaService turmaService;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public AlunosViewController(final AlunoService alunoService, final TurmaService turmaService) {
+    public AlunosController(final AlunoService alunoService, final TurmaService turmaService) {
         this.alunoService = alunoService;
         this.turmaService = turmaService;
     }
@@ -47,10 +47,8 @@ public class AlunosViewController {
         Page<Aluno> alunosPage = alunoService.findPaginated(page, PAGE_SIZE);
         List<Aluno> alunosList = alunosPage.getContent();
 
-        // Title
         mv.addObject("title", "Lista de Alunos");
 
-        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalPages", alunosPage.getTotalPages());
         mv.addObject("totalItems", alunosPage.getTotalElements());
@@ -74,19 +72,21 @@ public class AlunosViewController {
             return this.newAlunoGet(alunoForm);
         }
         alunoService.save(alunoForm);
-        return new ModelAndView("redirect:/alunos");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/deletar")
     public ModelAndView deleteAluno(@PathVariable("id") Long id) {
         alunoService.remove(id);
-        return new ModelAndView("redirect:/alunos");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/editar")
     public ModelAndView editAlunoGet(@PathVariable("id") Long id, EditAlunoForm alunoForm) {
         Aluno aluno = alunoService.findById(id);
-        if (Objects.isNull(aluno)) return new ModelAndView("redirect:/alunos");
+        if (Objects.isNull(aluno)) {
+            return redirect();
+        }
 
         alunoForm.loadFromAluno(aluno);
         ModelAndView mv = new ModelAndView("alunos/edit");
@@ -103,7 +103,7 @@ public class AlunosViewController {
             return this.editAlunoGet(id, alunoForm);
         }
         alunoService.update(id, alunoForm);
-        return new ModelAndView("redirect:/alunos");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/detalhes")
@@ -137,4 +137,7 @@ public class AlunosViewController {
         return new ModelAndView("redirect:/alunos/{id}/detalhes");
     }
 
+    private ModelAndView redirect() {
+        return new ModelAndView("redirect:/alunos");
+    }
 }

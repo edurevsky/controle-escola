@@ -19,14 +19,14 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/turmas")
-public class TurmasViewController {
+public class TurmasController {
 
     private final TurmaService turmaService;
     private final ProfessorService professorService;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public TurmasViewController(final TurmaService turmaService, final ProfessorService professorService) {
+    public TurmasController(final TurmaService turmaService, final ProfessorService professorService) {
         this.turmaService = turmaService;
         this.professorService = professorService;
     }
@@ -42,10 +42,8 @@ public class TurmasViewController {
         Page<Turma> turmasPage = turmaService.findPaginated(page, PAGE_SIZE);
         List<Turma> turmasList = turmasPage.getContent();
 
-        // Title
         mv.addObject("title", "Lista de Turmas");
 
-        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalItems", turmasPage.getTotalElements());
         mv.addObject("totalPages", turmasPage.getTotalPages());
@@ -65,7 +63,7 @@ public class TurmasViewController {
     @PostMapping(value = "/registrar")
     public ModelAndView newTurmaPost(@ModelAttribute TurmaForm turmaForm) {
         turmaService.save(turmaForm);
-        return new ModelAndView("redirect:/turmas");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/detalhes")
@@ -93,13 +91,16 @@ public class TurmasViewController {
     @PostMapping(value = "/{id}/editar")
     public ModelAndView editTurmaPost(@PathVariable Long id, @ModelAttribute TurmaForm turmaForm) {
         turmaService.update(id, turmaForm);
-        return new ModelAndView("redirect:/turmas");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/deletar")
     public ModelAndView deleteTurma(@PathVariable Long id) {
         turmaService.delete(id);
-        return new ModelAndView("redirect:/turmas");
+        return redirect();
     }
 
+    private ModelAndView redirect() {
+        return new ModelAndView("redirect:/turmas");
+    }
 }

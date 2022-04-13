@@ -10,12 +10,8 @@ import javax.validation.ConstraintValidatorContext;
 @Component
 public class AlreadyRegisteredCpfValidator implements ConstraintValidator<AlreadyRegisteredCpf, String> {
 
-    private final CpfHandler cpfHandler;
-
     @Autowired
-    public AlreadyRegisteredCpfValidator(CpfHandler cpfHandler) {
-        this.cpfHandler = cpfHandler;
-    }
+    private CpfHandler cpfHandler;
 
     @Override
     public void initialize(AlreadyRegisteredCpf constraintAnnotation) {

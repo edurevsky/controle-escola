@@ -16,21 +16,21 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/usuarios")
-public class UsuariosViewController {
+public class UsuariosController {
 
     private final AppUserService appUserService;
     private final RoleRepository roleRepository;
     private final static Integer PAGE_SIZE = 10;
 
     @Autowired
-    public UsuariosViewController(AppUserService appUserService, RoleRepository roleRepository) {
+    public UsuariosController(AppUserService appUserService, RoleRepository roleRepository) {
         this.appUserService = appUserService;
         this.roleRepository = roleRepository;
     }
 
     @GetMapping
     public ModelAndView index() {
-        return this.paginatedUsuarios(1);
+        return paginatedUsuarios(1);
     }
 
     @GetMapping(value = "/{page}")
@@ -39,10 +39,8 @@ public class UsuariosViewController {
         Page<AppUser> users = appUserService.findPaginated(page, PAGE_SIZE);
         List<AppUser> usersList = users.getContent();
 
-        // Title
         mv.addObject("title", "Lista de Usuários");
 
-        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalPages", users.getTotalPages());
         mv.addObject("totalItems", users.getTotalElements());
@@ -65,12 +63,16 @@ public class UsuariosViewController {
             return this.newUsuarioGet(usuarioForm);
         }
         appUserService.save(usuarioForm);
-        return new ModelAndView("redirect:/usuarios");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/deletar")
     public ModelAndView deleteUsuario(@PathVariable("id") Long id) {
         appUserService.remove(id);
+        return redirect();
+    }
+
+    private ModelAndView redirect() {
         return new ModelAndView("redirect:/usuarios");
     }
 }

@@ -1,13 +1,13 @@
 package me.edurevsky.controleescola.web.controllers;
 
-import me.edurevsky.controleescola.configuration.security.UserDetailsImpl;
+import me.edurevsky.controleescola.entities.UserDetailsImpl;
 import me.edurevsky.controleescola.configuration.security.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeViewController {
+public class HomeController {
 
     @GetMapping(value = "/login")
     public ModelAndView loginPage() {

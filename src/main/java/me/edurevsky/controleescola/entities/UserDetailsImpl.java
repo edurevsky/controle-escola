@@ -1,4 +1,4 @@
-package me.edurevsky.controleescola.configuration.security;
+package me.edurevsky.controleescola.entities;
 
 import me.edurevsky.controleescola.entities.AppUser;
 import org.springframework.security.core.GrantedAuthority;

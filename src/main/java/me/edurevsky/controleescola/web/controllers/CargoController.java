@@ -18,13 +18,13 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/cargos")
-public class CargoViewController {
+public class CargoController {
 
     private final CargoService cargoService;
-    private static final int pageSize = 10;
+    private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public CargoViewController(final CargoService cargoService) {
+    public CargoController(final CargoService cargoService) {
         this.cargoService = cargoService;
     }
 
@@ -36,13 +36,11 @@ public class CargoViewController {
     @GetMapping(value = "/{page}")
     public ModelAndView paginatedCargos(@PathVariable("page") Integer page) {
         ModelAndView mv = new ModelAndView("cargos/index");
-        Page<Cargo> cargosPage = cargoService.findPaginated(page, pageSize);
+        Page<Cargo> cargosPage = cargoService.findPaginated(page, PAGE_SIZE);
         List<Cargo> cargosList = cargosPage.getContent();
 
-        // Title
         mv.addObject("title", "Lista de Cargos");
 
-        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalPages", cargosPage.getTotalPages());
         mv.addObject("totalItems", cargosPage.getTotalElements());
@@ -61,13 +59,13 @@ public class CargoViewController {
     @PostMapping(value = "/registrar")
     public ModelAndView newCargoPost(@ModelAttribute CargoForm cargoForm) {
         cargoService.save(cargoForm);
-        return new ModelAndView("redirect:/cargos");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/deletar")
     public ModelAndView deleteCargo(@PathVariable Long id) {
         cargoService.remove(id);
-        return new ModelAndView("redirect:/cargos");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/detalhes")
@@ -88,13 +86,16 @@ public class CargoViewController {
         ModelAndView mv = new ModelAndView("cargos/edit");
         mv.addObject("id", id);
         mv.addObject("title", "Editar cargo");
-        return new ModelAndView("cargos/edit");
+        return mv;
     }
 
     @PostMapping(value = "/{id}/editar")
     public ModelAndView editCargoPost(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
         cargoService.update(id, cargoForm);
-        return new ModelAndView("redirect:/cargos");
+        return redirect();
     }
 
+    private ModelAndView redirect() {
+        return new ModelAndView("redirect:/cargos");
+    }
 }

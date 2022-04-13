@@ -1,5 +1,6 @@
-package me.edurevsky.controleescola.configuration.security;
+package me.edurevsky.controleescola.services;
 
+import me.edurevsky.controleescola.entities.UserDetailsImpl;
 import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;

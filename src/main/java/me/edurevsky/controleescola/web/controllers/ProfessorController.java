@@ -17,16 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/professores")
-public class ProfessorViewController {
+public class ProfessorController {
 
     private final ProfessorService professorService;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public ProfessorViewController(final ProfessorService professorService) {
+    public ProfessorController(final ProfessorService professorService) {
         this.professorService = professorService;
     }
 
@@ -41,10 +42,8 @@ public class ProfessorViewController {
         Page<Professor> professoresPage = professorService.findPaginated(page, PAGE_SIZE);
         List<Professor> professoresList = professoresPage.getContent();
 
-        // Title
         mv.addObject("title", "Lista de Professores");
 
-        // Pagination
         mv.addObject("currentPage", page);
         mv.addObject("totalPages", professoresPage.getTotalPages());
         mv.addObject("totalItems", professoresPage.getTotalElements());
@@ -66,13 +65,15 @@ public class ProfessorViewController {
             return addProfessorView(professorForm);
         }
         professorService.save(professorForm);
-        return new ModelAndView("redirect:/professores");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/editar")
     public ModelAndView editProfessorView(@PathVariable("id") Long id, EditProfessorForm professorForm) {
         Professor professor = professorService.findById(id);
-        if (professor == null) return new ModelAndView("redirect:/professores");
+        if (Objects.isNull(professor)) {
+            return redirect();
+        }
 
         professorForm.loadFromProfessor(professor);
         ModelAndView mv = new ModelAndView("professores/edit");
@@ -94,7 +95,7 @@ public class ProfessorViewController {
     @GetMapping(value = "/{id}/deletar")
     public ModelAndView deletarProfessor(@PathVariable("id") Long id) {
         professorService.remove(id);
-        return new ModelAndView("redirect:/professores");
+        return redirect();
     }
 
     @GetMapping(value = "/{id}/detalhes")
@@ -106,4 +107,7 @@ public class ProfessorViewController {
         return mv;
     }
 
+    private ModelAndView redirect() {
+        return new ModelAndView("redirect:/professores");
+    }
 }
