@@ -39,14 +39,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR")
-                .antMatchers("/**/detalhes").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR")
+                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR")
+                .antMatchers("/**/detalhes").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR")
                 .antMatchers("/**/registrar").hasAnyAuthority("CREATOR", "ADMIN")
                 .antMatchers("/**/editar").hasAnyAuthority("EDITOR", "ADMIN")
                 .antMatchers("/**/deletar").hasAnyAuthority("EDITOR", "ADMIN")
 
                 // aluno
-                .antMatchers("/**/alterar-status").hasAnyAuthority("EDITOR", "ADMIN")
+                .antMatchers("/**/alterar-status").hasAnyAuthority("EDITOR", "ADMIN", "PROFESSOR")
                 .antMatchers("/**/alterar-turma").hasAnyAuthority("EDITOR", "ADMIN")
 
                 // usuarios

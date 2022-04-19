@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.forms;
 
 import lombok.Data;
 import me.edurevsky.controleescola.entities.Professor;
+import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import me.edurevsky.controleescola.validation.AlreadyRegisteredCpf;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -27,6 +28,7 @@ public class ProfessorForm {
         professor.setNome(professorForm.getNome());
         professor.setCpf(professorForm.getCpf());
         professor.setSalario(professorForm.getSalario());
+        professor.setEmail(GeradorDeEmail.gerarEmailParaProfessor(professorForm.getNome()));
         return professor;
     }
 

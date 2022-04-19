@@ -92,12 +92,6 @@ public class AlunoService {
         throw new NotImplementedException();
     }
 
-    /**
-     * Switches the Aluno attribute 'estaAtivo'
-     *
-     * @param id the Aluno id
-     * @return the updated Aluno Object
-     */
     @Transactional
     public Aluno switchEstaAtivo(Long id) {
         Handlers.handleEntityNotFound(alunoRepository, id, String.format(NOT_FOUND_MESSAGE, id));

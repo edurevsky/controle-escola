@@ -9,17 +9,19 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
 @Table(name = "tb_professores")
-@EqualsAndHashCode(callSuper = false)
+@Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class Professor extends PessoaFisica {
 
     private BigDecimal salario;
+
+    private String email;
 
     @OneToMany(mappedBy = "professor")
     private List<Turma> turmas = new ArrayList<>();

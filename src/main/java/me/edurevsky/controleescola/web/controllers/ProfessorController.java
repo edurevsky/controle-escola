@@ -3,6 +3,7 @@ package me.edurevsky.controleescola.web.controllers;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.EditProfessorForm;
 import me.edurevsky.controleescola.forms.ProfessorForm;
+import me.edurevsky.controleescola.services.AppUserService;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,11 +25,13 @@ import java.util.Objects;
 public class ProfessorController {
 
     private final ProfessorService professorService;
+    private final AppUserService appUserService;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public ProfessorController(final ProfessorService professorService) {
+    public ProfessorController(final ProfessorService professorService, AppUserService appUserService) {
         this.professorService = professorService;
+        this.appUserService = appUserService;
     }
 
     @GetMapping
@@ -64,7 +67,8 @@ public class ProfessorController {
         if (bindingResult.hasErrors()) {
             return addProfessorView(professorForm);
         }
-        professorService.save(professorForm);
+        Professor professor = professorService.save(professorForm);
+        appUserService.saveProfessor(professor);
         return redirect();
     }
 

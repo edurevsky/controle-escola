@@ -1,13 +1,14 @@
 package me.edurevsky.controleescola.services;
 
+import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.entities.Professor;
-import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.forms.EditProfessorForm;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.repositories.ProfessorRepository;
 import me.edurevsky.controleescola.repositories.TurmaRepository;
 import me.edurevsky.controleescola.services.utils.CpfHandler;
 import me.edurevsky.controleescola.services.utils.Handlers;
+import me.edurevsky.controleescola.utils.GeradorDeEmail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,19 +26,23 @@ public class ProfessorService {
     private final ProfessorRepository professorRepository;
     private final TurmaRepository turmaRepository;
     private final CpfHandler cpfHandler;
+    private final AppUserService appUserService;
     private static final String NOT_FOUND_MESSAGE = "Professor com id %d não encontrado";
 
     @Autowired
-    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler) {
+    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler, AppUserService appUserService) {
         this.professorRepository = professorRepository;
         this.turmaRepository = turmaRepository;
         this.cpfHandler = cpfHandler;
+        this.appUserService = appUserService;
     }
 
     @Transactional
     public Professor save(ProfessorForm professorForm) {
         cpfHandler.ifAlreadyRegistered_ThrowException(professorForm.getCpf());
-        return professorRepository.save(ProfessorForm.convertToProfessor(professorForm));
+
+        Professor professor = ProfessorForm.convertToProfessor(professorForm);
+        return professorRepository.save(professor);
     }
 
     @Transactional
@@ -48,7 +53,6 @@ public class ProfessorService {
         if (!professorForm.getCpf().equals(professor.getCpf())) {
             cpfHandler.ifAlreadyRegistered_ThrowException(professorForm.getCpf());
         }
-
         BeanUtils.copyProperties(professorForm, professor);
         return professorRepository.save(professor);
     }
@@ -58,6 +62,7 @@ public class ProfessorService {
         Handlers.handleEntityNotFound(professorRepository, id, String.format(NOT_FOUND_MESSAGE, id));
 
         Professor professor = professorRepository.getById(id);
+        professor.setEmail(GeradorDeEmail.gerarEmailParaProfessor(professorForm.getNome()));
         return professorRepository.save(EditProfessorForm.update(professor, professorForm));
     }
 
@@ -74,6 +79,10 @@ public class ProfessorService {
     public Professor findById(Long id) {
         return professorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(NOT_FOUND_MESSAGE, id)));
+    }
+
+    public Professor findByEmail(String email) {
+        return professorRepository.findByEmail(email);
     }
 
     public List<Professor> findAll() {

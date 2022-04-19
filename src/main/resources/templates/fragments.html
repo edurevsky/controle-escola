@@ -22,16 +22,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item active" sec:authorize="hasAnyAuthority('PROFESSOR', 'USER', 'EDITOR', 'CREATOR', 'ADMIN')">
                         <a class="nav-link" th:href="@{/turmas}">Turmas</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('PROFESSOR', 'USER', 'EDITOR', 'CREATOR', 'ADMIN')">
                         <a class="nav-link" th:href="@{/alunos}">Alunos</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'EDITOR', 'CREATOR', 'ADMIN')">
                         <a class="nav-link" th:href="@{/professores}">Professores</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER', 'EDITOR', 'CREATOR', 'ADMIN')">
                         <a class="nav-link" th:href="@{/funcionarios}">Funcionários</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('EDTIOR', 'CREATOR', 'ADMIN')">
