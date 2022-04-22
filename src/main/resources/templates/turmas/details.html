@@ -16,7 +16,11 @@
         <div class="col">
             <h1 th:text="|Turma ${turma.turma}|"></h1>
             <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
-                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar Turma</a>
+                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar
+                    Turma</a>
+            </div>
+            <div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSOR')">
+                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/avisos/novo|}">Novo aviso</a>
             </div>
         </div>
     </div>
@@ -25,23 +29,54 @@
 
 <div class="container mt-2">
 
-    <div class="row mt-2">
+    <div class="row mt-2" id="conteudo">
         <div class="col">
             <label for="turma-conteudo"><b>Conteúdo</b></label>
             <p id="turma-conteudo" th:text="${turma.conteudo}"></p>
         </div>
 
-        <div class="col">
+        <div class="col" id="professor">
             <label for="turma-professor"><b>Professor</b></label><br>
-            <a class="link-dark" th:if="${turma.professor == null}">Sem professor</a>
-
-            <a th:unless="${turma.professor == null}" id="turma-professor" th:href="@{|/professores/${turma.professor.id}/detalhes|}" th:text="${turma.professor.nome}"></a>
+            <p th:if="${turma.professor == null}">Sem professor</p>
+            <p th:unless="${turma.professor == null}" id="turma-professor" th:text="${turma.professor.nome}"></p>
         </div>
     </div>
 
 </div>
 
-<div class="container mt-2">
+<div class="container mt-2" id="avisos">
+
+    <div th:if="${ultimoAviso != null}">
+
+        <h2>Último aviso</h2>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div>
+                        <p th:text="|Enviado por: ${ultimoAviso.nomeUsuario}|"></p>
+                    </div>
+                    <div class="card-text">
+                        <p th:text="${ultimoAviso.mensagem}"></p>
+                    </div>
+                    <div class="card-text text-muted">
+                        <p th:text="|Enviado em: ${ultimoAviso.getDataFormatada()}|"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{|/turmas/${turma.id}/avisos|}">Ver todos os avisos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2" id="alunos">
 
     <h2>Alunos da turma</h2>
 

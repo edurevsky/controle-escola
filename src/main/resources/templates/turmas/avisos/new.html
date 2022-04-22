@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:insert="~{fragments :: head}">
+
+</head>
+<body>
+
+<div class="container mt-3">
+
+    <h1 th:text="${title}"></h1>
+
+    <form th:action="@{|/turmas/${id}/avisos/novo|}" th:object="${avisosTurmaForm}" method="post">
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="mensagem">Mensagem</label>
+                    <textarea id="mensagem" th:field="*{mensagem}"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

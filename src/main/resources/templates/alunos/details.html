@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div class="container mt-3" sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+<div class="container mt-3" sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN', 'PROFESSOR')">
 
     <h2>Outras ações</h2>
 
@@ -78,7 +78,7 @@
             </a>
         </div>
 
-        <div class="col">
+        <div class="col" sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
             <a th:href="@{|/alunos/${aluno.id}/alterar-turma|}">
                 <p>Alterar turma</p>
             </a>

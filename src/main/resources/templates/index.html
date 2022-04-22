@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="container mt-2" sec:authorize="hasAnyAuthority('PROFESSOR')">
+<div class="container mt-3" sec:authorize="hasAnyAuthority('PROFESSOR')">
 
     <h2>Suas turmas</h2>
 
@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr th:if="${professor.turmas.empty}">
-            <td colspan="3">Aqui aparecerá suas turmas</td>
+            <td colspan="3">Suas turmas aparecerão aqui</td>
         </tr>
         <tr th:each="turma : ${professor.turmas}">
             <th><span th:text="${turma.id}">Id</span></th>
