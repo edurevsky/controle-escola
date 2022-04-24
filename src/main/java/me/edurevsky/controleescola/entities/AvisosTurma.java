@@ -29,8 +29,4 @@ public class AvisosTurma {
 
     private String mensagem;
     private LocalDateTime data;
-
-    public String getDataFormatada() {
-        return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-    }
 }

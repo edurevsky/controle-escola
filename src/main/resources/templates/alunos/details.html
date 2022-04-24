@@ -30,9 +30,9 @@
             <p id="aluno-nome" th:text="${aluno.nome}"></p>
         </div>
 
-        <div class="col">
+        <div class="col" th:with="conversor=${T(me.edurevsky.controleescola.utils.ConversorDeDatas)}">
             <label for="aluno-matricula"><b>Matrícula</b></label>
-            <p id="aluno-matricula" th:text="${aluno.getMatriculaFormatada()}"></p>
+            <p id="aluno-matricula" th:text="${conversor.converterLocalDate(aluno.dataMatricula)}"></p>
         </div>
 
         <div class="col">

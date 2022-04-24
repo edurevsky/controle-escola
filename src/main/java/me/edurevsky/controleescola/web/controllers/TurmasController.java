@@ -1,7 +1,6 @@
 package me.edurevsky.controleescola.web.controllers;
 
 import me.edurevsky.controleescola.configuration.security.LoggedUser;
-import me.edurevsky.controleescola.entities.AvisosTurma;
 import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.entities.UserDetailsImpl;
 import me.edurevsky.controleescola.forms.AvisosTurmaForm;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 

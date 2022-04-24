@@ -59,8 +59,8 @@
                     <div class="card-text">
                         <p th:text="${ultimoAviso.mensagem}"></p>
                     </div>
-                    <div class="card-text text-muted">
-                        <p th:text="|Enviado em: ${ultimoAviso.getDataFormatada()}|"></p>
+                    <div class="card-text text-muted" th:with="conversor=${T(me.edurevsky.controleescola.utils.ConversorDeDatas)}">
+                        <p th:text="|Enviado em: ${conversor.converterLocalDateTime(ultimoAviso.data)}|"></p>
                     </div>
                 </div>
             </div>

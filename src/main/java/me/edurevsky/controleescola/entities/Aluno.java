@@ -36,10 +36,6 @@ public class Aluno extends PessoaFisica {
     @JoinColumn(name = "turma_id")
     private Turma turma;
 
-    public String getMatriculaFormatada() {
-        return dataMatricula.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
-
     @Override
     public Long getId() {
         return super.getId();
