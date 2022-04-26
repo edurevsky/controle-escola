@@ -24,6 +24,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Override
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
@@ -36,29 +37,59 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
-    // TODO: 26/04/2022 alterar todos os antMatchers 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/turmas/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
-                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
-                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR", "ALUNO")
-                .antMatchers("/**/detalhes").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR")
-                .antMatchers("/**/registrar").hasAnyAuthority("CREATOR", "ADMIN")
-                .antMatchers("/**/editar").hasAnyAuthority("EDITOR", "ADMIN")
-                .antMatchers("/**/deletar").hasAnyAuthority("EDITOR", "ADMIN")
 
-                // aluno
-                .antMatchers("/**/alterar-status").hasAnyAuthority("EDITOR", "ADMIN", "PROFESSOR")
-                .antMatchers("/**/alterar-turma").hasAnyAuthority("EDITOR", "ADMIN")
+                .antMatchers("/usuarios/**").hasAuthority("ADMIN")
 
-                // usuarios
-                .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/funcionarios", "/cargos", "/professores").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "USER")
 
-                // avisos turma
-                .antMatchers("/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
-                .antMatchers("/**/avisos/novo").hasAnyAuthority("ADMIN", "PROFESSOR")
+                .antMatchers("/alunos", "/turmas").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "USER")
 
+                .antMatchers("/turmas/{id}/detalhes").hasAnyAuthority("USER", "ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+
+                .antMatchers("/turmas/{id}/avisos/novo").hasAnyAuthority("ADMIN", "PROFESSOR")
+
+                .antMatchers("/turmas/{id}/avisos").hasAnyAuthority("ADMIN", "PROFESSOR", "ALUNO")
+
+                .antMatchers("/alunos/{id}/detalhes").hasAnyAuthority("USER", "ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+
+                .antMatchers("/alunos/{id}/editar-status").hasAnyAuthority("ADMIN", "EDITOR", "PROFESSOR")
+
+                .antMatchers("/alunos/{id}/alterar-turma").hasAnyAuthority("ADMIN", "EDITOR")
+
+                .antMatchers("/**/registrar").hasAnyAuthority("ADMIN", "CREATOR")
+
+                .antMatchers("/**/editar").hasAnyAuthority("ADMIN", "EDITOR")
+
+                .antMatchers("/**/deletar").hasAnyAuthority("ADMIN", "EDITOR")
+
+                .antMatchers("/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "USER")
+
+
+                // fodase
+//                .antMatchers("/turmas/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+//                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "CREATOR", "PROFESSOR", "ALUNO")
+//                .antMatchers("/**/detalhes").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR")
+//                .antMatchers("/alunos/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR")
+//                .antMatchers("/**/registrar").hasAnyAuthority("CREATOR", "ADMIN")
+//                .antMatchers("/**/editar").hasAnyAuthority("EDITOR", "ADMIN")
+//                .antMatchers("/**/deletar").hasAnyAuthority("EDITOR", "ADMIN")
+//
+//                // aluno
+//                .antMatchers("/**/alterar-status").hasAnyAuthority("EDITOR", "ADMIN", "PROFESSOR")
+//                .antMatchers("/**/alterar-turma").hasAnyAuthority("EDITOR", "ADMIN")
+//
+//                // usuarios
+//                .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN")
+//
+//                // avisos turma
+//                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+//                .antMatchers("/turmas/**/avisos/novo").hasAnyAuthority("ADMIN", "PROFESSOR")
+//
+                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
 
                 //
                 .anyRequest()

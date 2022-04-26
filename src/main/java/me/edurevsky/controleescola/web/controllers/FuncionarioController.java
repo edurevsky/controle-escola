@@ -87,7 +87,6 @@ public class FuncionarioController {
 		if (Objects.isNull(funcionario)) {
 			return redirect();
 		}
-
 		funcionarioForm.loadFromFuncionario(funcionario);
 		ModelAndView mv = new ModelAndView("funcionarios/edit");
 		mv.addObject("title", "Editar funcionário");

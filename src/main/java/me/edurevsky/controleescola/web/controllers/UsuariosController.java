@@ -20,7 +20,7 @@ public class UsuariosController {
 
     private final AppUserService appUserService;
     private final RoleRepository roleRepository;
-    private final static Integer PAGE_SIZE = 10;
+    private static final Integer PAGE_SIZE = 10;
 
     @Autowired
     public UsuariosController(AppUserService appUserService, RoleRepository roleRepository) {

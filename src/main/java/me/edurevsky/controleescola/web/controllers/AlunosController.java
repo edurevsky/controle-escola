@@ -72,7 +72,7 @@ public class AlunosController {
     @PostMapping(value = "/registrar")
     public ModelAndView newAlunoPost(@Valid @ModelAttribute AlunoForm alunoForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return this.newAlunoGet(alunoForm);
+            return newAlunoGet(alunoForm);
         }
         Aluno aluno = alunoService.save(alunoForm);
         appUserService.saveAluno(aluno);
@@ -91,7 +91,6 @@ public class AlunosController {
         if (Objects.isNull(aluno)) {
             return redirect();
         }
-
         alunoForm.loadFromAluno(aluno);
         ModelAndView mv = new ModelAndView("alunos/edit");
         mv.addObject("title", "Editar Aluno");
@@ -116,7 +115,7 @@ public class AlunosController {
         ModelAndView mv = new ModelAndView("alunos/details");
         mv.addObject("title", String.format("Detalhes de %s", aluno.getNome()));
         mv.addObject("aluno", aluno);
-        mv.addObject("mstatus", !aluno.getEstaAtivo() ? "Ativo" : "Inativo");
+        mv.addObject("mstatus", Boolean.FALSE.equals(aluno.getEstaAtivo()) ? "Ativo" : "Inativo");
         return mv;
     }
 

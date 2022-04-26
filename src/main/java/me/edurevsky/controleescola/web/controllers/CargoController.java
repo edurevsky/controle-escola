@@ -80,8 +80,9 @@ public class CargoController {
     @GetMapping(value = "/{id}/editar")
     public ModelAndView editCargoGet(@ModelAttribute CargoForm cargoForm, @PathVariable Long id) {
         Cargo cargo = cargoService.findById(id);
-        if (Objects.isNull(cargo)) return new ModelAndView("redirect:/cargos");
-
+        if (Objects.isNull(cargo)) {
+            return redirect();
+        }
         cargoForm.loadFromCargo(cargo);
         ModelAndView mv = new ModelAndView("cargos/edit");
         mv.addObject("id", id);
