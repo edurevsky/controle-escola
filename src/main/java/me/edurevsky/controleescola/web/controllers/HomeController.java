@@ -2,6 +2,7 @@ package me.edurevsky.controleescola.web.controllers;
 
 import me.edurevsky.controleescola.configuration.security.LoggedUser;
 import me.edurevsky.controleescola.entities.UserDetailsImpl;
+import me.edurevsky.controleescola.repositories.AlunoRepository;
 import me.edurevsky.controleescola.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ public class HomeController {
     @Autowired
     private ProfessorService professorService;
 
+    @Autowired
+    private AlunoRepository alunoRepository;
+
     @GetMapping(value = "/login")
     public ModelAndView loginPage() {
         return new ModelAndView("login");
@@ -23,10 +27,12 @@ public class HomeController {
     public ModelAndView index(@LoggedUser UserDetailsImpl user) {
         ModelAndView mv = new ModelAndView("index");
         if (isProfessor(user)) {
+            mv.setViewName("professor-index");
             mv.addObject("professor", professorService.findByEmail(user.getUsername()));
         }
         if (isAluno(user)) {
-            ;
+            mv.setViewName("aluno-index");
+            mv.addObject("aluno", alunoRepository.findByEmail(user.getUsername()));
         }
         mv.addObject("title", "Início");
         return mv;

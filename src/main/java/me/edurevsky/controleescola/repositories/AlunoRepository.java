@@ -14,4 +14,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     Boolean existsByCpf(String cpf);
 
+    Aluno findByEmail(String email);
+
 }

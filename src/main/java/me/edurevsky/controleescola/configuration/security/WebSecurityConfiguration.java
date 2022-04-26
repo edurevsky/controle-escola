@@ -36,10 +36,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
+    // TODO: 26/04/2022 alterar todos os antMatchers 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR")
+                .antMatchers("/turmas/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR", "ALUNO")
                 .antMatchers("/**/detalhes").hasAnyAuthority("USER", "ADMIN", "CREATOR", "EDITOR", "PROFESSOR")
                 .antMatchers("/**/registrar").hasAnyAuthority("CREATOR", "ADMIN")
                 .antMatchers("/**/editar").hasAnyAuthority("EDITOR", "ADMIN")
@@ -51,6 +54,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // usuarios
                 .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN")
+
+                // avisos turma
+                .antMatchers("/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
+                .antMatchers("/**/avisos/novo").hasAnyAuthority("ADMIN", "PROFESSOR")
+
 
                 //
                 .anyRequest()

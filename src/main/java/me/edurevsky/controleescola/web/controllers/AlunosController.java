@@ -6,8 +6,8 @@ import me.edurevsky.controleescola.forms.AlterarTurmaForm;
 import me.edurevsky.controleescola.forms.AlunoForm;
 import me.edurevsky.controleescola.forms.EditAlunoForm;
 import me.edurevsky.controleescola.services.AlunoService;
+import me.edurevsky.controleescola.services.AppUserService;
 import me.edurevsky.controleescola.services.TurmaService;
-import me.edurevsky.controleescola.utils.ConversorDeDatas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -29,12 +29,14 @@ public class AlunosController {
 
     private final AlunoService alunoService;
     private final TurmaService turmaService;
+    private final AppUserService appUserService;
     private static final int PAGE_SIZE = 10;
 
     @Autowired
-    public AlunosController(final AlunoService alunoService, final TurmaService turmaService) {
+    public AlunosController(final AlunoService alunoService, final TurmaService turmaService, AppUserService appUserService) {
         this.alunoService = alunoService;
         this.turmaService = turmaService;
+        this.appUserService = appUserService;
     }
 
     @GetMapping
@@ -72,7 +74,8 @@ public class AlunosController {
         if (bindingResult.hasErrors()) {
             return this.newAlunoGet(alunoForm);
         }
-        alunoService.save(alunoForm);
+        Aluno aluno = alunoService.save(alunoForm);
+        appUserService.saveAluno(aluno);
         return redirect();
     }
 

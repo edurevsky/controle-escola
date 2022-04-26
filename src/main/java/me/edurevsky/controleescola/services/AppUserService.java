@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.services;
 
+import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.entities.Role;
@@ -47,7 +48,22 @@ public class AppUserService {
         Set<Role> roles = new HashSet<>();
         roles.add(professorRole());
         appUser.setRoles(roles);
-        String encodedPassword = passwordEncoder.encode(professor.getCpf().replace(".", "").replace("-", ""));
+
+        String encodedPassword = encodePassword(professor.getCpf()); // passwordEncoder.encode(professor.getCpf().replace(".", "").replace("-", ""));
+        appUser.setPassword(encodedPassword);
+        return userRepository.save(appUser);
+    }
+
+    @Transactional
+    public AppUser saveAluno(Aluno aluno) {
+        AppUser appUser = new AppUser();
+        appUser.setCompleteName(aluno.getNome());
+        appUser.setUsername(aluno.getEmail());
+        Set<Role> roles = new HashSet<>();
+        roles.add(alunoRole());
+        appUser.setRoles(roles);
+
+        String encodedPassword = encodePassword(aluno.getCpf()); // passwordEncoder.encode(aluno.getCpf().replace(".", "").replace("-", ""));
         appUser.setPassword(encodedPassword);
         return userRepository.save(appUser);
     }
@@ -83,5 +99,13 @@ public class AppUserService {
 
     private Role professorRole() {
         return roleRepository.getById(5);
+    }
+
+    private Role alunoRole() {
+        return roleRepository.getById(6);
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password.replace(".", "").replace("-", ""));
     }
 }

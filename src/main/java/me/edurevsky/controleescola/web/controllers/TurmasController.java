@@ -117,6 +117,7 @@ public class TurmasController {
         }
         ModelAndView mv = new ModelAndView("turmas/avisos/all");
         mv.addObject("avisosList", avisosTurmaService.findByTurmaSorted(turma));
+        mv.addObject("title", "Avisos da Turma");
         return mv;
     }
 

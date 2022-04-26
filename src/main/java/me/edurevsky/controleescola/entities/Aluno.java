@@ -1,7 +1,6 @@
 package me.edurevsky.controleescola.entities;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

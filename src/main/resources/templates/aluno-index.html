@@ -18,6 +18,16 @@
     </div>
 </div>
 
+<div class="container mt-3" sec:authorize="hasAnyAuthority('ALUNO')">
+
+    <h2>Sua turma</h2>
+
+    <div id="turma" th:if="${aluno.turma != null}">
+        <a th:href="@{|/turmas/${aluno.turma.id}/detalhes|}">Ver sua turma</a>
+    </div>
+
+</div>
+
 <div th:replace="~{fragments :: main-footer}"></div>
 
 </body>

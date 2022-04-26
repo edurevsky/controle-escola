@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:insert="~{fragments :: head}">
+
+</head>
+<body>
+
+<div th:replace="~{fragments :: main-header}"></div>
+
+<div class="container mt-3">
+    <div sec:authorize="isAuthenticated()">
+        <h1>
+            Olá <span sec:authentication="principal.user.completeName">username</span>!
+        </h1>
+    </div>
+</div>
+
+<div class="container mt-3" sec:authorize="hasAnyAuthority('PROFESSOR')">
+
+    <h2>Suas turmas</h2>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Turma</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${professor.turmas.empty}">
+            <td colspan="3">Suas turmas aparecerão aqui</td>
+        </tr>
+        <tr th:each="turma : ${professor.turmas}">
+            <th><span th:text="${turma.id}">Id</span></th>
+            <td><span th:text="${turma.turma}">Turma</span></td>
+            <td><a class="link-info" th:href="@{|/turmas/${turma.id}/detalhes|}">Ver mais</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div th:replace="~{fragments :: main-footer}"></div>
+
+</body>
+</html>
