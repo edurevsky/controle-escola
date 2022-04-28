@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -69,6 +70,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "USER")
 
 
+
                 // fodase
 //                .antMatchers("/turmas/**/detalhes").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
 //                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "CREATOR", "PROFESSOR", "ALUNO")
@@ -89,8 +91,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/turmas/**/avisos").hasAnyAuthority("ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
 //                .antMatchers("/turmas/**/avisos/novo").hasAnyAuthority("ADMIN", "PROFESSOR")
 //
-                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
 
+                .antMatchers("/").hasAnyAuthority("USER", "ADMIN", "EDITOR", "CREATOR", "PROFESSOR", "ALUNO")
                 //
                 .anyRequest()
                 .authenticated()
@@ -103,6 +105,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/error")
                 .and()
                 .csrf().disable();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
     }
 
     @Override

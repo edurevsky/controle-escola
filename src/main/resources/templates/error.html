@@ -10,15 +10,28 @@
 </head>
 <body>
 
+<div th:replace="~{fragments :: main-header}"></div>
+
 <div class="container mt-2">
+
     <h1>Um erro ocorreu...</h1>
-    <p>
-        Caso o erro persista, entre em contato com os desenvolvedores.
-    </p>
+
+    <section id="erro">
+        <p th:if="${exception.message == null}">
+            Caso o erro persista, entre em contato com os desenvolvedores.
+        </p>
+        <p th:unless="${exception.message == null}">
+            [[${exception.message}]]
+        </p>
+    </section>
+
     <p>
         Clique <a th:href="@{/}">Aqui</a> para voltar para o início.
     </p>
+
 </div>
+
+<div th:replace="~{fragments :: main-footer}"></div>
 
 </body>
 </html>

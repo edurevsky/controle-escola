@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
 public class NotImplementedException extends RuntimeException {
 
-    private final static String STANDARD_MESSAGE = "This resource is not available";
+    private static final String STANDARD_MESSAGE = "This resource is not available";
 
     public NotImplementedException() {
         super(STANDARD_MESSAGE);

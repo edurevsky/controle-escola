@@ -15,9 +15,8 @@
     <div class="row">
         <div class="col">
             <h1 th:text="|Turma ${turma.turma}|"></h1>
-            <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
-                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar
-                    Turma</a>
+            <div sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+                <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/editar|}">Editar Turma</a>
             </div>
             <div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSOR')">
                 <a class="btn btn-primary float-end" role="button" th:href="@{|/turmas/${turma.id}/avisos/novo|}">Novo aviso</a>
