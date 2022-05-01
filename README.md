@@ -24,7 +24,7 @@ spring.datasource.password={sua senha}
 4 - Execução
 
 Você pode rodar o Main (ControleescolaApplication.java) através de alguma IDE. <br/>
-Ou dentro da pasta onde contém o mvnw, digitar em seu console:
+Ou dentro da pasta onde contém o mvnw, digitar em seu terminal:
 
 ```bash
 ./mvnw spring-boot:run
