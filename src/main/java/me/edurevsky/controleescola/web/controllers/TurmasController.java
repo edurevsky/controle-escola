@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.web.controllers;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.configuration.security.LoggedUser;
 import me.edurevsky.controleescola.entities.Turma;
 import me.edurevsky.controleescola.entities.UserDetailsImpl;
@@ -8,7 +9,6 @@ import me.edurevsky.controleescola.forms.TurmaForm;
 import me.edurevsky.controleescola.services.AvisosTurmaService;
 import me.edurevsky.controleescola.services.ProfessorService;
 import me.edurevsky.controleescola.services.TurmaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +23,13 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/turmas")
+@RequiredArgsConstructor
 public class TurmasController {
 
     private final TurmaService turmaService;
     private final ProfessorService professorService;
     private final AvisosTurmaService avisosTurmaService;
     private static final int PAGE_SIZE = 10;
-
-    @Autowired
-    public TurmasController(final TurmaService turmaService, final ProfessorService professorService, AvisosTurmaService avisosTurmaService) {
-        this.turmaService = turmaService;
-        this.professorService = professorService;
-        this.avisosTurmaService = avisosTurmaService;
-    }
 
     @GetMapping
     public ModelAndView index() {

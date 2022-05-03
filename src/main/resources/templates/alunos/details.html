@@ -6,9 +6,9 @@
 <head th:insert="~{fragments :: head}">
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-<div th:replace="~{fragments :: main-header}"></div>
+<header th:replace="~{fragments :: main-header}"></header>
 
 <div class="container mt-3">
 
@@ -86,7 +86,7 @@
     </div>
 </div>
 
-<div th:replace="~{fragments :: main-footer}"></div>
+<footer th:replace="~{fragments :: main-footer}"></footer>
 
 <script th:replace="~{fragments :: bootstrap-js}"></script>
 

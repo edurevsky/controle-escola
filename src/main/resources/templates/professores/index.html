@@ -6,9 +6,9 @@
 <head th:insert="~{fragments :: head}">
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-<div th:replace="~{fragments :: main-header}"></div>
+<header th:replace="~{fragments :: main-header}"></header>
 
 <div class="container mt-3">
 
@@ -51,28 +51,26 @@
         </tbody>
     </table>
 
-    <div th:if="${totalPages > 1}">
-        <div class="row">
-            <div class="col">
-                Total: [[${totalItems}]] - Página [[${currentPage}]] de [[${totalPages}]]
-            </div>
+    <div th:if="${totalPages > 0}">
+        <nav aria-label="paginas-carai">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage - 1 > 0}" th:href="@{|/professores/${currentPage - 1}|}">Anterior</a>
+                    <a class="page-link" th:unless="${currentPage - 1 > 0}">Anterior</a>
+                </li>
 
-            <div class="col">
-                <a th:if="${currentPage <= totalPages && currentPage != 1}"
-                   th:href="@{|/professores/${currentPage - 1}|}">Anterior</a>
-            </div>
+                <th:block th:each="i : ${#numbers.sequence(1, totalPages)}" >
+                    <li class="page-item" th:classappend="${i == currentPage ? 'active' : ''}">
+                        <a class="page-link" th:href="@{|/professores/${i}|}">[[${i}]]</a>
+                    </li>
+                </th:block>
 
-            <div class="col">
-                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{|/professores/${i}|}">[[${i}]]</a>
-                    <span th:unless="${currentPage != i}">[[${i}]]</span>
-                </span>
-            </div>
-
-            <div class="col">
-                <a th:if="${currentPage < totalPages}" th:href="@{|/professores/${currentPage + 1}|}">Próximo</a>
-            </div>
-        </div>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}" th:href="@{|/professores/${currentPage + 1}|}">Próximo</a>
+                    <span class="page-link" th:unless="${currentPage < totalPages}">Próximo</span>
+                </li>
+            </ul>
+        </nav>
     </div>
 
 </div>

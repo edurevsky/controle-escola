@@ -8,57 +8,54 @@
 </head>
 <body>
 
-<div class="container mt-3 w-50">
+<header th:replace="~{fragments :: main-header}"></header>
 
-    <h1 th:text="${title}"></h1>
+<section class="container mt-3 w-50" id="formulario">
 
-    <form th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
+    <div class="row mt-3 bg-light rounded">
 
-        <div class="row mt-3">
-            <div class="col">
-                <div class="form-group">
-                    <label for="turma-input">Turma</label>
-                    <input class="form-control" id="turma-input" type="text" th:field="*{turma}" placeholder="Turma">
+        <h1 th:text="${title}"></h1>
+
+        <form th:action="@{/turmas/registrar}" th:object="${turmaForm}" method="post">
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="turma-input">Turma</label>
+                        <input class="form-control" id="turma-input" type="text" th:field="*{turma}" placeholder="Turma">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="conteudo-input">Conteúdo</label>
+                        <input class="form-control" id="conteudo-input" type="text" th:field="*{conteudo}" placeholder="Conteúdo">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="prof-select">Professor</label>
+                        <select class="form-control" id="prof-select" th:field="*{professor}">
+                            <option th:value="${null}">Nenhum</option>
+                            <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"></option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <label for="conteudo-input">Conteúdo</label>
-                    <input class="form-control" id="conteudo-input" type="text" th:field="*{conteudo}" placeholder="Conteúdo">
+            <div class="row my-2">
+                <div class="col">
+                    <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
+                    <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
                 </div>
             </div>
 
-            <div class="col">
-                <div class="form-group">
-                    <label for="prof-select">Professor</label>
-                    <select class="form-control" id="prof-select" th:field="*{professor}">
-                        <option th:value="${null}">Nenhum</option>
-                        <option th:each="prof: ${professoresList}" th:value="${prof.id}" th:text="${prof.nome}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        </form>
 
-        <div class="row mt-2">
-            <div class="col">
-                <input class="btn btn-outline-primary" type="submit" th:value="Salvar">
-                <input class="btn btn-outline-secondary" type="reset" th:value="Limpar">
-            </div>
-        </div>
-
-    </form>
-
-</div>
-
-<div class="container mt-2 w-50">
-
-    <div th:if="${professoresList.empty}" class="alert alert-warning" role="alert">
-        Você ainda não registrou nenhum professor.
-        Clique <a th:href="@{/professores/registrar}">aqui</a> para registrar um professor.
     </div>
 
-</div>
+</section>
 
 </body>
 </html>

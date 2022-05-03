@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div th:fragment="main-header">
+<header th:fragment="main-header">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -50,24 +50,22 @@
         </div>
     </nav>
 
-</div>
+</header>
 
-<div th:fragment="main-footer">
 
-    <footer class="bg-light fixed-bottom">
-        <div class="container p-3">
-            <div class="row text-center">
-                <div class="col">
-                    <span>2022 Copyleft</span>
-                </div>
-                <div class="col">
-                    <a class="link-dark" href="https://github.com/edurevsky/">Github</a>
-                </div>
+<footer th:fragment="main-footer" class="bg-light mt-auto">
+    <div class="container p-3">
+        <div class="row text-center">
+            <div class="col">
+                <span>2022 Copyleft</span>
+            </div>
+            <div class="col">
+                <a class="link-dark" href="https://github.com/edurevsky/">Github</a>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-</div>
 
 <script th:fragment="bootstrap-js" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
