@@ -75,11 +75,11 @@ public class AppUserService {
 
     @Transactional
     public void remove(Long id) {
-        Handlers.handleEntityNotFound(userRepository, id, "");
+        Handlers.handleEntityNotFound(userRepository, id, "Usuário com id " + id + " não encontrada");
         AppUser user = userRepository.getById(id);
 
         if (user.getRoles().contains(adminRole())) {
-            throw new RuntimeException("Um admin não pode deletar um usuário que contenha uma autorização admin");
+            throw new RuntimeException("Um admin não pode deletar um admin.");
         }
         userRepository.deleteById(id);
     }

@@ -1,9 +1,9 @@
 package me.edurevsky.controleescola.web.controllers;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.Cargo;
 import me.edurevsky.controleescola.forms.CargoForm;
 import me.edurevsky.controleescola.services.CargoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +18,11 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/cargos")
+@RequiredArgsConstructor
 public class CargoController {
 
     private final CargoService cargoService;
     private static final int PAGE_SIZE = 10;
-
-    @Autowired
-    public CargoController(final CargoService cargoService) {
-        this.cargoService = cargoService;
-    }
 
     @GetMapping
     public ModelAndView index() {

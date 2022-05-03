@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.forms.AlterarTurmaForm;
 import me.edurevsky.controleescola.forms.EditAlunoForm;
@@ -23,19 +24,13 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private final TurmaRepository turmaRepository;
     private final CpfHandler cpfHandler;
     private static final String NOT_FOUND_MESSAGE = "Aluno com id %d não encontrado";
-
-    @Autowired
-    public AlunoService(AlunoRepository alunoRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler) {
-        this.alunoRepository = alunoRepository;
-        this.turmaRepository = turmaRepository;
-        this.cpfHandler = cpfHandler;
-    }
 
     @Transactional
     public Aluno save(AlunoForm alunoForm) {

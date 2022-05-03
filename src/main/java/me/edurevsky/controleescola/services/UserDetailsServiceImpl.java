@@ -1,5 +1,7 @@
 package me.edurevsky.controleescola.services;
 
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.UserDetailsImpl;
 import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;
@@ -9,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -19,10 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = userRepository.findByUsername(username);
-        if (Objects.isNull(appUser)) {
-            throw new UsernameNotFoundException(String.format("Username '%s' not found", username));
-        }
-        return new UserDetailsImpl(appUser);
+        Optional<AppUser> appUser = userRepository.findByUsername(username);
+        return new UserDetailsImpl(appUser.orElseThrow(() -> new UsernameNotFoundException("Usuário " + username + " não encontrado")));
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.forms.CargoForm;
 import me.edurevsky.controleescola.repositories.FuncionarioRepository;
 import me.edurevsky.controleescola.services.utils.Handlers;
@@ -23,18 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class CargoService {
 
     private final CargoRepository cargoRepository;
     private final FuncionarioRepository funcionarioRepository;
     private static final String NOT_FOUND_MESSAGE = "Cargo com id %d não encontrado";
     private static final String NAME_NOT_FOUND_MESSAGE = "Cargo com nome %s não encontrado";
-
-    @Autowired
-    public CargoService(CargoRepository cargoRepository, FuncionarioRepository funcionarioRepository) {
-        this.cargoRepository = cargoRepository;
-        this.funcionarioRepository = funcionarioRepository;
-    }
 
     public Cargo save(CargoForm cargoForm) {
         return cargoRepository.save(CargoForm.convertToCargo(cargoForm));

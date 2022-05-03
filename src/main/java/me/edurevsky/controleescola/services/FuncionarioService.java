@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
 import me.edurevsky.controleescola.forms.EditFuncionarioForm;
 import me.edurevsky.controleescola.services.utils.CpfHandler;
@@ -24,19 +25,13 @@ import me.edurevsky.controleescola.services.utils.Handlers;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
     private final CargoRepository cargoRepository;
     private final CpfHandler cpfHandler;
     private static final String NOT_FOUND_MESSAGE = "Funcionario com id %d não encontrado.";
-
-    @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository, CpfHandler cpfHandler) {
-        this.funcionarioRepository = funcionarioRepository;
-        this.cargoRepository = cargoRepository;
-        this.cpfHandler = cpfHandler;
-    }
 
     @Transactional
     public Funcionario save(FuncionarioForm funcionarioForm) {

@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.web.controllers;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.Funcionario;
 import me.edurevsky.controleescola.entities.enums.Turno;
 import me.edurevsky.controleescola.forms.EditCargoForm;
@@ -7,7 +8,6 @@ import me.edurevsky.controleescola.forms.EditFuncionarioForm;
 import me.edurevsky.controleescola.forms.FuncionarioForm;
 import me.edurevsky.controleescola.services.CargoService;
 import me.edurevsky.controleescola.services.FuncionarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,17 +24,12 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/funcionarios")
+@RequiredArgsConstructor
 public class FuncionarioController {
 
 	private final FuncionarioService funcionarioService;
 	private final CargoService cargoService;
 	private static final int PAGE_SIZE = 10;
-
-	@Autowired
-	public FuncionarioController(final FuncionarioService funcionarioService, final CargoService cargoService) {
-		this.funcionarioService = funcionarioService;
-		this.cargoService = cargoService;
-	}
 
 	@GetMapping
 	public ModelAndView index() {

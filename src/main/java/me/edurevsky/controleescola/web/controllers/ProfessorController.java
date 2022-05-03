@@ -1,11 +1,11 @@
 package me.edurevsky.controleescola.web.controllers;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.EditProfessorForm;
 import me.edurevsky.controleescola.forms.ProfessorForm;
 import me.edurevsky.controleescola.services.AppUserService;
 import me.edurevsky.controleescola.services.ProfessorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,17 +22,12 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/professores")
+@RequiredArgsConstructor
 public class ProfessorController {
 
     private final ProfessorService professorService;
     private final AppUserService appUserService;
     private static final int PAGE_SIZE = 10;
-
-    @Autowired
-    public ProfessorController(final ProfessorService professorService, AppUserService appUserService) {
-        this.professorService = professorService;
-        this.appUserService = appUserService;
-    }
 
     @GetMapping
     public ModelAndView index() {

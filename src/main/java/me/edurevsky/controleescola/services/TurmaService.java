@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.Aluno;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.exceptions.appexceptions.NotImplementedException;
@@ -23,19 +24,13 @@ import me.edurevsky.controleescola.repositories.TurmaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class TurmaService {
 
     private final TurmaRepository turmaRepository;
     private final ProfessorRepository professorRepository;
     private final AlunoRepository alunoRepository;
     private static final String NOT_FOUND_MESSAGE = "Turma com id %d não encontrada";
-
-    @Autowired
-    public TurmaService(TurmaRepository turmaRepository, ProfessorRepository professorRepository, AlunoRepository alunoRepository) {
-        this.turmaRepository = turmaRepository;
-        this.professorRepository = professorRepository;
-        this.alunoRepository = alunoRepository;
-    }
 
     public Turma save(TurmaForm turmaForm) {
         return turmaRepository.save(TurmaForm.convertToTurma(turmaForm));

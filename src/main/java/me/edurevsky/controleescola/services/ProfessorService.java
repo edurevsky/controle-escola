@@ -1,5 +1,6 @@
 package me.edurevsky.controleescola.services;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.entities.Professor;
 import me.edurevsky.controleescola.forms.EditProfessorForm;
@@ -21,6 +22,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
@@ -28,14 +30,6 @@ public class ProfessorService {
     private final CpfHandler cpfHandler;
     private final AppUserService appUserService;
     private static final String NOT_FOUND_MESSAGE = "Professor com id %d não encontrado";
-
-    @Autowired
-    public ProfessorService(ProfessorRepository professorRepository, TurmaRepository turmaRepository, CpfHandler cpfHandler, AppUserService appUserService) {
-        this.professorRepository = professorRepository;
-        this.turmaRepository = turmaRepository;
-        this.cpfHandler = cpfHandler;
-        this.appUserService = appUserService;
-    }
 
     @Transactional
     public Professor save(ProfessorForm professorForm) {

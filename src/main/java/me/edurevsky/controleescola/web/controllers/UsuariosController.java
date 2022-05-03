@@ -1,10 +1,10 @@
 package me.edurevsky.controleescola.web.controllers;
 
+import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.forms.UsuarioForm;
 import me.edurevsky.controleescola.repositories.RoleRepository;
 import me.edurevsky.controleescola.entities.AppUser;
 import me.edurevsky.controleescola.services.AppUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,17 +16,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/usuarios")
+@RequiredArgsConstructor
 public class UsuariosController {
 
     private final AppUserService appUserService;
     private final RoleRepository roleRepository;
     private static final Integer PAGE_SIZE = 10;
 
-    @Autowired
-    public UsuariosController(AppUserService appUserService, RoleRepository roleRepository) {
-        this.appUserService = appUserService;
-        this.roleRepository = roleRepository;
-    }
 
     @GetMapping
     public ModelAndView index() {
