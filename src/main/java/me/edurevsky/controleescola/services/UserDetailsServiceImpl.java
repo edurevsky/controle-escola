@@ -1,7 +1,5 @@
 package me.edurevsky.controleescola.services;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import me.edurevsky.controleescola.entities.UserDetailsImpl;
 import me.edurevsky.controleescola.repositories.UserRepository;
 import me.edurevsky.controleescola.entities.AppUser;

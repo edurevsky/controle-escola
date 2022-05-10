@@ -12,7 +12,6 @@ public class UserDetailsImpl implements UserDetails {
 
     private AppUser user;
 
-
     public UserDetailsImpl() {
 
     }
